@@ -47887,7 +47887,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47918,24 +47917,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         remove: function remove() {
             this.selected = {};
-        },
-        send: function send() {
-            axios.post('/subject', {
-                ime: this.name,
-                prezime: this.prezime,
-                srednje: this.srname,
-                rodjen: this.dob,
-                komentar: this.komentar,
-                studija: this.checked,
-                grupa: this.selected,
-                pol: this.pol
-
-            }).then(function () {
-                window.location.href = "/subject";
-            }).catch(function (error) {
-                console.log(error);
-            });
-            //  window.flash('Novi Ispitanik dodat')
         }
     },
     mounted: function mounted() {
@@ -47957,428 +47938,386 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "form",
-    {
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.send($event)
-        }
-      }
-    },
-    [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-8 mx-auto" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              { staticClass: "col-form-label", attrs: { for: "name" } },
-              [_vm._v("Ime")]
-            ),
-            _vm._v(" "),
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-md-8 mx-auto" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { staticClass: "col-form-label", attrs: { for: "name" } }, [
+          _vm._v("Ime")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.name,
+              expression: "name"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "name", type: "text", name: "ime", autofocus: "" },
+          domProps: { value: _vm.name },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.name = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "label",
+          { staticClass: "col-form-label", attrs: { for: "prezime" } },
+          [_vm._v("Prezime")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.prezime,
+              expression: "prezime"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "prezime", type: "text", name: "prezime" },
+          domProps: { value: _vm.prezime },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.prezime = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "label",
+          { staticClass: "col-form-label", attrs: { for: "srname" } },
+          [_vm._v("Srednje Ime")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.srname,
+              expression: "srname"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "srname", type: "text", name: "srednje" },
+          domProps: { value: _vm.srname },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.srname = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { staticClass: "col-form-label", attrs: { for: "date" } }, [
+          _vm._v("DOB")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.dob,
+              expression: "dob"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "date", id: "date", name: "rodjen" },
+          domProps: { value: _vm.dob },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.dob = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "mb-2" }, [
+        _c("p", { staticClass: "mb-2" }, [_vm._v("Pol")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "custom-control custom-radio custom-control-inline" },
+          [
             _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.name,
-                  expression: "name"
+                  value: _vm.pol,
+                  expression: "pol"
                 }
               ],
-              staticClass: "form-control",
-              attrs: { id: "name", type: "text", name: "name", autofocus: "" },
-              domProps: { value: _vm.name },
+              staticClass: "custom-control-input",
+              attrs: { type: "radio", id: "muski", value: "m", name: "pol" },
+              domProps: { checked: _vm._q(_vm.pol, "m") },
               on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.name = $event.target.value
+                change: function($event) {
+                  _vm.pol = "m"
                 }
               }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
+            }),
+            _vm._v(" "),
             _c(
               "label",
-              { staticClass: "col-form-label", attrs: { for: "prezime" } },
-              [_vm._v("Prezime")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.prezime,
-                  expression: "prezime"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { id: "prezime", type: "text", name: "prezime" },
-              domProps: { value: _vm.prezime },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.prezime = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              { staticClass: "col-form-label", attrs: { for: "srname" } },
-              [_vm._v("Srednje Ime")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.srname,
-                  expression: "srname"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { id: "srname", type: "text", name: "srname" },
-              domProps: { value: _vm.srname },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.srname = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              { staticClass: "col-form-label", attrs: { for: "date" } },
-              [_vm._v("DOB")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.dob,
-                  expression: "dob"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "date", id: "date" },
-              domProps: { value: _vm.dob },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.dob = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-2" }, [
-            _c("p", { staticClass: "mb-2" }, [_vm._v("Pol")]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "custom-control custom-radio custom-control-inline"
-              },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.pol,
-                      expression: "pol"
-                    }
-                  ],
-                  staticClass: "custom-control-input",
-                  attrs: { type: "radio", id: "muski", value: "m" },
-                  domProps: { checked: _vm._q(_vm.pol, "m") },
-                  on: {
-                    change: function($event) {
-                      _vm.pol = "m"
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "muski" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        Muski\n                    "
-                    )
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "custom-control custom-radio custom-control-inline"
-              },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.pol,
-                      expression: "pol"
-                    }
-                  ],
-                  staticClass: "custom-control-input",
-                  attrs: { type: "radio", id: "zenski", value: "z" },
-                  domProps: { checked: _vm._q(_vm.pol, "z") },
-                  on: {
-                    change: function($event) {
-                      _vm.pol = "z"
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "zenski" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        Zenski\n                    "
-                    )
-                  ]
-                )
-              ]
+              { staticClass: "custom-control-label", attrs: { for: "muski" } },
+              [_vm._v("\n                    Muski\n                ")]
             )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "komentar" } }, [_vm._v("Komentar")]),
-            _vm._v(" "),
-            _c("textarea", {
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "custom-control custom-radio custom-control-inline" },
+          [
+            _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.komentar,
-                  expression: "komentar"
+                  value: _vm.pol,
+                  expression: "pol"
                 }
               ],
-              staticClass: "form-control",
-              attrs: { id: "komentar", rows: "3" },
-              domProps: { value: _vm.komentar },
+              staticClass: "custom-control-input",
+              attrs: { type: "radio", id: "zenski", value: "f", name: "pol" },
+              domProps: { checked: _vm._q(_vm.pol, "f") },
               on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.komentar = $event.target.value
+                change: function($event) {
+                  _vm.pol = "f"
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "custom-control-label", attrs: { for: "zenski" } },
+              [_vm._v("\n                    Zenski\n                ")]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "komentar" } }, [_vm._v("Komentar")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.komentar,
+              expression: "komentar"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "komentar", rows: "3", name: "komentar" },
+          domProps: { value: _vm.komentar },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.komentar = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "mt-3" },
+        [
+          _c("div", { staticClass: "d-flex" }, [
+            _c("p", { staticClass: "flex-grow-1 text-center h4" }, [
+              _vm._v("Studije")
+            ]),
+            _vm._v(" "),
+            _vm.cekiram
+              ? _c("p", { staticClass: "text-center flex-grow-1 h4" }, [
+                  _vm._v("Grupe"),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-sm ml-3",
+                      attrs: { type: "button" },
+                      on: { click: _vm.remove }
+                    },
+                    [_vm._v("X")]
+                  )
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "mt-3" },
-            [
-              _c("div", { staticClass: "d-flex" }, [
-                _c("p", { staticClass: "flex-grow-1 text-center h4" }, [
-                  _vm._v("Studije")
-                ]),
-                _vm._v(" "),
-                _vm.cekiram
-                  ? _c("p", { staticClass: "text-center flex-grow-1 h4" }, [
-                      _vm._v("Grupe"),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-sm ml-3",
-                          attrs: { type: "button" },
-                          on: { click: _vm.remove }
-                        },
-                        [_vm._v("X")]
-                      )
-                    ])
-                  : _vm._e()
+          _vm._l(_vm.studije, function(studija) {
+            return _c("div", { key: studija.id, staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6 mb-4" }, [
+                _c("div", { staticClass: "custom-control custom-checkbox" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.checked[studija.id],
+                        expression: "checked[studija.id]"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "checkbox",
+                      id: studija.id,
+                      name: "studije[]"
+                    },
+                    domProps: {
+                      value: studija.id,
+                      checked: Array.isArray(_vm.checked[studija.id])
+                        ? _vm._i(_vm.checked[studija.id], studija.id) > -1
+                        : _vm.checked[studija.id]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.checked[studija.id],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = studija.id,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.checked,
+                                studija.id,
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.checked,
+                                studija.id,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.checked, studija.id, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: studija.id }
+                    },
+                    [_vm._v(_vm._s(studija.name))]
+                  )
+                ])
               ]),
               _vm._v(" "),
-              _vm._l(_vm.studije, function(studija) {
-                return _c("div", { key: studija.id, staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-6 mb-4" }, [
-                    _c(
+              _c("div", { staticClass: "col-md-6 mb-4" }, [
+                _vm.checked[studija.id]
+                  ? _c(
                       "div",
-                      { staticClass: "custom-control custom-checkbox" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.checked[studija.id],
-                              expression: "checked[studija.id]"
-                            }
-                          ],
-                          staticClass: "custom-control-input",
-                          attrs: { type: "checkbox", id: studija.id },
-                          domProps: {
-                            checked: Array.isArray(_vm.checked[studija.id])
-                              ? _vm._i(_vm.checked[studija.id], null) > -1
-                              : _vm.checked[studija.id]
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$a = _vm.checked[studija.id],
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.checked,
-                                      studija.id,
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.checked,
-                                      studija.id,
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(_vm.checked, studija.id, $$c)
-                              }
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
+                      { staticClass: "card", staticStyle: { width: "18rem" } },
+                      _vm._l(studija.groups, function(s) {
+                        return _c(
+                          "ul",
                           {
-                            staticClass: "custom-control-label",
-                            attrs: { for: studija.id }
+                            key: s.id,
+                            staticClass: "list-group list-group-flush"
                           },
-                          [_vm._v(_vm._s(studija.name))]
+                          [
+                            _c("li", { staticClass: "list-group-item" }, [
+                              _c("div", { staticClass: "form-check" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.selected[s.study_id],
+                                      expression: "selected[s.study_id]"
+                                    }
+                                  ],
+                                  staticClass: "form-check-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: s.id + studija.name,
+                                    name: "grupe[" + studija.id + "] "
+                                  },
+                                  domProps: {
+                                    value: s.id,
+                                    checked: _vm._q(
+                                      _vm.selected[s.study_id],
+                                      s.id
+                                    )
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.$set(_vm.selected, s.study_id, s.id)
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "form-check-label",
+                                    attrs: { for: s.id + studija.name }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(s.name) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ]
                         )
-                      ]
+                      })
                     )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6 mb-4" }, [
-                    _vm.checked[studija.id]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "card",
-                            staticStyle: { width: "18rem" }
-                          },
-                          _vm._l(studija.groups, function(s) {
-                            return _c(
-                              "ul",
-                              {
-                                key: s.id,
-                                staticClass: "list-group list-group-flush"
-                              },
-                              [
-                                _c("li", { staticClass: "list-group-item" }, [
-                                  _c("div", { staticClass: "form-check" }, [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.selected[s.study_id],
-                                          expression: "selected[s.study_id]"
-                                        }
-                                      ],
-                                      staticClass: "form-check-input",
-                                      attrs: {
-                                        type: "radio",
-                                        id: s.id + studija.name
-                                      },
-                                      domProps: {
-                                        value: s.id,
-                                        checked: _vm._q(
-                                          _vm.selected[s.study_id],
-                                          s.id
-                                        )
-                                      },
-                                      on: {
-                                        change: function($event) {
-                                          _vm.$set(
-                                            _vm.selected,
-                                            s.study_id,
-                                            s.id
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "label",
-                                      {
-                                        staticClass: "form-check-label",
-                                        attrs: { for: s.id + studija.name }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        " +
-                                            _vm._s(s.name) +
-                                            "\n                                    "
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ])
-                              ]
-                            )
-                          })
-                        )
-                      : _vm._e()
-                  ])
-                ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-primary my-5", attrs: { type: "submit" } },
-            [_vm._v("\n                Save\n            ")]
-          )
-        ])
-      ])
-    ]
-  )
+                  : _vm._e()
+              ])
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary my-5", attrs: { type: "submit" } },
+        [_vm._v("\n            Save\n        ")]
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

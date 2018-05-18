@@ -10428,6 +10428,62 @@ a.text-dark:focus {
   height: 100vh;
 }
 
+.navbar > .nav-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+
+.navbar-nav li > a {
+  padding: 25px;
+}
+
+.navbar-nav li > a:hover {
+  background-color: #5456e6;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: white;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: rgba(245, 245, 245, 0.904);
+}
+
+.navbar {
+  background-color: #7072e9;
+}
+
+.navbar-brand {
+  position: relative;
+}
+
+.navbar-brand img {
+  width: 90px;
+}
+
+.logo-light {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  opacity: 0;
+  -webkit-transition: opacity 0s;
+  transition: opacity 0s;
+}
+
+.navbar-brand:hover .logo-light {
+  opacity: 1;
+}
+
+.navbar-brand:hover .logo-dark {
+  opacity: 0;
+}
+
 .btn-success-my {
   background-color: #c3e6cb;
   color: black;
@@ -10514,7 +10570,7 @@ section .section-title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background: #00b1b3 !important;
+  background: #7072e9 !important;
 }
 
 #footer h5 {

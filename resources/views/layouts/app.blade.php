@@ -23,10 +23,11 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Studija
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel m-0 p-0">
+            <div class="container nav-container">
+                <a class="navbar-brand" href="{{ url('/') }}"> 
+                    <img class="logo-dark" alt="ICEF" src="http://www.ic.etf.bg.ac.rs/wp-content/uploads/2018/03/icef_logo_transparent_1-light-1.png">
+                    <img class="logo-light" alt="ICEF" src="http://www.ic.etf.bg.ac.rs/wp-content/uploads/2018/03/icef_logo_transparent_1.png">	 
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

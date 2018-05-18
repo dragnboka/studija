@@ -52,12 +52,14 @@ class SubjectController extends Controller
         $subject->pol = $request->pol == 'm' ? 'm' : 'f';
         $subject->komentar = $request->komentar;
         $subject->save();
+           
+        $ids = array_values(array_filter($request->studije));
         
-        $ids = array_keys(array_filter($request->studija));
-    
         $subject->studies()->attach($ids);
 
-        $subject->groups()->attach($request->grupa);
+        $subject->groups()->attach($request->grupe);
+
+        return redirect()->route('subject.index')->with('flash', 'Novi korisnik je kreiran.');
   
     }
 
