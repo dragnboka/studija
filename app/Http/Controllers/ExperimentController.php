@@ -43,11 +43,19 @@ class ExperimentController extends Controller
         $experiment = new Experiment;
         $experiment->subject_id = $subject->id;
         $experiment->task_id = $task->id;
+        $experiment->radio = auth()->user()->fullName;
         $experiment->vreme = $time;
         $experiment->komentar = $request->komentar;
 
         $experiment->save();
 
+        return redirect()->back();
+    }
+
+    public function storeComment(Request $request, Subject $subject, Task $task)
+    {
+        $task->subject()->attach($subject, ['komentar' => $request->task_komentar]);
+        
         return redirect()->back();
     }
 
@@ -59,9 +67,11 @@ class ExperimentController extends Controller
      */
     public function show(Subject $subject, Task $task)
     {
-        $experiments = Experiment::where([['task_id', $task->id],['subject_id', $subject->id]])->latest()->get();
+        $komentar = $task->subject()->where('subject_id', $subject->id)->first();
         
-        return view('experiments.show', compact('task','experiments','subject'));
+        $experiments = Experiment::where([['task_id', $task->id],['subject_id', $subject->id]])->get();
+        
+        return view('experiments.show', compact('task','experiments','subject','komentar'));
     }
 
     /**

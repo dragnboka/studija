@@ -17,6 +17,7 @@ class CreateExperimentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('subject_id');
             $table->unsignedInteger('task_id');
+            $table->string('radio');
             $table->time('vreme');
             $table->string('komentar')->nullable();
             $table->timestamps();

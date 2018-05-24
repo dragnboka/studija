@@ -43,6 +43,8 @@ Route::get('/subject/{subject}/{task}', 'ExperimentController@show')->name('expe
 
 Route::post('/subject/{subject}/{task}', 'ExperimentController@store')->name('experiment.store');
 
+Route::post('/koment/{subject}/{task}', 'ExperimentController@storeComment')->name('task.comment.store');
+
 
 Route::get('/search', 'SearchController@index')->name('search.index');
 

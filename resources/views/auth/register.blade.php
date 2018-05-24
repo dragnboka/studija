@@ -12,14 +12,28 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                            <label for="ime" class="col-md-4 col-form-label text-md-right">{{ __('Ime') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="ime" type="text" class="form-control{{ $errors->has('ime') ? ' is-invalid' : '' }}" name="ime" value="{{ old('ime') }}" required autofocus>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('ime'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('ime') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="prezime" class="col-md-4 col-form-label text-md-right">{{ __('Prezime') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="prezime" type="text" class="form-control{{ $errors->has('prezime') ? ' is-invalid' : '' }}" name="prezime" value="{{ old('prezime') }}" required autofocus>
+
+                                @if ($errors->has('prezime'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('prezime') }}</strong>
                                     </span>
                                 @endif
                             </div>

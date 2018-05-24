@@ -25,7 +25,11 @@
                 </tr>
                 <tr>
                     <td>Datum Rodjenja</td>
-                    <td>{{$subject->formattedRodjen}}</td>
+                    <td>{{$subject->rodjen->format('d,m,Y')}}</td>
+                </tr>
+                <tr>
+                    <td>Godina</td>
+                    <td>{{$subject->age}}</td>
                 </tr>
                 <tr>
                     <td>Pol</td>
@@ -109,7 +113,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     @foreach ($subject->studies as $study)
                     @foreach ($study->tasks as $task)
-                        <a class="dropdown-item" href="http://127.0.0.1:8000/subject/4?task={{$task->name}}">{{$task->name}}</a>
+                        <a class="dropdown-item" href="/subject/{{$subject->id}}?task={{$task->name}}">{{$task->name}}</a>
                     @endforeach
                     @endforeach
                 </div> 
@@ -122,13 +126,15 @@
                     <tr>
                         <th>Vreme</th>
                         <th>Komentar</th>
+                        <th>Radio</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach ($experiments as $experiment)
                     <tr>
-                        <td>{{$experiment->vreme}}</td>
+                        <td>{{$experiment->time($experiment->vreme)}}</td>
                         <td>{{$experiment->komentar}}</td>
+                        <td>{{$experiment->radio}}</td>
                     </tr>
                 @endforeach
                 </tbody>

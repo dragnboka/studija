@@ -6,7 +6,8 @@
         <div class="col-md-2 order-md-12">
             <a class="btn btn-primary mb-4" href="{{route('study.create')}}">Kreiraj novu studiju</a>
         </div>
-
+        
+        @if(count($studies))
         <div class="col-md-10 order-md-1">
             <h2 class="mb-3 text-center">Sve studije</h2>
 
@@ -34,6 +35,12 @@
             </table>
             
         </div>  
+        @else
+            <div class="col-md-10 order-md-1">
+                <h2>Trenutno ne postoji ni jedna studija</h2>
+            </div>
+        @endif
+         
     </div>
 </div>
 @endsection

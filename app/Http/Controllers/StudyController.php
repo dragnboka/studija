@@ -55,7 +55,7 @@ class StudyController extends Controller
             $s->groups()->save($g);
         }
         
-        // dd($task['value']);
+        return redirect()->route('study')->with('flash', 'Nova studija je dodata');
     }
 
     public function storeNew(Request $request)
@@ -84,7 +84,7 @@ class StudyController extends Controller
      */
     public function show(Study $study)
     {
-        $study =  $study->where('id', $study->id)->with(['tasks','subjects'])->firstOrFail();
+        $study =  $study->where('id', $study->id)->with(['tasks','subjects','groups'])->firstOrFail();
         
         return view('study.show', compact('study'));
     }

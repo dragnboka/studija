@@ -43,7 +43,6 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-    
         $subject = new Subject;
         $subject->ime = $request->ime;
         $subject->prezime = $request->prezime;
