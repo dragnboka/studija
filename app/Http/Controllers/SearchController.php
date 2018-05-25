@@ -12,6 +12,7 @@ class SearchController extends Controller
     {
         $query = $request->input('query');
         $subjects = Subject::where(\DB::raw('concat(ime," ",prezime)') , 'LIKE' , "%$query%")
+            ->orWhere(\DB::raw('concat(prezime," ",ime)') , 'LIKE' , "%$query%")
             ->orWhere('srednje', 'like',"%$query%")
             ->paginate(30);
         
