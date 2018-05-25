@@ -47389,24 +47389,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47418,14 +47400,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             groupInputs: []
         };
     },
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    },
 
     methods: {
-        done: function done() {
-            alert('saasa');
-        },
         onAddTask: function onAddTask() {
             if (this.task == '') {
                 return;
@@ -47434,7 +47410,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 id: Math.random() * Math.random() * 1000,
                 value: this.task
             };
-            this.taskInputs.unshift(newTask);
+            this.taskInputs.push(newTask);
             this.task = '';
         },
         onDeleteTask: function onDeleteTask(id) {
@@ -47447,23 +47423,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 id: Math.random() * Math.random() * 1000,
                 value: this.group
             };
-            this.groupInputs.unshift(newGroup);
+            this.groupInputs.push(newGroup);
             this.group = '';
         },
         onDeleteGroup: function onDeleteGroup(id) {
             this.groupInputs = this.groupInputs.filter(function (group) {
                 return group.id !== id;
-            });
-        },
-        send: function send() {
-            axios.post('/study', {
-                name: this.name,
-                tasks: this.taskInputs,
-                groups: this.groupInputs
-            }).then(function () {
-                window.location.href = "http://127.0.0.1:8000";
-            }).catch(function (error) {
-                console.log(error);
             });
         }
     }
@@ -47485,10 +47450,8 @@ var render = function() {
     _c(
       "form",
       {
+        attrs: { method: "post", action: "/study" },
         on: {
-          submit: function($event) {
-            $event.preventDefault()
-          },
           keydown: function($event) {
             if (
               !("button" in $event) &&
@@ -47502,6 +47465,14 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "row" }, [
+          _c("input", {
+            attrs: {
+              name: "_token",
+              value: "kvBsGMNzev67coE5hggEsax8Nwml92pE4W9yuIGO",
+              type: "hidden"
+            }
+          }),
+          _vm._v(" "),
           _c("div", { staticClass: "col-md-4" }, [
             _c("div", { staticClass: "form-group" }, [
               _c("p", { staticClass: "text-center h3" }, [
@@ -47599,9 +47570,27 @@ var render = function() {
                   { key: taskInput.id, staticClass: "list-group" },
                   [
                     _c("li", { staticClass: "list-group-item d-flex mb-2" }, [
-                      _c("p", { staticClass: "flex-grow-1 list-group-p" }, [
-                        _vm._v(_vm._s(taskInput.value))
-                      ]),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: taskInput.value,
+                            expression: "taskInput.value"
+                          }
+                        ],
+                        staticClass: "flex-grow-1 list-group-p form-control",
+                        attrs: { type: "text", name: "tasks[]" },
+                        domProps: { value: taskInput.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(taskInput, "value", $event.target.value)
+                          }
+                        }
+                      }),
                       _vm._v(" "),
                       _c(
                         "button",
@@ -47685,9 +47674,27 @@ var render = function() {
                   { key: groupInput.id, staticClass: "list-group" },
                   [
                     _c("li", { staticClass: "list-group-item d-flex mb-2" }, [
-                      _c("p", { staticClass: "flex-grow-1 list-group-p" }, [
-                        _vm._v(_vm._s(groupInput.value))
-                      ]),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: groupInput.value,
+                            expression: "groupInput.value"
+                          }
+                        ],
+                        staticClass: "flex-grow-1 list-group-p form-control",
+                        attrs: { type: "text", name: "groups[]" },
+                        domProps: { value: groupInput.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(groupInput, "value", $event.target.value)
+                          }
+                        }
+                      }),
                       _vm._v(" "),
                       _c(
                         "button",
@@ -47711,28 +47718,31 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group row mt-5" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-6 mx-auto d-flex justify-content-center" },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "submit" },
-                  on: { click: _vm.send }
-                },
-                [_vm._v("\n                    Save\n                ")]
-              )
-            ]
-          )
-        ])
+        _vm._m(0)
       ]
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row mt-5" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-6 mx-auto d-flex justify-content-center" },
+        [
+          _c(
+            "button",
+            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+            [_vm._v("\n                    Save\n                ")]
+          )
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -49544,7 +49554,7 @@ var render = function() {
       staticClass: "alert alert-success alert-flash",
       attrs: { role: "alert" }
     },
-    [_c("strong", [_vm._v("Success!")]), _vm._v(" " + _vm._s(_vm.body) + "\n")]
+    [_vm._v("\n    " + _vm._s(_vm.body) + "\n")]
   )
 }
 var staticRenderFns = []

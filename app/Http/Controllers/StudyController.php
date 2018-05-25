@@ -46,16 +46,16 @@ class StudyController extends Controller
         $s = Study::where('id',$id)->first();
         foreach($request->tasks as $task) {
             $t = new Task;
-            $t->name = $task['value'];
+            $t->name = $task;
             $s->tasks()->save($t);
         }
         foreach($request->groups as $group) {
             $g = new Group;
-            $g->name = $group['value'];
+            $g->name = $group;
             $s->groups()->save($g);
         }
         
-        return redirect()->route('study')->with('flash', 'Nova studija je dodata');
+        return redirect()->route('study.index')->with('flash', 'Nova studija je dodata');
     }
 
     public function storeNew(Request $request)
