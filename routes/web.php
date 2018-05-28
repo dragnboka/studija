@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/exel', 'Export\ExportsController@exportSubjects')->name('export.subjects');
 Route::get('/exel/{study}', 'Export\ExportsController@exportStudy')->name('exels');
+Route::get('/excels/{subject}', 'Export\ExportsController@exportSubjectExperiments')->name('subject.experiments');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

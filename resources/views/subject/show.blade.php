@@ -6,6 +6,9 @@
         <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
     <div class="row">
+        <a class="btn btn-primary" href="{{route('subject.experiments', $subject)}}">Export subject Experiments</a>
+    </div>
+    <div class="row">
         <div class="col-md-6 mb-3">
             <table class="table table-hover">
                 <tr class="table-success">
