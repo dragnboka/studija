@@ -20,12 +20,12 @@ class ExportsController extends Controller
 
     public function exportStudy(Study $study) 
     {
-        return Excel::download(new StudyExport($study), 'invoices.xlsx');
+        return Excel::download(new StudyExport($study), "$study->name subjects.xlsx");
     }
 
     public function exportSubjectExperiments(Subject $subject) 
     {
-        return Excel::download(new ExperimentsExport($subject), 'invoices.xlsx');
+        return Excel::download(new ExperimentsExport($subject), "$subject->fullName measurements.xlsx");
     }
    
 }

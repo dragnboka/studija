@@ -17,6 +17,11 @@ class Subject extends Model
         return  $this->rodjen->diff(Carbon::now())->format('%y');
     }
     
+    public function getFullNameAttribute()
+    {
+        return $this->ime . ' ' . $this->prezime;
+    }
+
     public function getFormattedNameAttribute()
     {
         return mb_convert_case($this->ime, MB_CASE_TITLE, 'UTF-8');

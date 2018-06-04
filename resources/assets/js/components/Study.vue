@@ -1,18 +1,18 @@
 <template>
     <div>
-        <h2 class="text-center mb-4 font-weight-bold">Kreiraj Novu Studiju</h2>
+        <h2 class="text-center mb-4 font-weight-bold">Create new study</h2>
         <form @keydown.enter.prevent method="post" action="/study">
             <div class="row">
                 <input name="_token" value="kvBsGMNzev67coE5hggEsax8Nwml92pE4W9yuIGO" type="hidden">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <p class="text-center h3">Ime studije</p>
+                        <p class="text-center h3">Study name</p>
                         <input id="name" type="text" class="form-control" name="name" v-model="name" required autofocus>
                     </div>
                 </div>
 
                 <div class="col-md-4">
-                    <p class="text-center h3">Task</p>
+                    <p class="text-center h3">Study tasks</p>
                     <div class="input-group mb-3">
                         <input @keyup.enter="onAddTask" type="text" class="form-control" v-model.trim="task">
                         <div class="input-group-append">
@@ -33,7 +33,7 @@
                 </div>
                     
                 <div class="col-md-4">
-                    <p class="text-center h3">Grupa</p>
+                    <p class="text-center h3">Study groups</p>
                     <div class="input-group mb-3">
                         <input @keyup.enter="onAddGroup" v-model.trim="group" type="text" class="form-control" >
                         <div class="input-group-append">
@@ -57,7 +57,7 @@
             <div class="form-group row mt-5">
                 <div class="col-md-6 mx-auto d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary">
-                        Save
+                        Create
                     </button>
                 </div>
             </div>

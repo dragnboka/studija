@@ -12,34 +12,34 @@
         <div class="col-md-6 mb-3">
             <table class="table table-hover">
                 <tr class="table-success">
-                    <th colspan="2">Podaci o ispitaniku</th>
+                    <th colspan="2">{{$subject->fullName}} info</th>
                 </tr>
                 <tr>
-                    <td>Ime</td>
+                    <td>First name</td>
                     <td>{{$subject->ime}}</td>
                 </tr>
                 <tr>
-                    <td>Prezime</td>
+                    <td>Last name</td>
                     <td>{{$subject->prezime}}</td>
                 </tr>
                 <tr>
-                    <td>Srednje Ime</td>
+                    <td>Middle name</td>
                     <td>{{$subject->srednje}}</td>
                 </tr>
                 <tr>
-                    <td>Datum Rodjenja</td>
+                    <td>Date of birth</td>
                     <td>{{$subject->rodjen->format('d,m,Y')}}</td>
                 </tr>
                 <tr>
-                    <td>Godina</td>
+                    <td>Age</td>
                     <td>{{$subject->age}}</td>
                 </tr>
                 <tr>
-                    <td>Pol</td>
+                    <td>Gender</td>
                     <td>{{$subject->formattedPol}}</td>
                 </tr>
                 <tr>
-                    <td>Komentar o pacijentu</td>
+                    <td>Subject comment</td>
                     <td>{{$subject->komentar}}</td>
                 </tr>
             </table>
@@ -48,11 +48,11 @@
             @if(count($studyGroups))
             <table class="table table-hover">
                 <tr class="table-success">
-                    <th colspan="2">Studije u kojima ucestvuje</th>
+                    <th colspan="2">Studies for {{$subject->fullName}}</th>
                 </tr>
                 <tr>
-                    <td>Naziv Studije</td>
-                    <td>Naziv Grupe</td>
+                    <td>Study name</td>
+                    <td>Group</td>
                 </tr>
                 @foreach ($studyGroups as $study)
                 <tr>

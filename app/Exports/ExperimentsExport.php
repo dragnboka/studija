@@ -18,13 +18,15 @@ class ExperimentsExport implements FromCollection, WithMapping, WithHeadings
 
     public function map($experiment): array
     {
-
+    
         return [
             $experiment->radio,
             $experiment->vreme,
             $experiment->komentar,
             $experiment->task->name,
+            $experiment->task->subject()->where('subject_id', $this->subject->id)->first() ? $experiment->task->subject()->where('subject_id', $this->subject->id)->first()->pivot->komentar : '',
         ];
+
     }
 
     public function headings(): array
@@ -33,14 +35,13 @@ class ExperimentsExport implements FromCollection, WithMapping, WithHeadings
             'Radio',
             'Vreme',
             'Komentar',
-            'ime taska'  
+            'ime taska',
+            'task komentar' 
         ];
     }
 
     public function collection()
     {
-        //dd($this->subject->experiments);
         return $this->subject->experiments;
-        //return Study::where('id',$this->study->id);
     }
 }

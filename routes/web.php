@@ -50,5 +50,7 @@ Route::post('/koment/{subject}/{task}', 'ExperimentController@storeComment')->na
 Route::get('/search', 'SearchController@index')->name('search.index');
 
 Route::get('/api', 'ApiController@index');
+Route::get('/api/search/', 'ApiController@search');
 Route::get('/api/{subject}', 'ApiController@show');
+
 

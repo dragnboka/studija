@@ -4,21 +4,21 @@
 <div class="container">
     <div class="row">
         <div class="col-md-2 order-md-12">
-            <a class="btn btn-primary mb-4" href="{{route('study.create')}}">Kreiraj novu studiju</a>
+            <a class="btn btn-primary mb-4" href="{{route('study.create')}}">Create new study</a>
         </div>
         
         @if(count($studies))
         <div class="col-md-10 order-md-1">
-            <h2 class="mb-3 text-center">Sve studije</h2>
+            <h2 class="mb-3 text-center">All studies</h2>
 
             <table class="table">
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Ime</th>
-                        <th>Datum</th>
-                        <th>Broj Ucesnika</th>
-                        <th>download</th>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>Participants count</th>
+                        <th>Download</th>
                     </tr>
                 </thead>
                 <tbody>

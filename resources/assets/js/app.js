@@ -26,6 +26,8 @@ Vue.component('subject', require('./components/Subject.vue'))
 Vue.component('update-study', require('./components/UpdateStudy.vue'))
 Vue.component('update-subject', require('./components/UpdateSubject.vue'))
 Vue.component('flash', require('./components/Flash.vue'));
+Vue.component('auto-complete', require('./components/AutoComplete.vue'));
+
 
 const app = new Vue({
     el: '#app'

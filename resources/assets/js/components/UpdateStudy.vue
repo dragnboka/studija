@@ -1,11 +1,11 @@
 <template>
     <div>
-        <h2 class="text-center mb-4 font-weight-bold">Dodaj nove grupe i taskove</h2>
+        <h2 class="text-center mb-4 font-weight-bold">Add new tasks and groups</h2>
         <form @submit.prevent @keydown.enter.prevent>
             <div class="row">
                 
                 <div class="col-md-6">
-                    <p class="text-center h3">Task</p>
+                    <p class="text-center h3">Tasks</p>
                     <div class="input-group mb-3">
                         <input @keyup.enter="onAddTask" type="text" class="form-control" v-model.trim="task">
                         <div class="input-group-append">
@@ -26,7 +26,7 @@
                 </div>
                     
                 <div class="col-md-6">
-                    <p class="text-center h3">Grupa</p>
+                    <p class="text-center h3">Groups</p>
                     <div class="input-group mb-3">
                         <input @keyup.enter="onAddGroup" v-model.trim="group" type="text" class="form-control" >
                         <div class="input-group-append">
@@ -49,8 +49,11 @@
         
             <div class="form-group row mt-5">
                 <div class="col-md-6 mx-auto d-flex justify-content-center">
-                    <button @click="send" type="submit" class="btn btn-primary">
-                        Dodaj
+                    <button @click="send" type="submit" class="btn btn-primary mr-3">
+                        Add
+                    </button>
+                    <button @click="cancel" type="submit" class="btn btn-primary">
+                        Cancel
                     </button>
                 </div>
             </div>
@@ -108,6 +111,9 @@
                     console.log(error);
                 });
 
+            },
+            cancel(){
+                return window.location.href = `/study/${this.studyId}`;
             }
         }
     }

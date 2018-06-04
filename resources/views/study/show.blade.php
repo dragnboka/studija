@@ -4,11 +4,11 @@
 <div class="container">
     <div class="row mb-4">
         <div class="col-sm-10">
-            <h2 class="flex-grow-1">Naziv Studije: {{$study->name}}</h2>
+            <h2 class="flex-grow-1">Study name: {{$study->name}}</h2>
         </div>
         <div class="col-sm-2">
             @can('admin')
-            <a class="btn btn-outline-primary" href="{{route('study.edit', $study)}}">Edit</a>
+            <a class="btn btn-outline-primary" href="{{route('study.edit', $study)}}">Edit study</a>
             @endcan
         </div>
     </div>
@@ -17,7 +17,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-header text-white bg-dark">
-                    Taskovi
+                    Tasks
                 </div>
 
                 <ul class="list-group list-group-flush text-white">
@@ -30,7 +30,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-header text-white bg-dark">
-                    Grupe
+                    Groups
                 </div>
 
                 <ul class="list-group list-group-flush text-white">
@@ -44,15 +44,15 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h2 class="text-md-center mb-3">Ucesnici u studiji</h2>
+            <h2 class="text-md-center mb-3">Study subjects</h2>
             <div class="table table1 table-responsive">
                 <a class="table-row table-row-headig">
                     <div class="table-cell">Id</div>
-                    <div class="table-cell">Ime</div>
-                    <div class="table-cell">Prezime</div>
-                    <div class="table-cell">Srednje ime</div>
-                    <div class="table-cell">Rodjen/a</div>
-                    <div class="table-cell">Pol</div>
+                    <div class="table-cell">First name</div>
+                    <div class="table-cell">Last name</div>
+                    <div class="table-cell">Middle name</div>
+                    <div class="table-cell">Date of birth</div>
+                    <div class="table-cell">Gender</div>
                 </a>
                 @foreach ($study->subjects as $subject)
                 <a class="table-row table-row-body" href="{{route('subject.show', $subject)}}">
@@ -61,7 +61,7 @@
                     <div class="table-cell">{{$subject->prezime}}</div>
                     <div class="table-cell">{{$subject->srednje}}</div>
                     <div class="table-cell">{{$subject->rodjen->toFormattedDateString()}}</div>
-                    <div class="table-cell">{{$subject->pol == 'm' ? 'muski' : 'zenski'}}</div>
+                    <div class="table-cell">{{$subject->pol == 'm' ? 'male' : 'female'}}</div>
                 </a>
                 @endforeach
             </div>    

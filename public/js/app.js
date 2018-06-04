@@ -14011,6 +14011,7 @@ Vue.component('subject', __webpack_require__(43));
 Vue.component('update-study', __webpack_require__(46));
 Vue.component('update-subject', __webpack_require__(49));
 Vue.component('flash', __webpack_require__(52));
+Vue.component('auto-complete', __webpack_require__(64));
 
 var app = new Vue({
   el: '#app'
@@ -47444,7 +47445,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("h2", { staticClass: "text-center mb-4 font-weight-bold" }, [
-      _vm._v("Kreiraj Novu Studiju")
+      _vm._v("Create new study")
     ]),
     _vm._v(" "),
     _c(
@@ -47476,7 +47477,7 @@ var render = function() {
           _c("div", { staticClass: "col-md-4" }, [
             _c("div", { staticClass: "form-group" }, [
               _c("p", { staticClass: "text-center h3" }, [
-                _vm._v("Ime studije")
+                _vm._v("Study name")
               ]),
               _vm._v(" "),
               _c("input", {
@@ -47513,7 +47514,9 @@ var render = function() {
             "div",
             { staticClass: "col-md-4" },
             [
-              _c("p", { staticClass: "text-center h3" }, [_vm._v("Task")]),
+              _c("p", { staticClass: "text-center h3" }, [
+                _vm._v("Study tasks")
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-3" }, [
                 _c("input", {
@@ -47617,7 +47620,9 @@ var render = function() {
             "div",
             { staticClass: "col-md-4" },
             [
-              _c("p", { staticClass: "text-center h3" }, [_vm._v("Grupa")]),
+              _c("p", { staticClass: "text-center h3" }, [
+                _vm._v("Study groups")
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-3" }, [
                 _c("input", {
@@ -47736,7 +47741,7 @@ var staticRenderFns = [
           _c(
             "button",
             { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [_vm._v("\n                    Save\n                ")]
+            [_vm._v("\n                    Create\n                ")]
           )
         ]
       )
@@ -48453,6 +48458,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['studyId'],
@@ -48507,6 +48515,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        cancel: function cancel() {
+            return window.location.href = '/study/' + this.studyId;
         }
     }
 });
@@ -48521,7 +48532,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("h2", { staticClass: "text-center mb-4 font-weight-bold" }, [
-      _vm._v("Dodaj nove grupe i taskove")
+      _vm._v("Add new tasks and groups")
     ]),
     _vm._v(" "),
     _c(
@@ -48548,7 +48559,7 @@ var render = function() {
             "div",
             { staticClass: "col-md-6" },
             [
-              _c("p", { staticClass: "text-center h3" }, [_vm._v("Task")]),
+              _c("p", { staticClass: "text-center h3" }, [_vm._v("Tasks")]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-3" }, [
                 _c("input", {
@@ -48634,7 +48645,7 @@ var render = function() {
             "div",
             { staticClass: "col-md-6" },
             [
-              _c("p", { staticClass: "text-center h3" }, [_vm._v("Grupa")]),
+              _c("p", { staticClass: "text-center h3" }, [_vm._v("Groups")]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-3" }, [
                 _c("input", {
@@ -48725,11 +48736,21 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-primary",
+                  staticClass: "btn btn-primary mr-3",
                   attrs: { type: "submit" },
                   on: { click: _vm.send }
                 },
-                [_vm._v("\n                    Dodaj\n                ")]
+                [_vm._v("\n                    Add\n                ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.cancel }
+                },
+                [_vm._v("\n                    Cancel\n                ")]
               )
             ]
           )
@@ -49572,6 +49593,275 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(69)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(67)
+/* template */
+var __vue_template__ = __webpack_require__(71)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-e197a202"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\AutoComplete.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e197a202", Component.options)
+  } else {
+    hotAPI.reload("data-v-e197a202", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 65 */,
+/* 66 */,
+/* 67 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      query: '',
+      results: [],
+      studies: []
+    };
+  },
+
+  methods: {
+    autoComplete: function autoComplete() {
+      var _this = this;
+
+      this.results = [];
+      this.studies = [];
+      if (this.query.length > 0) {
+        axios.get('/api/search', { params: { query: this.query } }).then(function (response) {
+          _this.results = response.data.subjects;
+          _this.studies = response.data.studies;
+        });
+      }
+    },
+    send: function send() {
+      return window.location.href = '/search?query=' + this.query;
+    }
+  }
+});
+
+/***/ }),
+/* 68 */,
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(70);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(56)("37abf342", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e197a202\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AutoComplete.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e197a202\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AutoComplete.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(55)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.list-group-item:hover a[data-v-e197a202] {\r\n    background-color: aquamarine;\r\n    text-decoration: none;\r\n    color: black\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "form",
+      {
+        attrs: { action: "" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.send($event)
+          }
+        }
+      },
+      [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.query,
+              expression: "query"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "what are you looking for?" },
+          domProps: { value: _vm.query },
+          on: {
+            keyup: _vm.autoComplete,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.query = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.results.length || _vm.studies.length
+          ? _c("div", { staticClass: "panel-footer" }, [
+              _c(
+                "ul",
+                { staticClass: "list-group" },
+                [
+                  _vm.results.length
+                    ? _c("li", { staticClass: "list-group-item bg-info" }, [
+                        _vm._v("subjekti")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.results, function(result) {
+                    return _c(
+                      "li",
+                      { key: result.id, staticClass: "list-group-item p-0" },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "d-block p-2",
+                            attrs: { href: "/subject/" + result.id }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(result.ime) + " " + _vm._s(result.prezime)
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm.studies.length
+                    ? _c("li", { staticClass: "list-group-item bg-info" }, [
+                        _vm._v("studije")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.studies, function(study) {
+                    return _c(
+                      "li",
+                      { key: study.id, staticClass: "list-group-item p-0" },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "d-block p-2",
+                            attrs: { href: "/study/" + study.id }
+                          },
+                          [_vm._v(_vm._s(study.name))]
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ])
+          : _vm._e()
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e197a202", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
