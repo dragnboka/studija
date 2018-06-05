@@ -5,9 +5,7 @@
     @if (Session::has('message'))
         <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
-    <div class="row">
-        <a class="btn btn-primary" href="{{route('subject.experiments', $subject)}}">Export subject Experiments</a>
-    </div>
+    
     <div class="row">
         <div class="col-md-6 mb-3">
             <table class="table table-hover">
@@ -56,7 +54,10 @@
                 </tr>
                 @foreach ($studyGroups as $study)
                 <tr>
-                    <td>{{$study->studyName}}</td>
+                    <td>
+                        <p>{{$study->studyName}}</p>
+                        <a class="btn btn-primary" href="{{route('subject.experiments', [$study->id,$subject])}}">Export subject Experiments</a>
+                    </td>
                     <td>{{$study->groupName}}</td>
                 </tr>
                 @endforeach
@@ -88,16 +89,15 @@
                         </div>
                     
                         <div id="{{$study->id}}" class="collapse" aria-labelledby="heading{{$study->id}}" data-parent="#accordion">
-                        <div class="card-body p-0">
-                            <ul class="list-group">
-                                @foreach ($study->tasks as $task)
-                                <li class="list-group-item text-center d-flex">
-                                    <a class="flex-grow-1" href="{{route('experiment.show', [$subject,$task])}}">{{$task->name}}</a>
-                                </li>
-                                
-                            </ul>
-                        @endforeach
-                        </div>
+                            <div class="card-body p-0">
+                                <ul class="list-group list-group--task">
+                                    @foreach ($study->tasks as $task)
+                                    <li class="list-group-item p-0 text-center d-flex">
+                                        <a class="flex-grow-1 p-3" href="{{route('experiment.show', [$subject,$task])}}">{{$task->name}}</a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     @endforeach

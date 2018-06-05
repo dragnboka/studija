@@ -43,6 +43,10 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'ime' => 'required|string',
+            'prezime' => 'required|string'
+        ]);
         $subject = new Subject;
         $subject->ime = $request->ime;
         $subject->prezime = $request->prezime;
@@ -70,25 +74,18 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject, Request $request)
     {
-        // $experiments = DB::table('subjects')
-        //     ->join('experiments', 'subjects.id', '=', 'experiments.subject_id')
-        //     ->join('tasks', 'experiments.task_id', '=', 'tasks.id')
-        //     ->select('experiments.vreme', 'experiments.komentar', 'tasks.name')
-        //     ->where('subjects.id', $subject->id)
-        //        ->paginate(10);
-           
+    
         $experiments = $subject->experiments()->with('task')->filter($request)->paginate(10);
-        // $g=Study::find(1);
-        // dd($g->experiments()->count());
+    
         $studyGroups = DB::table('subjects')
             ->join('group_subject', 'subjects.id', '=', 'group_subject.subject_id')
             ->join('groups', 'group_subject.group_id', '=', 'groups.id')
             ->join('studies', 'groups.study_id', '=', 'studies.id')
             ->selectRaw('studies.name  as studyName')
+            ->selectRaw('studies.id as id')
             ->selectRaw('groups.name  as groupName')
             ->where('subjects.id', $subject->id)
             ->get();
-        //$studyGroups = $subject->studies()->with('tasks')->get();
 
         $subject = $subject->where('id',$subject->id)->with('studies.tasks')->first();
         

@@ -10856,3 +10856,19 @@ button {
   fill: #00b1b3;
 }
 
+.list-group--group .list-group-item a,
+.list-group--task .list-group-item a {
+  color: black;
+  text-decoration: none;
+}
+
+.list-group--group .list-group-item:hover a,
+.list-group--task .list-group-item:hover a {
+  color: white;
+  background-color: #d35b5b;
+}
+
+.active-group {
+  background-color: #d35b5b;
+}
+

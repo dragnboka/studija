@@ -1,0 +1,12 @@
+.list-group--group .list-group-item a,.list-group--task .list-group-item a{
+    color: black;
+    text-decoration: none;
+}
+
+.list-group--group .list-group-item:hover a, .list-group--task .list-group-item:hover a{
+    color: white;
+    background-color: rgb(211, 91, 91)
+}
+.active-group {
+    background-color: rgb(211, 91, 91)
+}

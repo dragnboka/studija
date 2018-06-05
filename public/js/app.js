@@ -47697,11 +47697,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['csrf'],
     data: function data() {
         return {
             name: '',
@@ -47753,290 +47751,293 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h2", { staticClass: "text-center mb-4 font-weight-bold" }, [
-      _vm._v("Create new study")
-    ]),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        attrs: { method: "post", action: "/study" },
+  return _c(
+    "form",
+    {
+      attrs: { method: "post", action: "/study" },
+      on: {
+        keydown: function($event) {
+          if (
+            !("button" in $event) &&
+            _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+          ) {
+            return null
+          }
+          $event.preventDefault()
+        }
+      }
+    },
+    [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.csrf,
+            expression: "csrf"
+          }
+        ],
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: _vm.csrf },
         on: {
-          keydown: function($event) {
-            if (
-              !("button" in $event) &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
+          input: function($event) {
+            if ($event.target.composing) {
+              return
             }
-            $event.preventDefault()
+            _vm.csrf = $event.target.value
           }
         }
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("input", {
-            attrs: {
-              name: "_token",
-              value: "kvBsGMNzev67coE5hggEsax8Nwml92pE4W9yuIGO",
-              type: "hidden"
-            }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("p", { staticClass: "text-center h3" }, [
-                _vm._v("Study name")
-              ]),
-              _vm._v(" "),
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("p", { staticClass: "text-center h3" }, [_vm._v("Study name")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.name,
+                  expression: "name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                id: "name",
+                type: "text",
+                name: "name",
+                required: "",
+                autofocus: ""
+              },
+              domProps: { value: _vm.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.name = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-4" },
+          [
+            _c("p", { staticClass: "text-center h3" }, [_vm._v("Study tasks")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group mb-3" }, [
               _c("input", {
                 directives: [
                   {
                     name: "model",
-                    rawName: "v-model",
-                    value: _vm.name,
-                    expression: "name"
+                    rawName: "v-model.trim",
+                    value: _vm.task,
+                    expression: "task",
+                    modifiers: { trim: true }
                   }
                 ],
                 staticClass: "form-control",
-                attrs: {
-                  id: "name",
-                  type: "text",
-                  name: "name",
-                  required: "",
-                  autofocus: ""
-                },
-                domProps: { value: _vm.name },
+                attrs: { type: "text" },
+                domProps: { value: _vm.task },
                 on: {
+                  keyup: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.onAddTask($event)
+                  },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.name = $event.target.value
+                    _vm.task = $event.target.value.trim()
+                  },
+                  blur: function($event) {
+                    _vm.$forceUpdate()
                   }
                 }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-4" },
-            [
-              _c("p", { staticClass: "text-center h3" }, [
-                _vm._v("Study tasks")
-              ]),
+              }),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.trim",
-                      value: _vm.task,
-                      expression: "task",
-                      modifiers: { trim: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.task },
-                  on: {
-                    keyup: function($event) {
-                      if (
-                        !("button" in $event) &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.onAddTask($event)
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.task = $event.target.value.trim()
-                    },
-                    blur: function($event) {
-                      _vm.$forceUpdate()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group-append" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-primary",
-                      attrs: { type: "button" },
-                      on: { click: _vm.onAddTask }
-                    },
-                    [_vm._v("Add Task")]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.taskInputs, function(taskInput) {
-                return _c(
-                  "ul",
-                  { key: taskInput.id, staticClass: "list-group" },
-                  [
-                    _c("li", { staticClass: "list-group-item d-flex mb-2" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: taskInput.value,
-                            expression: "taskInput.value"
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.onAddTask }
+                  },
+                  [_vm._v("Add Task")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.taskInputs, function(taskInput) {
+              return _c(
+                "ul",
+                { key: taskInput.id, staticClass: "list-group" },
+                [
+                  _c("li", { staticClass: "list-group-item d-flex mb-2" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: taskInput.value,
+                          expression: "taskInput.value"
+                        }
+                      ],
+                      staticClass: "flex-grow-1 list-group-p form-control",
+                      attrs: { type: "text", name: "tasks[]" },
+                      domProps: { value: taskInput.value },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
                           }
-                        ],
-                        staticClass: "flex-grow-1 list-group-p form-control",
-                        attrs: { type: "text", name: "tasks[]" },
-                        domProps: { value: taskInput.value },
+                          _vm.$set(taskInput, "value", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "ml-3 btn btn-danger btn-sm",
+                        attrs: { type: "button" },
                         on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(taskInput, "value", $event.target.value)
+                          click: function($event) {
+                            _vm.onDeleteTask(taskInput.id)
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "ml-3 btn btn-danger btn-sm",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.onDeleteTask(taskInput.id)
-                            }
-                          }
-                        },
-                        [_vm._v("X")]
-                      )
-                    ])
-                  ]
-                )
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-4" },
-            [
-              _c("p", { staticClass: "text-center h3" }, [
-                _vm._v("Study groups")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.trim",
-                      value: _vm.group,
-                      expression: "group",
-                      modifiers: { trim: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.group },
-                  on: {
-                    keyup: function($event) {
-                      if (
-                        !("button" in $event) &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.onAddGroup($event)
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.group = $event.target.value.trim()
-                    },
-                    blur: function($event) {
-                      _vm.$forceUpdate()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group-append" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-primary",
-                      attrs: { type: "button" },
-                      on: { click: _vm.onAddGroup }
-                    },
-                    [_vm._v("Add Group")]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.groupInputs, function(groupInput) {
-                return _c(
-                  "ul",
-                  { key: groupInput.id, staticClass: "list-group" },
-                  [
-                    _c("li", { staticClass: "list-group-item d-flex mb-2" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: groupInput.value,
-                            expression: "groupInput.value"
-                          }
-                        ],
-                        staticClass: "flex-grow-1 list-group-p form-control",
-                        attrs: { type: "text", name: "groups[]" },
-                        domProps: { value: groupInput.value },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(groupInput, "value", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "ml-3 btn btn-danger btn-sm",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.onDeleteGroup(groupInput.id)
-                            }
-                          }
-                        },
-                        [_vm._v("X")]
-                      )
-                    ])
-                  ]
-                )
-              })
-            ],
-            2
-          )
-        ]),
+                      },
+                      [_vm._v("X")]
+                    )
+                  ])
+                ]
+              )
+            })
+          ],
+          2
+        ),
         _vm._v(" "),
-        _vm._m(0)
-      ]
-    )
-  ])
+        _c(
+          "div",
+          { staticClass: "col-md-4" },
+          [
+            _c("p", { staticClass: "text-center h3" }, [
+              _vm._v("Study groups")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group mb-3" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.trim",
+                    value: _vm.group,
+                    expression: "group",
+                    modifiers: { trim: true }
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.group },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.onAddGroup($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.group = $event.target.value.trim()
+                  },
+                  blur: function($event) {
+                    _vm.$forceUpdate()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.onAddGroup }
+                  },
+                  [_vm._v("Add Group")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.groupInputs, function(groupInput) {
+              return _c(
+                "ul",
+                { key: groupInput.id, staticClass: "list-group" },
+                [
+                  _c("li", { staticClass: "list-group-item d-flex mb-2" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: groupInput.value,
+                          expression: "groupInput.value"
+                        }
+                      ],
+                      staticClass: "flex-grow-1 list-group-p form-control",
+                      attrs: { type: "text", name: "groups[]" },
+                      domProps: { value: groupInput.value },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(groupInput, "value", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "ml-3 btn btn-danger btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.onDeleteGroup(groupInput.id)
+                          }
+                        }
+                      },
+                      [_vm._v("X")]
+                    )
+                  ])
+                ]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -48051,7 +48052,7 @@ var staticRenderFns = [
           _c(
             "button",
             { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [_vm._v("\n                    Create\n                ")]
+            [_vm._v("\n                Create\n            ")]
           )
         ]
       )
@@ -48214,6 +48215,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        status: Array,
+        required: false,
+        default: []
+    },
     data: function data() {
         return {
             name: '',

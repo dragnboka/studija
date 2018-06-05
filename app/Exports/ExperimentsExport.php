@@ -5,15 +5,19 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use App\Subject;
+use App\{Subject, Study};
 
 class ExperimentsExport implements FromCollection, WithMapping, WithHeadings
 {
+    private $study;
+
     private $subject;
 
-    public function __construct(Subject $subject)
+    public function __construct(Study $study, Subject $subject)
     {
+        $this->study = $study;
         $this->subject = $subject;
+        
     }
 
     public function map($experiment): array
@@ -42,6 +46,6 @@ class ExperimentsExport implements FromCollection, WithMapping, WithHeadings
 
     public function collection()
     {
-        return $this->subject->experiments;
+        return $this->study->experiments()->where('subject_id', $this->subject->id)->get();
     }
 }

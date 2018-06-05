@@ -17,18 +17,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/profile', 'HomeController@index')->name('home');
+Route::post('/home', 'HomeController@store')->name('home.store');
 
 /**
  * Password
  */
-Route::get('password', 'PasswordController@index')->name('password.index');
+Route::get('profile/password', 'PasswordController@index')->name('password.index');
 Route::post('password', 'PasswordController@store')->name('password.store');
 
 
 Route::get('/exel', 'Export\ExportsController@exportSubjects')->name('export.subjects');
 Route::get('/exel/{study}', 'Export\ExportsController@exportStudy')->name('exels');
-Route::get('/excels/{subject}', 'Export\ExportsController@exportSubjectExperiments')->name('subject.experiments');
+Route::get('/excels/{study}/{subject}', 'Export\ExportsController@exportSubjectExperiments')->name('subject.experiments');
 
 Route::get('/study', 'StudyController@index')->name('study.index');
 Route::post('/study', 'StudyController@store');

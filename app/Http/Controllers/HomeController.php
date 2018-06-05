@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Account\ProfileStoreRequest;
 
 class HomeController extends Controller
 {
@@ -24,5 +25,12 @@ class HomeController extends Controller
     public function index()
     {
         return view('account.index');
+    }
+    
+    public function store(ProfileStoreRequest $request)
+    {
+        $request->user()->update($request->only('ime','prezime', 'email'));
+
+        return back()->withFlash('Profile details updated.');
     }
 }

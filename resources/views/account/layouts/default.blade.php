@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-sm-2">
             @include('account.layouts.partials._navigation')
         </div>
-        <div class="col-md-9">
+        <div class="col-sm-10">
             @yield('account.content')
         </div>
     </div>

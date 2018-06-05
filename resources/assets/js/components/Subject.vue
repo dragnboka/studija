@@ -92,6 +92,11 @@
 
 <script>
 export default {
+    props: {
+        status: Array,
+        required: false,
+        default: []
+    },
     data(){
         return {
             name: '',

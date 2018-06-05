@@ -17,31 +17,37 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-header text-white bg-dark">
-                    Tasks
+                    <p class="m-0 p-1">Tasks</p> 
                 </div>
 
-                <ul class="list-group list-group-flush text-white">
+                <ul class="list-group list-group-flush">
                     @foreach ($study->tasks as $task)
-                        <li class="list-group-item bg-info">{{$task->name}}</li>
+                        <li class="list-group-item">{{$task->name}}</li>
                     @endforeach
                 </ul>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="card">
-                <div class="card-header text-white bg-dark">
-                    Groups
+                <div class="card-header text-white bg-dark d-flex">
+                    <p class="m-0 p-1">Groups</p> 
+                    @if(request('group'))
+                    <a href="{{ route('study.show', $study) }}" class="btn btn-danger btn-sm ml-auto">X</a>
+                    @endif
                 </div>
 
-                <ul class="list-group list-group-flush text-white">
+                <ul class="list-group list-group--group list-group-flush">
                     @foreach ($study->groups as $group)
-                        <li class="list-group-item bg-info">{{$group->name}}</li>
+                        <li class="list-group-item p-0">
+                            <a class="d-flex p-3 {{request()->query('group') == $group->name ? 'active-group' : ''}}" href="/study/{{$study->id}}?group={{urlencode($group->name)}}">{{$group->name}}<span class="badge badge-pill badge-info p-2 ml-auto">{{$group->subjects->count()}}</span></a>
+                        </li>
                     @endforeach
                 </ul>
             </div>
         </div>
     </div>
 
+    @if(count($subjects))
     <div class="row">
         <div class="col-md-12">
             <h2 class="text-md-center mb-3">Study subjects</h2>
@@ -54,7 +60,7 @@
                     <div class="table-cell">Date of birth</div>
                     <div class="table-cell">Gender</div>
                 </a>
-                @foreach ($study->subjects as $subject)
+                @foreach ($subjects as $subject)
                 <a class="table-row table-row-body" href="{{route('subject.show', $subject)}}">
                     <div class="table-cell">{{$subject->id}}</div>
                     <div class="table-cell">{{$subject->formattedName}}</div>
@@ -66,7 +72,10 @@
                 @endforeach
             </div>    
         </div>
-    </div>            
+    </div>
+    @else
+        <h3>No subjects for {{$study->name}} study</h3>
+    @endif
 </div>
 @endsection
 

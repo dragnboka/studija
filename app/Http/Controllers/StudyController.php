@@ -82,11 +82,13 @@ class StudyController extends Controller
      * @param  \App\Study  $study
      * @return \Illuminate\Http\Response
      */
-    public function show(Study $study)
+    public function show(Request $request, Study $study)
     {
-        $study =  $study->where('id', $study->id)->with(['tasks','subjects','groups'])->firstOrFail();
-        
-        return view('study.show', compact('study'));
+        $study =  $study->where('id', $study->id)->with(['tasks','subjects','groups','groups.subjects'])->firstOrFail();
+
+        $subjects = $study->subjects()->groupFilter($request)->paginate(50);
+    
+        return view('study.show', compact('study', 'subjects'));
     }
 
     /**

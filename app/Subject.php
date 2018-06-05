@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Filters\Study\SubjectFilters;
+use App\Filters\Groups\SubjectFilters as GroupFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -35,6 +36,11 @@ class Subject extends Model
     public function getFormattedRodjenAttribute()
     {
         return $this->rodjen->toDateString();
+    }
+
+    public function scopeGroupFilter(Builder $builder, Request $request)
+    {
+        return (new GroupFilter($request))->filter($builder);
     }
 
     public function scopeFilter(Builder $builder, Request $request)

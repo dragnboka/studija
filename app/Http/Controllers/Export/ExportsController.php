@@ -23,9 +23,14 @@ class ExportsController extends Controller
         return Excel::download(new StudyExport($study), "$study->name subjects.xlsx");
     }
 
-    public function exportSubjectExperiments(Subject $subject) 
+    public function exportSubjectExperiments(Study $study, Subject $subject) 
     {
-        return Excel::download(new ExperimentsExport($subject), "$subject->fullName measurements.xlsx");
+        if(count($study->experiments()->where('subject_id', $subject->id)->get())) {
+            return Excel::download(new ExperimentsExport($study, $subject), "$subject->fullName $study->name.xlsx");
+        } else {
+            return back()->withFlash('No data to export');
+        }
+       
     }
    
 }
