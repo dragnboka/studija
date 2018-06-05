@@ -62,7 +62,7 @@
                 @endforeach
             </table>
             @else 
-                <h3>Subjekat trenutno nije ni u jednoj studiji</h3>   
+                <h3>Subject is not in any study</h3>   
             @endif
         </div>
         <div class="col-md-1">
@@ -72,82 +72,84 @@
         </div>
     </div>
 
-    <div class="row mb-5">
-        <div class="col-md-12">
-            <h2 class="text-center">Izberi studiju za novo merenje</h2>
-            <div id="accordion">
-                @foreach ($subject->studies as $study)
-                <div class="card">
-                    <div class="card-header p-0" id="heading{{$study->id}}">
-                    <h5 class="mb-0 d-flex">
-                        <button class="btn flex-grow-1 p-3" data-toggle="collapse" data-target="#{{$study->id}}" aria-expanded="false" aria-controls="collapseOne">
-                            Studija: {{$study->name}}
-                        </button>
-                    </h5>
-                    </div>
-                
-                    <div id="{{$study->id}}" class="collapse" aria-labelledby="heading{{$study->id}}" data-parent="#accordion">
-                    <div class="card-body p-0">
-                        <ul class="list-group">
-                            @foreach ($study->tasks as $task)
-                            <li class="list-group-item text-center d-flex">
-                                <a class="flex-grow-1" href="{{route('experiment.show', [$subject,$task])}}">Task: {{$task->name}}</a>
-                            </li>
-                            
-                        </ul>
-                    @endforeach
-                    </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            @if(count($experiments))
-            <h2 class="my-3 text-center">Sva Merenja za {{$subject->ime}}</h2>
-            <div class="btn-group mb-4">
-                <button type="button" class="btn btn-outline-primary btn-square dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{-- {{request()->input($key) ?? $key}} --}}
-                    Taskovi
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    @if(count($studyGroups))
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h2 class="text-center">Choose task for new measuer</h2>
+                <div id="accordion">
                     @foreach ($subject->studies as $study)
-                    @foreach ($study->tasks as $task)
-                        <a class="dropdown-item" href="/subject/{{$subject->id}}?task={{$task->name}}">{{$task->name}}</a>
+                    <div class="card">
+                        <div class="card-header p-0" id="heading{{$study->id}}">
+                        <h5 class="mb-0 d-flex">
+                            <button class="btn flex-grow-1 p-3" data-toggle="collapse" data-target="#{{$study->id}}" aria-expanded="true" aria-controls="collapseOne">
+                                {{$study->name}}
+                            </button>
+                        </h5>
+                        </div>
+                    
+                        <div id="{{$study->id}}" class="collapse" aria-labelledby="heading{{$study->id}}" data-parent="#accordion">
+                        <div class="card-body p-0">
+                            <ul class="list-group">
+                                @foreach ($study->tasks as $task)
+                                <li class="list-group-item text-center d-flex">
+                                    <a class="flex-grow-1" href="{{route('experiment.show', [$subject,$task])}}">{{$task->name}}</a>
+                                </li>
+                                
+                            </ul>
+                        @endforeach
+                        </div>
+                        </div>
+                    </div>
                     @endforeach
-                    @endforeach
-                </div> 
+                </div>
             </div>
-            {{-- @foreach ($experiments->task as $task)
-                {{$task->name}}
-            @endforeach --}}
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Vreme</th>
-                        <th>Komentar</th>
-                        <th>Radio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach ($experiments as $experiment)
-                    <tr>
-                        <td>{{$experiment->time($experiment->vreme)}}</td>
-                        <td>{{$experiment->komentar}}</td>
-                        <td>{{$experiment->radio}}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-            {{ $experiments->links() }}
-            @else
-                <h3 class="text-center">Trenutno nema merenja za {{$subject->ime}}</h3>
-            @endif
-           
         </div>
-    </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                @if(count($experiments))
+                <h2 class="my-3 text-center">All measurements for {{$subject->ime}}</h2>
+                <div class="btn-group mb-4">
+                    <button type="button" class="btn btn-outline-primary btn-square dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{-- {{request()->input($key) ?? $key}} --}}
+                        Tasks
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach ($subject->studies as $study)
+                        @foreach ($study->tasks as $task)
+                            <a class="dropdown-item" href="/subject/{{$subject->id}}?task={{$task->name}}">{{$task->name}}</a>
+                        @endforeach
+                        @endforeach
+                    </div> 
+                </div>
+                {{-- @foreach ($experiments->task as $task)
+                    {{$task->name}}
+                @endforeach --}}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Comment</th>
+                            <th>Radio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($experiments as $experiment)
+                        <tr>
+                            <td>{{$experiment->time($experiment->vreme)}}</td>
+                            <td>{{$experiment->komentar}}</td>
+                            <td>{{$experiment->radio}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                {{ $experiments->links() }}
+                @else
+                    <h3 class="text-center">No measurements for {{$subject->ime}}</h3>
+                @endif
+            
+            </div>
+        </div>
+    @endif
 </div>
 @endsection

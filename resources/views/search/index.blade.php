@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-@if($subjects->count())
+    @if($subjects->count())
         <h2 class="mb-3 text-md-center">{{$subjects->total()}} {{ ngettext(" Ispitanik", "Ispitanika", $subjects->total())}} za trazeni search {{request()->input('query')}}</h2>
 
         <div class="table table1 table-responsive">
@@ -28,7 +28,7 @@
         </div>    
         {{ $subjects->links() }}
     @else
-        nema takvog
+        
     @endif
 
     @if($studies->count())

@@ -20,28 +20,28 @@ class SubjectFilters extends FiltersAbstract
      * @var array
      */
     protected $filters = [
-        'pol' => PolFilter::class,
-        'ime' => NameFilter::class,
-        'studija' => StudyFilter::class,
+        'gender' => PolFilter::class,
+        'name' => NameFilter::class,
+        'study' => StudyFilter::class,
         'dob' => DobFilter::class,
     ];
 
     public static function mappings()
     {
         $map = [
-            'pol' => [
-                'muski' => 'Muski',
-                'zenski' => 'Zenski'
+            'gender' => [
+                'male' => 'Male',
+                'female' => 'Female'
             ],
-            'ime' => [
-                'asc' => 'asc',
-                'desc' => 'desc',
+            'name' => [
+                'asc' => '+',
+                'desc' => '-',
             ],
             'dob' => [
-                'asc' => 'asc',
-                'desc' => 'desc',
+                'asc' => '+',
+                'desc' => '-',
             ],
-            'studija' => Study::get()->pluck('name','name')->toArray()
+            'study' => Study::get()->pluck('name','name')->toArray()
            
         ];
 

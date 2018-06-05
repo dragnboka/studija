@@ -1,8 +1,8 @@
 @foreach ($mappings as $key => $map)
     <div class="btn-group mb-4">
             <button type="button" class="btn btn-outline-primary btn-square dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{-- {{request()->input($key) ?? $key}} --}}
-                {{$key}}
+                {{request()->input($key) ?? $key}}
+                {{-- {{$key}} --}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($map as $value => $name)

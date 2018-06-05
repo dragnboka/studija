@@ -38,7 +38,7 @@
                     <ul class="navbar-nav mr-auto flex-grow-1">
                         <li><a class="nav-link" href="{{ route('subject.index') }}">Subjects</a></li>
                         <li><a class="nav-link" href="{{ route('study.index') }}">Studies</a></li>
-                        <li class="search-list mr-3 d-flex justify-content-center flex-grow-1">@include('layouts.partials._searchForm')</li>
+                        <li class="search-list mr-3 d-flex justify-content-center flex-grow-1"><auto-complete></auto-complete></li>
                     </ul>
 
 
@@ -64,6 +64,10 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        {{ __('Profile') }}
+                                    </a>
                                 </div>
                             </li>
                         @endguest

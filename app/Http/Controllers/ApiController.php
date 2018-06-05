@@ -58,10 +58,10 @@ class ApiController extends Controller
         $subjects = Subject::where(\DB::raw('concat(ime," ",prezime)') , 'LIKE' , "%$query%")
             ->orWhere(\DB::raw('concat(prezime," ",ime)') , 'LIKE' , "%$query%")
             ->orWhere('srednje', 'like',"%$query%")
-            ->get();
+            ->get()->toArray();
 
-        $studies = Study::withCount('subjects')->where('name', 'like',"%$query%")->get();
-
+        $studies = Study::withCount('subjects')->where('name', 'like',"%$query%")->get()->toArray();
+    
         return response()->json(['subjects'=>$subjects,'studies'=>$studies]);
     }
 }

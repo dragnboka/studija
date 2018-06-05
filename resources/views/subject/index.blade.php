@@ -3,10 +3,9 @@
 @section('content')
 
 <div class="container">
-    <auto-complete></auto-complete>
     <div class="row mb-2">
         <div class="col-sm-4 d-flex justify-content-center">
-            <a class="btn btn-primary" href="{{route('subject.create')}}">Kreiraj novog ispitanika</a>
+            <a class="btn btn-primary" href="{{route('subject.create')}}">Create new subject</a>
         </div>
         <div class="col-sm-4 offset-sm-4 d-flex justify-content-center">
             <a class="btn btn-primary" href="{{route('export.subjects')}}">Export all subjects</a>

@@ -21,8 +21,8 @@ class SearchController extends Controller
         // ->orWhere('srednje', 'like',"%$query%")
         // ->paginate(50);
        
-        $studies = Study::withCount('subjects')->where('name', 'like',"%$query%")->paginate(50);
-
+        $studies = Study::withCount('subjects')->where('name', 'like',"%$query%")->paginate(10);
+        
         return view('search.index', compact('subjects', 'studies'));
     }
 }

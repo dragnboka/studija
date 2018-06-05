@@ -15,8 +15,8 @@ class PolFilter extends FilterAbstract
     public function mappings()
     {
         return [
-            'muski' => 'm',
-            'zenski' => 'f',
+            'male' => 'm',
+            'female' => 'f',
         ];
     }
 
