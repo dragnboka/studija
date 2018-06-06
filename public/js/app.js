@@ -47632,7 +47632,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_js__ = __webpack_require__(47);
 //
 //
 //
@@ -47698,15 +47698,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['csrf'],
     data: function data() {
         return {
             name: '',
             task: '',
             group: '',
             taskInputs: [],
-            groupInputs: []
+            groupInputs: [],
+            errors: new __WEBPACK_IMPORTED_MODULE_0__classes_js__["a" /* Errors */]()
         };
     },
 
@@ -47739,6 +47740,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.groupInputs = this.groupInputs.filter(function (group) {
                 return group.id !== id;
             });
+        },
+        send: function send() {
+            axios.post('/study', {
+                name: this.name,
+                tasks: this.taskInputsValues,
+                groups: this.taskGroupsValues
+            }).then(function () {
+                //window.location.href = "/subject";
+
+            }).catch(function (error) {
+                return console.log(error.response.data.errors);
+            });
+            //.catch((error) => this.errors.record(error.response.data.errors));
+        }
+    },
+    computed: {
+        taskInputsValues: function taskInputsValues() {
+            return this.taskInputs.map(function (task) {
+                return task.value;
+            });
+        },
+        taskGroupsValues: function taskGroupsValues() {
+            return this.groupInputs.map(function (task) {
+                return task.value;
+            });
         }
     }
 });
@@ -47754,7 +47780,6 @@ var render = function() {
   return _c(
     "form",
     {
-      attrs: { method: "post", action: "/study" },
       on: {
         keydown: function($event) {
           if (
@@ -47764,31 +47789,14 @@ var render = function() {
             return null
           }
           $event.preventDefault()
+        },
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.send($event)
         }
       }
     },
     [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.csrf,
-            expression: "csrf"
-          }
-        ],
-        attrs: { type: "hidden", name: "_token" },
-        domProps: { value: _vm.csrf },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.csrf = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-4" }, [
           _c("div", { staticClass: "form-group" }, [
@@ -47804,13 +47812,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: {
-                id: "name",
-                type: "text",
-                name: "name",
-                required: "",
-                autofocus: ""
-              },
+              attrs: { id: "name", type: "text", name: "name", autofocus: "" },
               domProps: { value: _vm.name },
               on: {
                 input: function($event) {
@@ -47895,7 +47897,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "flex-grow-1 list-group-p form-control",
-                      attrs: { type: "text", name: "tasks[]" },
+                      attrs: { type: "text", name: "tasks[]", readonly: "" },
                       domProps: { value: taskInput.value },
                       on: {
                         input: function($event) {
@@ -48001,7 +48003,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "flex-grow-1 list-group-p form-control",
-                      attrs: { type: "text", name: "groups[]" },
+                      attrs: { type: "text", name: "groups[]", readonly: "" },
                       domProps: { value: groupInput.value },
                       on: {
                         input: function($event) {
@@ -49040,7 +49042,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 id: Math.random() * Math.random() * 1000,
                 value: this.task
             };
-            this.taskInputs.unshift(newTask);
+            this.taskInputs.push(newTask);
             this.task = '';
         },
         onDeleteTask: function onDeleteTask(id) {
@@ -49053,7 +49055,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 id: Math.random() * Math.random() * 1000,
                 value: this.group
             };
-            this.groupInputs.unshift(newGroup);
+            this.groupInputs.push(newGroup);
             this.group = '';
         },
         onDeleteGroup: function onDeleteGroup(id) {
@@ -49064,10 +49066,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         send: function send() {
             var _this = this;
 
+            if (this.taskInputs.length == 0 && this.groupInputs.length == 0) {
+                return;
+            }
             axios.post('/study/' + this.studyId, {
                 id: this.studyId,
-                tasks: this.taskInputs,
-                groups: this.groupInputs
+                tasks: this.taskInputsValues,
+                groups: this.taskGroupsValues
             }).then(function () {
                 window.location.href = '/study/' + _this.studyId;
             }).catch(function (error) {
@@ -49076,6 +49081,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cancel: function cancel() {
             return window.location.href = '/study/' + this.studyId;
+        }
+    },
+    computed: {
+        taskInputsValues: function taskInputsValues() {
+            return this.taskInputs.map(function (task) {
+                return task.value;
+            });
+        },
+        taskGroupsValues: function taskGroupsValues() {
+            return this.groupInputs.map(function (task) {
+                return task.value;
+            });
         }
     }
 });
@@ -49174,9 +49191,27 @@ var render = function() {
                   { key: taskInput.id, staticClass: "list-group" },
                   [
                     _c("li", { staticClass: "list-group-item d-flex mb-2" }, [
-                      _c("p", { staticClass: "flex-grow-1 list-group-p" }, [
-                        _vm._v(_vm._s(taskInput.value))
-                      ]),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: taskInput.value,
+                            expression: "taskInput.value"
+                          }
+                        ],
+                        staticClass: "flex-grow-1 list-group-p form-control",
+                        attrs: { type: "text", name: "tasks[]", readonly: "" },
+                        domProps: { value: taskInput.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(taskInput, "value", $event.target.value)
+                          }
+                        }
+                      }),
                       _vm._v(" "),
                       _c(
                         "button",
@@ -49260,9 +49295,27 @@ var render = function() {
                   { key: groupInput.id, staticClass: "list-group" },
                   [
                     _c("li", { staticClass: "list-group-item d-flex mb-2" }, [
-                      _c("p", { staticClass: "flex-grow-1 list-group-p" }, [
-                        _vm._v(_vm._s(groupInput.value))
-                      ]),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: groupInput.value,
+                            expression: "groupInput.value"
+                          }
+                        ],
+                        staticClass: "flex-grow-1 list-group-p form-control",
+                        attrs: { type: "text", name: "groups[]", readonly: "" },
+                        domProps: { value: groupInput.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(groupInput, "value", $event.target.value)
+                          }
+                        }
+                      }),
                       _vm._v(" "),
                       _c(
                         "button",

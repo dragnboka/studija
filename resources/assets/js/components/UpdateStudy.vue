@@ -14,13 +14,13 @@
                     </div>
 
                     <ul class="list-group"
-                            v-for="(taskInput) in taskInputs"
-                            :key="taskInput.id">
-                            <li class="list-group-item d-flex mb-2">
-                                <p class="flex-grow-1 list-group-p">{{taskInput.value}}</p>
-                                <button @click="onDeleteTask(taskInput.id)" type="button"
-                                class="ml-3 btn btn-danger btn-sm">X</button>
-                            </li>
+                        v-for="(taskInput) in taskInputs"
+                        :key="taskInput.id">
+                        <li class="list-group-item d-flex mb-2">
+                            <input class="flex-grow-1 list-group-p form-control" type="text" v-model="taskInput.value" name="tasks[]" readonly>
+                            <button @click="onDeleteTask(taskInput.id)" type="button"
+                            class="ml-3 btn btn-danger btn-sm">X</button>
+                        </li>
                     </ul>  
                     
                 </div>
@@ -37,8 +37,8 @@
                     <ul class="list-group"
                             v-for="(groupInput) in groupInputs"
                             :key="groupInput.id">
-                        <li class="list-group-item d-flex mb-2">
-                            <p class="flex-grow-1 list-group-p">{{groupInput.value}}</p>
+                         <li class="list-group-item d-flex mb-2">
+                            <input class="flex-grow-1 list-group-p form-control" type="text" v-model="groupInput.value" name="groups[]" readonly>
                             <button @click="onDeleteGroup(groupInput.id)" type="button"
                             class="ml-3 btn btn-danger btn-sm">X</button>
                         </li>
@@ -82,7 +82,7 @@
                 id: Math.random() * Math.random() * 1000,
                 value: this.task
                 }
-                this.taskInputs.unshift(newTask)
+                this.taskInputs.push(newTask)
                 this.task = ''
             },
             onDeleteTask (id) {
@@ -93,17 +93,20 @@
                 id: Math.random() * Math.random() * 1000,
                 value: this.group
                 }
-                this.groupInputs.unshift(newGroup)
+                this.groupInputs.push(newGroup)
                 this.group = ''
             },
             onDeleteGroup (id) {
                 this.groupInputs = this.groupInputs.filter(group => group.id !== id)
             },
             send(){
+                if (this.taskInputs.length == 0 && this.groupInputs.length == 0) {
+                    return
+                }
                 axios.post(`/study/${this.studyId}`, {
                     id: this.studyId,
-                    tasks: this.taskInputs,
-                    groups: this.groupInputs
+                    tasks: this.taskInputsValues,
+                    groups: this.taskGroupsValues
                 }).then(() => {
                     window.location.href = `/study/${this.studyId}`;
                 })
@@ -114,6 +117,14 @@
             },
             cancel(){
                 return window.location.href = `/study/${this.studyId}`;
+            }
+        },
+        computed: {
+            taskInputsValues(){
+                return this.taskInputs.map((task) => task.value)
+            },
+            taskGroupsValues(){
+                return this.groupInputs.map((task) => task.value)
             }
         }
     }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\{Task, Group, Study};
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Requests\Studies\{UpdateStudyInfoRequest, AddTaskAndGroupsToStudyRequest};
 
 class StudyController extends Controller
 {
@@ -39,41 +39,47 @@ class StudyController extends Controller
      */
     public function store(Request $request)
     {
-        $study = new Study;
-        $study->name = $request->name;
-        $study->save();
-        $id = $study->id;
-        $s = Study::where('id',$id)->first();
-        foreach($request->tasks as $task) {
-            $t = new Task;
-            $t->name = $task;
-            $s->tasks()->save($t);
-        }
-        foreach($request->groups as $group) {
-            $g = new Group;
-            $g->name = $group;
-            $s->groups()->save($g);
-        }
+        dd($request);
+        // $study = new Study;
+        // $study->name = $request->name;
+        // $study->save();
+        // $id = $study->id;
+        // $s = Study::where('id',$id)->first();
+        // foreach($request->tasks as $task) {
+        //     $t = new Task;
+        //     $t->name = $task;
+        //     $study->tasks()->save($t);
+        // }
+        // foreach($request->groups as $group) {
+        //     $g = new Group;
+        //     $g->name = $group;
+        //     $study->groups()->save($g);
+        // }
         
-        return redirect()->route('study.index')->with('flash', 'Nova studija je dodata');
+        // return redirect()->route('study.index')->with('flash', 'Nova studija je dodata');
     }
 
-    public function storeNew(Request $request)
+    public function storeNew(AddTaskAndGroupsToStudyRequest $request)
     {
+    
         $study = Study::where('id',$request->id)->firstOrFail();
         
-        foreach($request->tasks as $task) {
-            $t = new Task;
-            $t->name = $task['value'];
-            $study->tasks()->save($t);
+        if (count($request->tasks)) {
+            foreach($request->tasks as $task) {
+                $t = new Task;
+                $t->name = $task;
+                $study->tasks()->save($t);
+            }
         }
-        foreach($request->groups as $group) {
-            $g = new Group;
-            $g->name = $group['value'];
-            $study->groups()->save($g);
+        
+        if (count($request->groups)) {
+            foreach($request->groups as $group) {
+                $g = new Group;
+                $g->name = $group;
+                $study->groups()->save($g);
+            }
         }
-
-        return redirect()->route('study.show',$study->id)->with('flash', 'added groups or tasks');
+        $request->session()->flash('flash', "Successfully added to study");
     }
 
     /**
@@ -100,6 +106,7 @@ class StudyController extends Controller
     public function edit(Study $study)
     {
         $this->authorize('admin');
+
         $study =  $study->where('id', $study->id)->with(['tasks','groups'])->firstOrFail();
         return view('study.edit', compact('study'));
     }
@@ -111,9 +118,10 @@ class StudyController extends Controller
      * @param  \App\Study  $study
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Study $study)
+    public function update(UpdateStudyInfoRequest $request, Study $study)
     { 
         $this->authorize('admin');
+
         $study->name = $request->name;
         $study->save();
         $tasks = Task::where('study_id', $study->id)->get();

@@ -21,25 +21,44 @@
                             <div class="col-md-4">
                                 <h3>Study name</h3>
                                 <div class="form-group">
-                                    <input id="name" type="text" class="form-control" name="name" value="{{$study->name}}" required autofocus>
+                                    <label for="name" class="col-form-label">{{ __('Ime') }}</label>
+                                    <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name', $study->name) }}"    autofocus >
+            
+                                    @if ($errors->has('name'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <h3>Tasks</h3>
-                                @foreach ($study->tasks as $task)
+                                @foreach ($study->tasks as $i => $task)
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="tasks[]" value="{{$task->name}}" id="task-{{$task->id}}">
+                                    <input type="text" class="form-control{{ $errors->has("tasks.$i") ? ' is-invalid' : '' }}" name="tasks[]" value="{{ old("tasks.$i", $task->name) }}" id="task-{{$task->id}}">
+                                
+                                    @if ($errors->has("tasks.$i"))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first("tasks.$i") }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 @endforeach
                             </div>
 
                             <div class="col-md-4">
                                 <h3>Groups</h3>
-                                @foreach ($study->groups as $group)
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="groups[]" value="{{$group->name}}" id="group-{{$group->id}}">
-                                </div>
+                                @foreach ($study->groups as $i => $group)
+                                    <div class="form-group">
+                                        <input type="text" class="form-control{{ $errors->has("groups.$i") ? ' is-invalid' : '' }}" name="groups[]" value="{{ old("groups.$i", $group->name) }}" id="group-{{$group->id}}">
+                                        
+                                        @if ($errors->has("groups.$i"))
+                                            <span class="invalid-feedback">
+                                                <strong>{{ $errors->first("groups.$i") }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
