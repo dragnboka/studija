@@ -1,113 +1,142 @@
 <template>  
+<form @submit.prevent="send"  @input="errors.clear($event.target.name)">
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="form-group">
-                <label for="name" class="col-form-label">Ime</label>
+                <label for="name" class="col-form-label">First name</label>
 
-                <input id="name" type="text" class="form-control" name="ime" v-model="name" autofocus>
+                <input id="name" type="text" class="form-control mb-2" name="firstName" v-model="firstName" required autofocus>
+
+                <span class="text-danger" 
+                    v-if="errors.has('firstName')" 
+                    v-text="errors.get('firstName')">
+                </span>
             </div>
 
             <div class="form-group">
-                <label for="prezime" class="col-form-label">Prezime</label>
+                <label for="prezime" class="col-form-label">Last name</label>
 
-                <input id="prezime" type="text" class="form-control" name="prezime" v-model="prezime">
+                <input id="prezime" name="lastName" type="text" class="form-control mb-2" v-model="lastName" required>
+
+                <span class="text-danger" 
+                    v-if="errors.has('lastName')" 
+                    v-text="errors.get('lastName')">
+                </span>
             </div>
 
             <div class="form-group">
-                <label for="srname" class="col-form-label">Srednje Ime</label>
+                <label for="srname" class="col-form-label">Middle name</label>
 
-                <input id="srname" type="text" class="form-control" name="srednje" v-model="srname">
+                <input id="srname" name="middleName" type="text" class="form-control mb-2" v-model="middleName" required>
+
+                <span class="text-danger" 
+                    v-if="errors.has('middleName')" 
+                    v-text="errors.get('middleName')">
+                </span>
             </div>
 
             <div class="form-group">
-                <label for="date" class="col-form-label">DOB</label>
-                    <input class="form-control" type="date" id="date" v-model="dob" name="rodjen">
+                <label for="date" class="col-form-label">Date of birth</label>
+                <input class="form-control mb-2" type="date" id="date" v-model="dob" name="dob" required>
+
+                <span class="text-danger" 
+                    v-if="errors.has('dob')" 
+                    v-text="errors.get('dob')">
+                </span>
             </div>
 
-            <div class="mb-2">
-                <p class="mb-2">Pol</p>
+            <div class="mb-3">
+                <p class="mb-2">Gender</p>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input v-model="pol" class="custom-control-input" type="radio" id="muski" value="m" name="pol">
+                    <input v-model="gender" name="gender" class="custom-control-input" type="radio" id="muski" value="m" required>
                     <label class="custom-control-label" for="muski">
-                        Muski
+                        Male
                     </label>
                 </div>
 
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input v-model="pol" class="custom-control-input" type="radio" id="zenski" value="f" name="pol">
+                    <input v-model="gender" name="gender" class="custom-control-input" type="radio" id="zenski" value="f">
                     <label class="custom-control-label" for="zenski">
-                        Zenski
+                        Female
                     </label>
                 </div>
+
+                <p class="text-danger mt-2" 
+                    v-if="errors.has('gender')" 
+                    v-text="errors.get('gender')">
+                </p>
             </div>
             
 
             <div class="form-group">
-                <label for="komentar">Komentar</label>
-                <textarea class="form-control" id="komentar" rows="3" v-model="komentar" name="komentar"></textarea>
+                <label for="comment">Comment</label>
+                <textarea class="form-control mb-2" name="comment" id="comment" rows="3" v-model="comment"></textarea>
             </div>
 
             <div class="mt-3">
                 <div class="d-flex">
-                    <p class="flex-grow-1 text-center h4">Studije</p>
-                    <p v-if="cekiram" class="text-center flex-grow-1 h4">Grupe<button @click="remove" type="button"
+                    <p class="flex-grow-1 text-center h4">Studies</p>
+                    <p v-if="cekiram" class="text-center flex-grow-1 h4">Groups<button @click="remove" type="button"
                     class="btn btn-danger btn-sm ml-3">X</button></p>
                 </div>
 
-                <div class="row" v-for="studija in studije" :key="studija.id">
+                <div class="row" v-for="study in studies" :key="study.id">
                     <div class="col-md-6 mb-4">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" :id=studija.id v-model="checked[studija.id]" name="studije[]" :value=studija.id>
-                            <label class="custom-control-label" :for=studija.id>{{studija.name}}</label>
+                            <input type="checkbox" class="custom-control-input" :id=study.id v-model="checked[study.id]" :value=study.id name="studies">
+                            <label class="custom-control-label" :for=study.id>{{study.name}}</label>
                         </div>
                         
                     </div>
 
                     <div class="col-md-6 mb-4">
-                        <div class="card" v-if="checked[studija.id]" style="width: 18rem;">
-                            <ul v-for="s in studija.groups" :key=s.id class="list-group list-group-flush">
+                        <div class="card" v-if="checked[study.id]" style="width: 18rem;">
+                            <ul v-for="s in study.groups" :key=s.id class="list-group list-group-flush">
                                 <li class="list-group-item" >
                                     <div class="form-check" >
-                                    <input  class="form-check-input"  type="radio" :value=s.id v-model="selected[s.study_id]" :id=s.id+studija.name :name="`grupe[${studija.id}] `">   
-                                    <label class="form-check-label" :for=s.id+studija.name>
+                                    <input  class="form-check-input"  type="radio" :value=s.id v-model="selected[s.study_id]" :id=s.id+study.name @input="clear">   
+                                    <label class="form-check-label" :for=s.id+study.name>
                                         {{s.name}}
                                     </label>
                                     </div>
                                 </li>
                             </ul>
-                        </div>
-                        
-                        
+                            <p class="text-danger m-0 p-3" 
+                                v-if="errors.has('groups')" 
+                                v-text="errors.get('groups')">
+                            </p>
+                        </div> 
                     </div>
                 </div>
+                <span class="text-danger" 
+                    v-if="errors.has('studies')" 
+                    v-text="errors.get('studies')">
+                </span>
             </div>
             
-            <button type="submit" class="btn btn-primary my-5">
+            <button :disabled="errors.any()" type="submit" class="btn btn-primary my-5">
                 Save
             </button>
         </div>
     </div>  
-
+</form>
 </template>
 
 <script>
+import {Errors} from './../classes.js'
 export default {
-    props: {
-        status: Array,
-        required: false,
-        default: []
-    },
     data(){
         return {
-            name: '',
-            prezime: '',
-            srname: '',
+            firstName: '',
+            lastName: '',
+            middleName: '',
             dob: '',
-            komentar: '',
-            pol: '',
-            studije: [],
+            gender: '',
+            comment: '',
+            studies: [],
             selected: {},
-            checked: {}
+            checked: {},
+            errors: new Errors()
             
         }
     },
@@ -122,34 +151,38 @@ export default {
         }
     },
     methods: {
+        clear(){
+            if(this.errors.has('groups')) {
+                this.errors.clear('groups')
+            } 
+        },
         remove() {
             this.selected = {}    
         },
 
-        // send(){
-        //     axios.post('/subject', {
-        //             ime: this.name,
-        //             prezime: this.prezime,
-        //             srednje: this.srname,
-        //             rodjen: this.dob,
-        //             komentar: this.komentar,
-        //             studija: this.checked,
-        //             grupa: this.selected,
-        //             pol: this.pol,
+        send(){
+            axios.post('/subject', {
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    middleName: this.middleName,
+                    dob: this.dob,
+                    gender: this.gender,
+                    comment: this.comment,
+                    studies: this.checked,
+                    groups: this.selected,
+                    
                 
-        //         }).then(() => {
-        //             window.location.href = "/subject";
-        //         })
-        //         .catch(function (error) {
-        //             console.log(error);
-        //         });
-        //         //  window.flash('Novi Ispitanik dodat')
-        // }
+                }).then(() => {
+                    window.location.href = "/subject";
+                    
+                })
+                .catch((error) => this.errors.record(error.response.data.errors));
+        }
     },
     mounted(){
         axios.get('/api')
             .then((response) => {
-            this.studije = response.data
+            this.studies = response.data
             })
             .catch(function (error) {
                 console.log(error);

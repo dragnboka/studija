@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Filters\Study\SubjectFilters;
-use Illuminate\Foundation\Console\Presets\React;
 use App\{Task, Group, Study, Subject, Experiment};
+use App\Http\Requests\Subjects\SubjectStoreRequest;
 
 class SubjectController extends Controller
 {
@@ -41,29 +41,24 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubjectStoreRequest $request)
     {
-        $request->validate([
-            'ime' => 'required|string',
-            'prezime' => 'required|string'
-        ]);
         $subject = new Subject;
-        $subject->ime = $request->ime;
-        $subject->prezime = $request->prezime;
-        $subject->srednje = $request->srednje;
-        $subject->rodjen = $request->rodjen;
-        $subject->pol = $request->pol == 'm' ? 'm' : 'f';
-        $subject->komentar = $request->komentar;
+        $subject->ime = $request->firstName;
+        $subject->prezime = $request->lastName;
+        $subject->srednje = $request->middleName;
+        $subject->rodjen = $request->dob;
+        $subject->pol = $request->gender == 'm' ? 'm' : 'f';
+        $subject->komentar = $request->comment;
         $subject->save();
            
-        $ids = array_values(array_filter($request->studije));
+        $ids = array_keys(array_filter($request->studies));
         
         $subject->studies()->attach($ids);
 
-        $subject->groups()->attach($request->grupe);
+        $subject->groups()->attach($request->groups);
 
-        return redirect()->route('subject.index')->with('flash', 'Novi korisnik je kreiran.');
-  
+        $request->session()->flash('flash', "$subject->ime was added");
     }
 
     /**

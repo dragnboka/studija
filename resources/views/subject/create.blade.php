@@ -2,9 +2,6 @@
 
 @section('content')
 <div class="container">
-    <form method="post" action="/subject">
-        @csrf
-        <subject></subject>
-    </form>
+    <subject></subject>
 </div>
 @endsection

@@ -47,7 +47,12 @@
         </div>    
         {{ $subjects->appends(request()->query())->links() }}
     @else
-        Trenutno nema ispitanika
+        <h2 class="text-center">There is no subjects or filter</h2>
+        @if (count(array_intersect(array_keys(request()->query()), array_keys($mappings))))
+        <p class="text-center">
+            <a href="{{ route('subject.index') }}">Clear all filters</a>
+        </p>
+        @endif
     @endif
      
 </div>
