@@ -18,38 +18,59 @@
                     @method('PUT')
                     @csrf
                     <div class="form-group">
-                        <label for="name" class="col-form-label">First name</label>
+                        <label for="firstName" class="col-form-label">First name</label>
+                        <input id="firstName" type="text" class="form-control{{ $errors->has('firstName') ? ' is-invalid' : '' }}" name="firstName" value="{{ old('firstName', $subject->ime) }}"    autofocus >
 
-                        <input id="name" type="text" class="form-control" name="ime" value="{{$subject->ime}}" autofocus>
+                        @if ($errors->has('firstName'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('firstName') }}</strong>
+                            </span>
+                        @endif
                     </div>
 
                     <div class="form-group">
-                        <label for="prezime" class="col-form-label">Last name</label>
+                        <label for="lastName" class="col-form-label">Last name</label>
+                        <input id="lastName" type="text" class="form-control{{ $errors->has('lastName') ? ' is-invalid' : '' }}" name="lastName" value="{{ old('lastName', $subject->prezime) }}"    autofocus >
 
-                        <input id="prezime" type="text" class="form-control" name="prezime"  value="{{$subject->prezime}}">
+                        @if ($errors->has('lastName'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('lastName') }}</strong>
+                            </span>
+                        @endif
                     </div>
 
                     <div class="form-group">
-                        <label for="srname" class="col-form-label">Middle name</label>
+                        <label for="middleName" class="col-form-label">Middle name</label>
+                        <input id="middleName" type="text" class="form-control{{ $errors->has('middleName') ? ' is-invalid' : '' }}" name="middleName" value="{{ old('middleName', $subject->srednje) }}"    autofocus >
 
-                        <input id="srname" type="text" class="form-control" name="srednje" value="{{$subject->srednje}}">
+                        @if ($errors->has('middleName'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('middleName') }}</strong>
+                            </span>
+                        @endif
                     </div>
 
                     <div class="mb-2">
                         <p class="mb-2">Gender</p>
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input name="pol" class="custom-control-input" type="radio" id="muski" value="m" {{$subject->pol ==='m' ? 'checked' : ' '}}>
-                            <label class="custom-control-label" for="muski">
+                            <input name="gender" class="custom-control-input" type="radio" id=male" value="m" {{$subject->pol ==='m' ? 'checked' : ' '}}>
+                            <label class="custom-control-label" for=male">
                                 Male
                             </label>
                         </div>
 
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input name="pol" class="custom-control-input" type="radio" id="zenski" value="z" {{$subject->pol ==='f' ? 'checked' : ' '}}>
-                            <label class="custom-control-label" for="zenski">
+                            <input name="gender" class="custom-control-input" type="radio" id="female" value="f" {{$subject->pol ==='f' ? 'checked' : ' '}}>
+                            <label class="custom-control-label" for="female">
                                 Female
                             </label>
                         </div>
+
+                        @if ($errors->has('gender'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('gender') }}</strong>
+                            </span>
+                        @endif
                     </div>
 
 
@@ -66,11 +87,9 @@
             </div>
 
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <form action="{{route('subject.update', $subject)}}" method="POST">
-                    @method('PUT')
-                    @csrf
+                
                 <update-subject :id={{$subject->id}}></update-subject>
-                </form>
+                
             </div>            
         </div>    
     </div>

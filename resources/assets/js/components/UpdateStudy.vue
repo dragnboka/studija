@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="text-center mb-4 font-weight-bold">Add new tasks and groups</h2>
+        <h2 class="text-center my-3 font-weight-bold">Add new tasks and groups</h2>
         <form @submit.prevent @keydown.enter.prevent>
             <div class="row">
                 

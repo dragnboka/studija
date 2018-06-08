@@ -48382,12 +48382,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return Object.keys(this.selected).length > 0;
         },
         cekiram: function cekiram() {
-            for (var key in this.checked) {
-                if (this.checked[key] == true) {
-                    return true;
-                }
-            }
-            //return Object.keys(this.checked).length !== 0
+            return Object.keys(this.checked).length !== 0;
         },
         studiesValues: function studiesValues() {
             return _.keys(_.pickBy(this.checked));
@@ -49171,7 +49166,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h2", { staticClass: "text-center mb-4 font-weight-bold" }, [
+    _c("h2", { staticClass: "text-center my-3 font-weight-bold" }, [
       _vm._v("Add new tasks and groups")
     ]),
     _vm._v(" "),
@@ -49498,6 +49493,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_js__ = __webpack_require__(12);
 //
 //
 //
@@ -49540,39 +49536,97 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id'],
     data: function data() {
         return {
-            studije: [],
-            selected: {},
-            checked: {},
-            grupe: []
+            studies: [],
+            selectedGroups: {},
+            selectedStudies: {},
+            grupe: [],
+            errors: new __WEBPACK_IMPORTED_MODULE_0__classes_js__["a" /* Errors */](),
+            errorsF: []
         };
     },
 
     computed: {
+        emptyGroups: function emptyGroups() {
+            return Object.keys(this.selectedGroups).length > 0;
+        },
         cekiram: function cekiram() {
-            for (var key in this.checked) {
-                if (this.checked[key] == true) {
-                    return true;
-                }
-            }
-
-            //return Object.keys(this.checked).length !== 0
+            return Object.keys(this.selectedStudies).length !== 0;
+        },
+        studiesValues: function studiesValues() {
+            return _.keys(_.pickBy(this.selectedStudies));
+        },
+        cancel: function cancel() {
+            return '/subject/' + this.id;
         }
     },
     methods: {
+        clear: function clear(name) {
+            if (this.errors.has(name)) {
+                this.errors.clear(name);
+            }
+        },
+        send: function send() {
+            var _this = this;
+
+            this.errorsF = [];
+
+            if (_.isEmpty(this.selectedStudies) || _.isEmpty(this.selectedGroups)) {
+                this.errorsF.push("You must select at least one study and one group");
+                return;
+            }
+
+            if (Object.keys(this.selectedGroups).length !== Object.keys(this.selectedStudies).length) {
+                this.errorsF.push("Select study and group together");
+                return;
+            }
+            axios.post('/subject/' + this.id, {
+                studies: this.selectedStudies,
+                groups: this.selectedGroups
+            }).then(function () {
+                window.location.href = '/subject/' + _this.id;
+            }).catch(function (error) {
+                return _this.errors.record(error.response.data.errors);
+            });
+        },
         remove: function remove() {
-            this.selected = {};
+            this.selectedGroups = {};
+        },
+        removeStudies: function removeStudies() {
+            this.selectedStudies = {};
         }
     },
     mounted: function mounted() {
-        var _this = this;
+        var _this2 = this;
 
         axios.get('/api/' + this.id).then(function (response) {
-            _this.studije = response.data;
+            _this2.studies = response.data;
         }).catch(function (error) {
             console.log(error);
         });
@@ -49588,158 +49642,235 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "mt-3" },
+    "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.send($event)
+        }
+      }
+    },
     [
-      _c("div", { staticClass: "d-flex" }, [
-        _c("p", { staticClass: "flex-grow-1 text-center h4" }, [
-          _vm._v("Studije")
-        ]),
-        _vm._v(" "),
-        _vm.cekiram
-          ? _c("p", { staticClass: "text-center flex-grow-1 h4" }, [
-              _vm._v("Grupe"),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger btn-sm ml-3",
-                  attrs: { type: "button" },
-                  on: { click: _vm.remove }
-                },
-                [_vm._v("X")]
-              )
-            ])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.studije, function(studija) {
-        return _c("div", { key: studija.id, staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6 mb-4" }, [
-            _c("div", { staticClass: "custom-control custom-checkbox" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.checked[studija.id],
-                    expression: "checked[studija.id]"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", name: "studije[]", id: studija.id },
-                domProps: {
-                  value: studija.id,
-                  checked: Array.isArray(_vm.checked[studija.id])
-                    ? _vm._i(_vm.checked[studija.id], studija.id) > -1
-                    : _vm.checked[studija.id]
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.checked[studija.id],
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = studija.id,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(_vm.checked, studija.id, $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.checked,
-                            studija.id,
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
-                      }
-                    } else {
-                      _vm.$set(_vm.checked, studija.id, $$c)
-                    }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-control-label",
-                  attrs: { for: studija.id }
-                },
-                [_vm._v(_vm._s(studija.name))]
-              )
-            ])
+      _c(
+        "div",
+        { staticClass: "mt-3" },
+        [
+          _c("div", { staticClass: "d-flex" }, [
+            _c("p", { staticClass: "flex-grow-1 text-center h4" }, [
+              _vm._v("Studies"),
+              _vm.studiesValues.length > 0
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-sm ml-3",
+                      attrs: { type: "button" },
+                      on: { click: _vm.removeStudies }
+                    },
+                    [_vm._v("X")]
+                  )
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _vm.cekiram
+              ? _c("p", { staticClass: "text-center flex-grow-1 h4" }, [
+                  _vm._v("Groups"),
+                  _vm.emptyGroups
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-sm ml-3",
+                          attrs: { type: "button" },
+                          on: { click: _vm.remove }
+                        },
+                        [_vm._v("X")]
+                      )
+                    : _vm._e()
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 mb-4" }, [
-            _vm.checked[studija.id]
-              ? _c(
-                  "div",
-                  { staticClass: "card", staticStyle: { width: "18rem" } },
-                  _vm._l(studija.groups, function(s) {
-                    return _c(
-                      "ul",
-                      { key: s.id, staticClass: "list-group list-group-flush" },
+          _vm._l(_vm.studies, function(study) {
+            return _c("div", { key: study.id, staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6 mb-4" }, [
+                _c("div", { staticClass: "custom-control custom-radio" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedStudies[study.id],
+                        expression: "selectedStudies[study.id]"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "radio",
+                      id: study.id,
+                      name: "studies[" + study.id + "]"
+                    },
+                    domProps: {
+                      value: study.id,
+                      checked: _vm._q(_vm.selectedStudies[study.id], study.id)
+                    },
+                    on: {
+                      input: function($event) {
+                        _vm.clear("studies")
+                      },
+                      change: function($event) {
+                        _vm.$set(_vm.selectedStudies, study.id, study.id)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: study.id }
+                    },
+                    [_vm._v(_vm._s(study.name))]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 mb-4" }, [
+                _vm.selectedStudies[study.id]
+                  ? _c(
+                      "div",
+                      { staticClass: "card", staticStyle: { width: "18rem" } },
                       [
-                        _c("li", { staticClass: "list-group-item" }, [
-                          _c("div", { staticClass: "form-check" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.selected[s.study_id],
-                                  expression: "selected[s.study_id]"
-                                }
-                              ],
-                              staticClass: "form-check-input",
-                              attrs: {
-                                type: "radio",
-                                name: "grupe[" + studija.id + "] ",
-                                id: s.id + studija.name
-                              },
-                              domProps: {
-                                value: s.id,
-                                checked: _vm._q(_vm.selected[s.study_id], s.id)
-                              },
-                              on: {
-                                change: function($event) {
-                                  _vm.$set(_vm.selected, s.study_id, s.id)
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-check-label",
-                                attrs: { for: s.id + studija.name }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(s.name) +
-                                    "\n                        "
+                        _vm._l(study.groups, function(s) {
+                          return _c(
+                            "ul",
+                            {
+                              key: s.id,
+                              staticClass: "list-group list-group-flush"
+                            },
+                            [
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "custom-control custom-radio"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.selectedGroups[s.study_id],
+                                          expression:
+                                            "selectedGroups[s.study_id]"
+                                        }
+                                      ],
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "radio",
+                                        id: s.id + study.name
+                                      },
+                                      domProps: {
+                                        value: s.id,
+                                        checked: _vm._q(
+                                          _vm.selectedGroups[s.study_id],
+                                          s.id
+                                        )
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          _vm.clear("groups")
+                                        },
+                                        change: function($event) {
+                                          _vm.$set(
+                                            _vm.selectedGroups,
+                                            s.study_id,
+                                            s.id
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: s.id + study.name }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\r\n                                " +
+                                            _vm._s(s.name) +
+                                            "\r\n                            "
+                                        )
+                                      ]
+                                    )
+                                  ]
                                 )
-                              ]
-                            )
-                          ])
-                        ])
-                      ]
+                              ])
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.has("groups")
+                          ? _c("p", {
+                              staticClass: "text-danger m-0 p-3",
+                              domProps: {
+                                textContent: _vm._s(_vm.errors.get("groups"))
+                              }
+                            })
+                          : _vm._e()
+                      ],
+                      2
                     )
-                  })
-                )
-              : _vm._e()
-          ])
-        ])
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary my-5", attrs: { type: "submit" } },
-        [_vm._v("\n        Edit\n    ")]
+                  : _vm._e()
+              ])
+            ])
+          }),
+          _vm._v(" "),
+          _vm.errors.has("studies")
+            ? _c("p", {
+                staticClass: "text-danger",
+                domProps: { textContent: _vm._s(_vm.errors.get("studies")) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.errors.has("both")
+            ? _c("p", {
+                staticClass: "text-danger",
+                domProps: { textContent: _vm._s(_vm.errors.get("both")) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.errorsF.length
+            ? _vm._l(_vm.errorsF, function(error, i) {
+                return _c("p", { key: i, staticClass: "text-danger" }, [
+                  _vm._v(_vm._s(error))
+                ])
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary my-5 m-r3",
+              attrs: { disabled: _vm.errors.any(), type: "submit" }
+            },
+            [_vm._v("\r\n            Add\r\n        ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-primary my-5",
+              attrs: { href: _vm.cancel }
+            },
+            [_vm._v("\r\n            Cancel\r\n        ")]
+          )
+        ],
+        2
       )
-    ],
-    2
+    ]
   )
 }
 var staticRenderFns = []

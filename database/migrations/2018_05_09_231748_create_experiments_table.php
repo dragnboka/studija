@@ -20,7 +20,7 @@ class CreateExperimentsTable extends Migration
             $table->string('radio');
             $table->time('vreme');
             $table->string('komentar')->nullable();
-            $table->timestamps();
+            $table->softDeletes();
 
             // $table->foreign('subject_id')->references('id')->on('subjects');
             // $table->foreign('task_id')->references('id')->on('tasks');

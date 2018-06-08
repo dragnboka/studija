@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <a class="btn btn-primary" href="{{ route('subject.show', $subject) }}">Vrati</a>
+    <a class="btn btn-primary d-block mb-3" href="{{ route('subject.show', $subject) }}">Back</a>
     
-    <h2 class="mb-4">{{$task->name}} 
+    <h2 class="mb-4">Task: {{$task->name}} 
         @if ($komentar)
         ({{$komentar->pivot->komentar}})</span>
         @endif
@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group row">
-                            <label for="sati" class="col-sm-3 col-form-label">Sat</label>
+                            <label for="sati" class="col-sm-3 col-form-label">Hours</label>
                             <div class="col-sm-9">
                                 <input id="sati" type="number" class="form-control" name="sati" min="0" max="23" autofocus>
                             </div>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group row">
-                            <label for="minuti" class="col-sm-3 col-form-label">Minut</label>
+                            <label for="minuti" class="col-sm-3 col-form-label">Minutes</label>
                             <div class="col-sm-9">
                                 <input id="minuti" type="number" class="form-control" name="minuti" min="0" max="59">
                             </div>
@@ -33,22 +33,22 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="komentar" class="col-form-label">Komentar</label>
+                    <label for="komentar" class="col-form-label">Comment</label>
                     <textarea name="komentar" class="form-control" id="komentar" cols="30" rows="2"></textarea>
                 </div>
 
-                <input class="btn btn-primary" type="submit" value="Savuvaj">
+                <input class="btn btn-primary" type="submit" value="Save">
             </form>
             <form action="{{route('task.comment.store', [$subject,$task])}}" method="post">
                 @csrf
-                <h3>Komentar za task</h3>
+                <h3>Commetn for task</h3>
 
                 <div class="form-group">
-                    <label for="task_komentar" class="col-form-label">Komentar za task</label>
+                    <label for="task_komentar" class="col-form-label">Commetn for task</label>
                     <textarea name="task_komentar" class="form-control" id="task_komentar" cols="30" rows="3"></textarea>
                 </div>
 
-                <input class="btn btn-primary" type="submit" value="Savuvaj">
+                <input class="btn btn-primary" type="submit" value="Save">
             </form>
         </div>
 
@@ -58,8 +58,8 @@
                 <thead>
                     <tr class="table-success">
                         <th>#</th>
-                        <th>Vreme</th>
-                        <th>Komentar</th>
+                        <th>Time</th>
+                        <th>Comment</th>
                         <th>Radio</th>
                     </tr>
                 </thead>
@@ -75,7 +75,7 @@
                 </tbody> 
             </table>
             @else
-                <h3>Nema merenja za ovaj Task</h3>
+                <h3>There is no measurements for task {{$task->name}} </h3>
             @endif
                 {{-- <p>{{$experiment->created_at->diffForHumans()}}</p>    --}}
         </div>

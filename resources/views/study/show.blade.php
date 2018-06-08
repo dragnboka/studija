@@ -3,18 +3,41 @@
 @section('content')
 <div class="container">
     <div class="row mb-4">
-        <div class="col-sm-10">
+        <div class="col-sm-7">
             <h2 class="flex-grow-1">Study name: {{$study->name}}</h2>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-5">
             @can('admin')
-            <a class="btn btn-outline-primary" href="{{route('study.edit', $study)}}">Edit study</a>
-            <form action="{{route('study.destroy', $study)}}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-outline-danger" type="submit">Delete study</button>
-            </form>
-            
+            <div class="d-flex justify-content-around">
+                <a class="btn btn-outline-primary" href="{{route('study.edit', $study)}}">Edit study</a>
+               
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal">
+                    Delete study
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete study {{$study->name}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                        <form action="{{route('study.destroy', $study)}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit">Yes</button>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+               
+            </div>
             @endcan
         </div>
     </div>

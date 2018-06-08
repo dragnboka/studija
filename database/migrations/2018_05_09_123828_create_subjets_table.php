@@ -21,6 +21,7 @@ class CreateSubjetsTable extends Migration
             $table->date('rodjen');
             $table->string('pol',1);
             $table->text('komentar')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

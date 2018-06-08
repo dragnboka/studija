@@ -48,6 +48,8 @@ Route::get('/subject/create', 'SubjectController@create')->name('subject.create'
 Route::get('/subject/{subject}', 'SubjectController@show')->name('subject.show');
 Route::get('/subject/{subject}/edit', 'SubjectController@edit')->name('subject.edit');
 Route::put('/subject/{subject}', 'SubjectController@update')->name('subject.update');
+Route::post('/subject/{subject}', 'SubjectController@addStudy');
+Route::delete('/subject/{subject}', 'SubjectController@destroy')->name('subject.destroy');
 
 Route::get('/subject/{subject}/{task}', 'ExperimentController@show')->name('experiment.show');
 

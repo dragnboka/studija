@@ -1,72 +1,127 @@
 <template>
+<form @submit.prevent="send">
     <div class="mt-3">
         <div class="d-flex">
-            <p class="flex-grow-1 text-center h4">Studije</p>
-            <p v-if="cekiram" class="text-center flex-grow-1 h4">Grupe<button @click="remove" type="button"
+            <p class="flex-grow-1 text-center h4">Studies<button v-if="studiesValues.length > 0" @click="removeStudies" type="button"
+            class="btn btn-danger btn-sm ml-3">X</button></p>
+            <p v-if="cekiram" class="text-center flex-grow-1 h4">Groups<button v-if="emptyGroups" @click="remove" type="button"
             class="btn btn-danger btn-sm ml-3">X</button></p>
         </div>
 
-        <!-- <select name="" id="">
-            <option v-for="studija in studije" :key="studija.id" value=""> {{studija.name}}</option>
-        </select> -->
-        <div class="row" v-for="studija in studije" :key="studija.id">
+        <div class="row" v-for="study in studies" :key="study.id">
             <div class="col-md-6 mb-4">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input"  name="studije[]" v-model="checked[studija.id]" :value=studija.id  :id=studija.id>
-                    <label class="custom-control-label" :for=studija.id>{{studija.name}}</label>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" :id=study.id v-model="selectedStudies[study.id]" :value=study.id :name="`studies[${study.id}]`" @input="clear('studies')">
+                    <label class="custom-control-label" :for=study.id>{{study.name}}</label>
                 </div>
                 
             </div>
 
-            <div class="col-md-6 mb-4">
-                <div class="card" v-if="checked[studija.id]" style="width: 18rem;">
-                    <ul v-for="s in studija.groups" :key=s.id class="list-group list-group-flush">
+           <div class="col-md-6 mb-4">
+                <div class="card" v-if="selectedStudies[study.id]" style="width: 18rem;">
+                    <ul v-for="s in study.groups" :key=s.id class="list-group list-group-flush">
                         <li class="list-group-item" >
-                            <div class="form-check" >
-                            <input  class="form-check-input"  type="radio"  :value=s.id v-model="selected[s.study_id]" :name="`grupe[${studija.id}] `" :id=s.id+studija.name>   
-                            <label class="form-check-label" :for=s.id+studija.name>
+                            <div class="custom-control custom-radio" >
+                            <input  class="custom-control-input"  type="radio" :value=s.id v-model="selectedGroups[s.study_id]" :id=s.id+study.name @input="clear('groups')">   
+                            <label class="custom-control-label" :for=s.id+study.name>
                                 {{s.name}}
                             </label>
                             </div>
                         </li>
                     </ul>
-                </div>           
+                    <p class="text-danger m-0 p-3" 
+                        v-if="errors.has('groups')" 
+                        v-text="errors.get('groups')">
+                    </p>
+                </div> 
             </div>
         </div>
-        <button type="submit" class="btn btn-primary my-5">
-            Edit
+        <p class="text-danger" 
+            v-if="errors.has('studies')" 
+            v-text="errors.get('studies')">
+        </p>
+
+        <p class="text-danger" 
+            v-if="errors.has('both')" 
+            v-text="errors.get('both')">
+        </p>
+        
+        <template v-if="errorsF.length">
+            <p class="text-danger" v-for="(error,i) in errorsF" :key="i">{{ error }}</p>
+        </template>
+
+        <button :disabled="errors.any()" type="submit" class="btn btn-primary my-5 m-r3">
+            Add
         </button>
+
+        <a :href="cancel" class="btn btn-primary my-5">
+            Cancel
+        </a>
     </div>
-            
+</form>           
 </template>
 
 <script>
+import {Errors} from './../classes.js'
 export default {
     props: [
         'id'
     ],
     data(){
         return {
-            studije: [],
-            selected: {},
-            checked: {},
-            grupe: []            
+            studies: [],
+            selectedGroups: {},
+            selectedStudies: {},
+            grupe: [],
+            errors: new Errors(),
+            errorsF:[],            
         }
     },
     computed: {
-        cekiram(){
-            for (var key in this.checked) {
-                if (this.checked[key] == true) {
-                    return true
-                }
-            }
-            
-            //return Object.keys(this.checked).length !== 0
+        emptyGroups() {
+            return Object.keys(this.selectedGroups).length > 0
         },
+        cekiram(){
+            return Object.keys(this.selectedStudies).length !== 0
+        },
+        studiesValues(){
+            return _.keys(_.pickBy(this.selectedStudies));
+        },
+        cancel(){
+            return `/subject/${this.id}`
+        }
     },
     methods: {
+        clear(name){
+            if(this.errors.has(name)) {
+                this.errors.clear(name)
+            } 
+        },
+        send(){
+            this.errorsF = [];
+            
+            if(_.isEmpty(this.selectedStudies) || _.isEmpty(this.selectedGroups)) {
+                this.errorsF.push("You must select at least one study and one group");
+                return;
+            }
+
+            if (Object.keys(this.selectedGroups).length !== Object.keys(this.selectedStudies).length) {
+                this.errorsF.push("Select study and group together");
+                return
+            }
+            axios.post(`/subject/${this.id}`, {
+                studies: this.selectedStudies,
+                groups: this.selectedGroups,
+            }).then(() => {
+                window.location.href = `/subject/${this.id}`;
+            })
+            .catch((error) => this.errors.record(error.response.data.errors));
+        },
         remove() {
-            this.selected = {}    
+            this.selectedGroups = {}    
+        },
+        removeStudies() {
+            this.selectedStudies = {}    
         },
         
         
@@ -74,7 +129,7 @@ export default {
     mounted(){
         axios.get(`/api/${this.id}`)
             .then((response) => {
-            this.studije = response.data
+            this.studies = response.data
             })
             .catch(function (error) {
                 console.log(error);

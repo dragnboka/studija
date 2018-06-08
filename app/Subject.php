@@ -8,10 +8,18 @@ use App\Filters\Study\SubjectFilters;
 use App\Filters\Groups\SubjectFilters as GroupFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subject extends Model
 {
-    protected $dates = ['rodjen'];
+    use SoftDeletes;
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['rodjen','deleted_at'];
 
     public function getAgeAttribute()
     {

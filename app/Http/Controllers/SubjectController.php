@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Filters\Study\SubjectFilters;
 use App\{Task, Group, Study, Subject, Experiment};
-use App\Http\Requests\Subjects\SubjectStoreRequest;
+use App\Http\Requests\Subjects\{
+    SubjectStoreRequest,
+    UpdateSubjectInfoRequest,
+    AddStudyToSubjectRequest
+    };
 
 class SubjectController extends Controller
 {
@@ -48,7 +52,7 @@ class SubjectController extends Controller
         $subject->prezime = $request->lastName;
         $subject->srednje = $request->middleName;
         $subject->rodjen = $request->dob;
-        $subject->pol = $request->gender == 'm' ? 'm' : 'f';
+        $subject->pol = $request->gender;
         $subject->komentar = $request->comment;
         $subject->save();
            
@@ -80,11 +84,6 @@ class SubjectController extends Controller
             ->where('studies.deleted_at', null)
             ->get();
 
-            // $ids = $studyGroups->map(function ($id) {
-            //     return $id->id;
-            // });
-            // $studeis = Study::find($ids);
-        // dd($studeis->experiments);
         $experiments = $subject->experiments()->with('task')->filter($request)->paginate(10);
         
         $subject = $subject->where('id',$subject->id)->with('studies.tasks')->first();
@@ -113,27 +112,28 @@ class SubjectController extends Controller
      * @param  \App\Study  $study
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subject $subject)
+    public function update(UpdateSubjectInfoRequest $request, Subject $subject)
     {
         $this->authorize('admin');
-
-        if($request->has('ime')){
-            $subject->ime = $request->ime;
-            $subject->prezime = $request->prezime;
-            $subject->srednje = $request->srednje;
-            $subject->pol = $request->pol == 'm' ? 'm' : 'f';
-            $subject->komentar = $request->komentar;
-            $subject->save();
-        } else {
-
-            $ids = array_values(array_filter($request->studije));
-
-            $subject->studies()->attach($ids);
         
-            $subject->groups()->attach($request->grupe);
-        }
+        $subject->ime = $request->firstName;
+        $subject->prezime = $request->lastName;
+        $subject->srednje = $request->middleName;
+        $subject->pol = $request->gender;
+        $subject->komentar = $request->komentar;
+        $subject->save();
         
         return redirect()->route('subject.show',$subject->id)->with('flash', 'Profile info has been changed.');
+    }
+    public function addStudy(AddStudyToSubjectRequest $request, Subject $subject)
+    {
+        //$ids = array_values(array_filter($request->studies));
+        
+        $subject->studies()->attach($request->studies);
+    
+        $subject->groups()->attach($request->groups);
+        
+        $request->session()->flash('flash', "$subject->ime was added to new study");
     }
 
     /**
@@ -142,8 +142,12 @@ class SubjectController extends Controller
      * @param  \App\Study  $study
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Study $study)
+    public function destroy(Subject $subject)
     {
-        //
+        $this->authorize('admin');
+
+        $subject->delete();
+        $subject->experiments()->delete();
+        return redirect()->route('subject.index')->with('flash', 'Subject was deleted.');
     }
 }

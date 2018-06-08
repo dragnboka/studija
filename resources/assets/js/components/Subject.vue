@@ -146,12 +146,7 @@ export default {
             return Object.keys(this.selected).length > 0
         },
         cekiram(){
-            for (var key in this.checked) {
-                if (this.checked[key] == true) {
-                    return true
-                }
-            }
-            //return Object.keys(this.checked).length !== 0
+            return Object.keys(this.checked).length !== 0
         },
         studiesValues(){
             return _.keys(_.pickBy(this.checked));
