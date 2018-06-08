@@ -89,6 +89,9 @@
                 this.taskInputs = this.taskInputs.filter(task => task.id !== id)
             },
             onAddGroup () {
+                if(this.group == ''){
+                    return
+                }
                 const newGroup = {
                 id: Math.random() * Math.random() * 1000,
                 value: this.group

@@ -9,6 +9,12 @@
         <div class="col-sm-2">
             @can('admin')
             <a class="btn btn-outline-primary" href="{{route('study.edit', $study)}}">Edit study</a>
+            <form action="{{route('study.destroy', $study)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-outline-danger" type="submit">Delete study</button>
+            </form>
+            
             @endcan
         </div>
     </div>
@@ -22,7 +28,7 @@
 
                 <ul class="list-group list-group-flush">
                     @foreach ($study->tasks as $task)
-                        <li class="list-group-item">{{$task->name}}</li>
+                        <li class="list-group-item p-3">{{$task->name}}</li>
                     @endforeach
                 </ul>
             </div>
@@ -39,7 +45,7 @@
                 <ul class="list-group list-group--group list-group-flush">
                     @foreach ($study->groups as $group)
                         <li class="list-group-item p-0">
-                            <a class="d-flex p-3 {{request()->query('group') == $group->name ? 'active-group' : ''}}" href="/study/{{$study->id}}?group={{urlencode($group->name)}}">{{$group->name}}<span class="badge badge-pill badge-info p-2 ml-auto">{{$group->subjects->count()}}</span></a>
+                            <a class="d-flex p-3 {{request()->query('group') == $group->name ? 'active-group' : ''}}" href="/study/{{$study->id}}?group={{urlencode($group->name)}}">{{$group->name}}<span class="badge badge-pill badge-danger p-2 ml-auto">{{$group->subjects->count()}}</span></a>
                         </li>
                     @endforeach
                 </ul>

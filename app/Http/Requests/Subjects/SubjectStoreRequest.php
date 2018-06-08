@@ -29,7 +29,7 @@ class SubjectStoreRequest extends FormRequest
             'middleName'  => 'required|string',
             'dob'  => 'required|date_format:"Y-m-d"',
             'gender'  => 'required',
-            'studies' => 'required',
+            'studies' => 'required|filled',
             'groups' => 'required',
         ];
     }

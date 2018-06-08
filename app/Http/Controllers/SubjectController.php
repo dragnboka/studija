@@ -52,7 +52,7 @@ class SubjectController extends Controller
         $subject->komentar = $request->comment;
         $subject->save();
            
-        $ids = array_keys(array_filter($request->studies));
+        $ids = array_values(array_filter($request->studies));
         
         $subject->studies()->attach($ids);
 
@@ -69,9 +69,6 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject, Request $request)
     {
-    
-        $experiments = $subject->experiments()->with('task')->filter($request)->paginate(10);
-    
         $studyGroups = DB::table('subjects')
             ->join('group_subject', 'subjects.id', '=', 'group_subject.subject_id')
             ->join('groups', 'group_subject.group_id', '=', 'groups.id')
@@ -80,8 +77,16 @@ class SubjectController extends Controller
             ->selectRaw('studies.id as id')
             ->selectRaw('groups.name  as groupName')
             ->where('subjects.id', $subject->id)
+            ->where('studies.deleted_at', null)
             ->get();
 
+            // $ids = $studyGroups->map(function ($id) {
+            //     return $id->id;
+            // });
+            // $studeis = Study::find($ids);
+        // dd($studeis->experiments);
+        $experiments = $subject->experiments()->with('task')->filter($request)->paginate(10);
+        
         $subject = $subject->where('id',$subject->id)->with('studies.tasks')->first();
         
         return view('subject.show', compact('subject','experiments','studyGroups'));

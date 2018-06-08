@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\{Task, Group, Study};
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Studies\{UpdateStudyInfoRequest, AddTaskAndGroupsToStudyRequest};
+use App\Http\Requests\Studies\CreateStudyRequest;
 
 class StudyController extends Controller
 {
@@ -37,26 +38,25 @@ class StudyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateStudyRequest $request)
     {
-        dd($request);
-        // $study = new Study;
-        // $study->name = $request->name;
-        // $study->save();
-        // $id = $study->id;
-        // $s = Study::where('id',$id)->first();
-        // foreach($request->tasks as $task) {
-        //     $t = new Task;
-        //     $t->name = $task;
-        //     $study->tasks()->save($t);
-        // }
-        // foreach($request->groups as $group) {
-        //     $g = new Group;
-        //     $g->name = $group;
-        //     $study->groups()->save($g);
-        // }
+        $study = new Study;
+        $study->name = $request->name;
+        $study->save();
+        $id = $study->id;
+        $s = Study::where('id',$id)->first();
+        foreach($request->tasks as $task) {
+            $t = new Task;
+            $t->name = $task;
+            $study->tasks()->save($t);
+        }
+        foreach($request->groups as $group) {
+            $g = new Group;
+            $g->name = $group;
+            $study->groups()->save($g);
+        }
         
-        // return redirect()->route('study.index')->with('flash', 'Nova studija je dodata');
+        $request->session()->flash('flash', "Study $study->name was created");
     }
 
     public function storeNew(AddTaskAndGroupsToStudyRequest $request)
@@ -136,7 +136,7 @@ class StudyController extends Controller
             $group->save();
         }
 
-        return redirect()->back()->with('flash', 'Study info has been changed.');
+        return redirect()->route('study.show',$study->id)->with('flash', 'Study info has been changed.');
     }
 
     /**
@@ -147,6 +147,8 @@ class StudyController extends Controller
      */
     public function destroy(Study $study)
     {
-        //
+        $study->delete();
+        $study->experiments()->delete();
+        return redirect()->route('study.index')->with('flash', 'Study was deleted.');
     }
 }

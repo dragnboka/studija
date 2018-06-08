@@ -10865,10 +10865,10 @@ button {
 .list-group--group .list-group-item:hover a,
 .list-group--task .list-group-item:hover a {
   color: white;
-  background-color: #d35b5b;
+  background-color: #74e0f3;
 }
 
 .active-group {
-  background-color: #d35b5b;
+  background-color: #74e0f3;
 }
 

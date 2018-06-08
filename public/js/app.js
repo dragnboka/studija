@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,7 +71,7 @@
 
 
 var bind = __webpack_require__(6);
-var isBuffer = __webpack_require__(22);
+var isBuffer = __webpack_require__(23);
 
 /*global toString:true*/
 
@@ -517,7 +517,7 @@ module.exports = g;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(24);
+var normalizeHeaderName = __webpack_require__(25);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -13729,12 +13729,12 @@ process.umask = function() { return 0; };
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(25);
-var buildURL = __webpack_require__(27);
-var parseHeaders = __webpack_require__(28);
-var isURLSameOrigin = __webpack_require__(29);
+var settle = __webpack_require__(26);
+var buildURL = __webpack_require__(28);
+var parseHeaders = __webpack_require__(29);
+var isURLSameOrigin = __webpack_require__(30);
 var createError = __webpack_require__(9);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(30);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(31);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -13831,7 +13831,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(31);
+      var cookies = __webpack_require__(32);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -13915,7 +13915,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(26);
+var enhanceError = __webpack_require__(27);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -13973,6 +13973,55 @@ module.exports = Cancel;
 
 /***/ }),
 /* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Errors; });
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Errors = function () {
+    function Errors() {
+        _classCallCheck(this, Errors);
+
+        this.errors = {};
+    }
+
+    _createClass(Errors, [{
+        key: "has",
+        value: function has(field) {
+            return this.errors.hasOwnProperty(field);
+        }
+    }, {
+        key: "any",
+        value: function any() {
+            return Object.keys(this.errors).length > 0;
+        }
+    }, {
+        key: "get",
+        value: function get(field) {
+            if (this.errors[field]) {
+                return this.errors[field][0];
+            }
+        }
+    }, {
+        key: "record",
+        value: function record(errors) {
+            this.errors = errors;
+        }
+    }, {
+        key: "clear",
+        value: function clear(field) {
+            delete this.errors[field];
+        }
+    }]);
+
+    return Errors;
+}();
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports) {
 
 /*
@@ -14054,7 +14103,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -14282,15 +14331,15 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(15);
+__webpack_require__(16);
 module.exports = __webpack_require__(66);
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -14300,9 +14349,9 @@ module.exports = __webpack_require__(66);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(16);
+__webpack_require__(17);
 
-window.Vue = __webpack_require__(39);
+window.Vue = __webpack_require__(40);
 
 window.events = new Vue();
 
@@ -14316,8 +14365,8 @@ window.flash = function (message) {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('study', __webpack_require__(42));
-Vue.component('subject', __webpack_require__(45));
+Vue.component('study', __webpack_require__(43));
+Vue.component('subject', __webpack_require__(46));
 Vue.component('update-study', __webpack_require__(49));
 Vue.component('update-subject', __webpack_require__(52));
 Vue.component('flash', __webpack_require__(55));
@@ -14328,11 +14377,11 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(17);
+window._ = __webpack_require__(18);
 window.Popper = __webpack_require__(4).default;
 
 /**
@@ -14344,7 +14393,7 @@ window.Popper = __webpack_require__(4).default;
 try {
   window.$ = window.jQuery = __webpack_require__(5);
 
-  __webpack_require__(19);
+  __webpack_require__(20);
 } catch (e) {}
 
 /**
@@ -14353,7 +14402,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(20);
+window.axios = __webpack_require__(21);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -14389,7 +14438,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -31499,10 +31548,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(18)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(19)(module)))
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -31530,7 +31579,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -35463,13 +35512,13 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(21);
+module.exports = __webpack_require__(22);
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35477,7 +35526,7 @@ module.exports = __webpack_require__(21);
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(6);
-var Axios = __webpack_require__(23);
+var Axios = __webpack_require__(24);
 var defaults = __webpack_require__(3);
 
 /**
@@ -35512,14 +35561,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(11);
-axios.CancelToken = __webpack_require__(37);
+axios.CancelToken = __webpack_require__(38);
 axios.isCancel = __webpack_require__(10);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(38);
+axios.spread = __webpack_require__(39);
 
 module.exports = axios;
 
@@ -35528,7 +35577,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 /*!
@@ -35555,7 +35604,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35563,8 +35612,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(32);
-var dispatchRequest = __webpack_require__(33);
+var InterceptorManager = __webpack_require__(33);
+var dispatchRequest = __webpack_require__(34);
 
 /**
  * Create a new instance of Axios
@@ -35641,7 +35690,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35660,7 +35709,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35693,7 +35742,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35721,7 +35770,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35794,7 +35843,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35854,7 +35903,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35929,7 +35978,7 @@ module.exports = (
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35972,7 +36021,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36032,7 +36081,7 @@ module.exports = (
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36091,18 +36140,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(34);
+var transformData = __webpack_require__(35);
 var isCancel = __webpack_require__(10);
 var defaults = __webpack_require__(3);
-var isAbsoluteURL = __webpack_require__(35);
-var combineURLs = __webpack_require__(36);
+var isAbsoluteURL = __webpack_require__(36);
+var combineURLs = __webpack_require__(37);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -36184,7 +36233,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36211,7 +36260,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36232,7 +36281,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36253,7 +36302,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36317,7 +36366,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36351,7 +36400,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47314,10 +47363,10 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(40).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(41).setImmediate))
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -47373,7 +47422,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(41);
+__webpack_require__(42);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -47387,7 +47436,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -47580,15 +47629,15 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(7)))
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(43)
+var __vue_script__ = __webpack_require__(44)
 /* template */
-var __vue_template__ = __webpack_require__(44)
+var __vue_template__ = __webpack_require__(45)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -47627,12 +47676,27 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_js__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_js__ = __webpack_require__(12);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -47712,6 +47776,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        clear: function clear(name) {
+            if (this.errors.has(name)) {
+                this.errors.clear(name);
+            }
+        },
         onAddTask: function onAddTask() {
             if (this.task == '') {
                 return;
@@ -47722,6 +47791,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
             this.taskInputs.push(newTask);
             this.task = '';
+            this.clear('tasks');
         },
         onDeleteTask: function onDeleteTask(id) {
             this.taskInputs = this.taskInputs.filter(function (task) {
@@ -47729,12 +47799,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         onAddGroup: function onAddGroup() {
+            if (this.group == '') {
+                return;
+            }
             var newGroup = {
                 id: Math.random() * Math.random() * 1000,
                 value: this.group
             };
             this.groupInputs.push(newGroup);
             this.group = '';
+            this.clear('groups');
         },
         onDeleteGroup: function onDeleteGroup(id) {
             this.groupInputs = this.groupInputs.filter(function (group) {
@@ -47742,17 +47816,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         send: function send() {
+            var _this = this;
+
+            if (this.taskInputs.length == 0 || this.groupInputs.length == 0 || this.name == '') {
+                return;
+            }
             axios.post('/study', {
                 name: this.name,
                 tasks: this.taskInputsValues,
                 groups: this.taskGroupsValues
             }).then(function () {
-                //window.location.href = "/subject";
-
+                window.location.href = "/studies";
             }).catch(function (error) {
-                return console.log(error.response.data.errors);
+                return _this.errors.record(error.response.data.errors);
             });
-            //.catch((error) => this.errors.record(error.response.data.errors));
         }
     },
     computed: {
@@ -47770,7 +47847,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47793,6 +47870,9 @@ var render = function() {
         submit: function($event) {
           $event.preventDefault()
           return _vm.send($event)
+        },
+        input: function($event) {
+          _vm.errors.clear($event.target.name)
         }
       }
     },
@@ -47811,8 +47891,14 @@ var render = function() {
                   expression: "name"
                 }
               ],
-              staticClass: "form-control",
-              attrs: { id: "name", type: "text", name: "name", autofocus: "" },
+              staticClass: "form-control mb-3",
+              attrs: {
+                id: "name",
+                type: "text",
+                name: "name",
+                autofocus: "",
+                required: ""
+              },
               domProps: { value: _vm.name },
               on: {
                 input: function($event) {
@@ -47822,7 +47908,14 @@ var render = function() {
                   _vm.name = $event.target.value
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.errors.has("name")
+              ? _c("span", {
+                  staticClass: "text-danger",
+                  domProps: { textContent: _vm._s(_vm.errors.get("name")) }
+                })
+              : _vm._e()
           ])
         ]),
         _vm._v(" "),
@@ -47856,12 +47949,15 @@ var render = function() {
                     }
                     return _vm.onAddTask($event)
                   },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.task = $event.target.value.trim()
-                  },
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.task = $event.target.value.trim()
+                    },
+                    _vm.clear
+                  ],
                   blur: function($event) {
                     _vm.$forceUpdate()
                   }
@@ -47881,6 +47977,13 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
+            _vm.errors.has("tasks")
+              ? _c("span", {
+                  staticClass: "text-danger",
+                  domProps: { textContent: _vm._s(_vm.errors.get("tasks")) }
+                })
+              : _vm._e(),
+            _vm._v(" "),
             _vm._l(_vm.taskInputs, function(taskInput) {
               return _c(
                 "ul",
@@ -47897,7 +48000,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "flex-grow-1 list-group-p form-control",
-                      attrs: { type: "text", name: "tasks[]", readonly: "" },
+                      attrs: { type: "text", name: "tasks", readonly: "" },
                       domProps: { value: taskInput.value },
                       on: {
                         input: function($event) {
@@ -47962,12 +48065,15 @@ var render = function() {
                     }
                     return _vm.onAddGroup($event)
                   },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.group = $event.target.value.trim()
-                  },
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.group = $event.target.value.trim()
+                    },
+                    _vm.clear
+                  ],
                   blur: function($event) {
                     _vm.$forceUpdate()
                   }
@@ -47987,6 +48093,13 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
+            _vm.errors.has("groups")
+              ? _c("span", {
+                  staticClass: "text-danger",
+                  domProps: { textContent: _vm._s(_vm.errors.get("groups")) }
+                })
+              : _vm._e(),
+            _vm._v(" "),
             _vm._l(_vm.groupInputs, function(groupInput) {
               return _c(
                 "ul",
@@ -48003,7 +48116,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "flex-grow-1 list-group-p form-control",
-                      attrs: { type: "text", name: "groups[]", readonly: "" },
+                      attrs: { type: "text", name: "groups", readonly: "" },
                       domProps: { value: groupInput.value },
                       on: {
                         input: function($event) {
@@ -48037,30 +48150,26 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("div", { staticClass: "form-group row mt-5" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-6 mx-auto d-flex justify-content-center" },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { disabled: _vm.errors.any(), type: "submit" }
+              },
+              [_vm._v("\n                Create\n            ")]
+            )
+          ]
+        )
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row mt-5" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-6 mx-auto d-flex justify-content-center" },
-        [
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [_vm._v("\n                Create\n            ")]
-          )
-        ]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -48071,13 +48180,13 @@ if (false) {
 }
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(46)
+var __vue_script__ = __webpack_require__(47)
 /* template */
 var __vue_template__ = __webpack_require__(48)
 /* template functional */
@@ -48118,12 +48227,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_js__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_js__ = __webpack_require__(12);
+//
 //
 //
 //
@@ -48268,6 +48378,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     computed: {
+        emptyGroups: function emptyGroups() {
+            return Object.keys(this.selected).length > 0;
+        },
         cekiram: function cekiram() {
             for (var key in this.checked) {
                 if (this.checked[key] == true) {
@@ -48275,6 +48388,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
             //return Object.keys(this.checked).length !== 0
+        },
+        studiesValues: function studiesValues() {
+            return _.keys(_.pickBy(this.checked));
         }
     },
     methods: {
@@ -48286,9 +48402,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         remove: function remove() {
             this.selected = {};
         },
+        removeStudies: function removeStudies() {
+            this.checked = {};
+        },
         send: function send() {
             var _this = this;
 
+            if (Object.keys(this.selected).length !== Object.keys(this.checked).length) {
+                return;
+            }
             axios.post('/subject', {
                 firstName: this.firstName,
                 lastName: this.lastName,
@@ -48296,7 +48418,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 dob: this.dob,
                 gender: this.gender,
                 comment: this.comment,
-                studies: this.checked,
+                studies: this.studiesValues,
                 groups: this.selected
 
             }).then(function () {
@@ -48316,55 +48438,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
     }
 });
-
-/***/ }),
-/* 47 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Errors; });
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Errors = function () {
-    function Errors() {
-        _classCallCheck(this, Errors);
-
-        this.errors = {};
-    }
-
-    _createClass(Errors, [{
-        key: "has",
-        value: function has(field) {
-            return this.errors.hasOwnProperty(field);
-        }
-    }, {
-        key: "any",
-        value: function any() {
-            return Object.keys(this.errors).length > 0;
-        }
-    }, {
-        key: "get",
-        value: function get(field) {
-            if (this.errors[field]) {
-                return this.errors[field][0];
-            }
-        }
-    }, {
-        key: "record",
-        value: function record(errors) {
-            this.errors = errors;
-        }
-    }, {
-        key: "clear",
-        value: function clear(field) {
-            delete this.errors[field];
-        }
-    }]);
-
-    return Errors;
-}();
 
 /***/ }),
 /* 48 */
@@ -48690,21 +48763,34 @@ var render = function() {
             [
               _c("div", { staticClass: "d-flex" }, [
                 _c("p", { staticClass: "flex-grow-1 text-center h4" }, [
-                  _vm._v("Studies")
+                  _vm._v("Studies"),
+                  _vm.studiesValues.length > 0
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-sm ml-3",
+                          attrs: { type: "button" },
+                          on: { click: _vm.removeStudies }
+                        },
+                        [_vm._v("X")]
+                      )
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _vm.cekiram
                   ? _c("p", { staticClass: "text-center flex-grow-1 h4" }, [
                       _vm._v("Groups"),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-sm ml-3",
-                          attrs: { type: "button" },
-                          on: { click: _vm.remove }
-                        },
-                        [_vm._v("X")]
-                      )
+                      _vm.emptyGroups
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-sm ml-3",
+                              attrs: { type: "button" },
+                              on: { click: _vm.remove }
+                            },
+                            [_vm._v("X")]
+                          )
+                        : _vm._e()
                     ])
                   : _vm._e()
               ]),
@@ -48712,73 +48798,42 @@ var render = function() {
               _vm._l(_vm.studies, function(study) {
                 return _c("div", { key: study.id, staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-6 mb-4" }, [
-                    _c(
-                      "div",
-                      { staticClass: "custom-control custom-checkbox" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.checked[study.id],
-                              expression: "checked[study.id]"
-                            }
-                          ],
-                          staticClass: "custom-control-input",
-                          attrs: {
-                            type: "checkbox",
-                            id: study.id,
-                            name: "studies"
-                          },
-                          domProps: {
-                            value: study.id,
-                            checked: Array.isArray(_vm.checked[study.id])
-                              ? _vm._i(_vm.checked[study.id], study.id) > -1
-                              : _vm.checked[study.id]
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$a = _vm.checked[study.id],
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = study.id,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.checked,
-                                      study.id,
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.checked,
-                                      study.id,
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(_vm.checked, study.id, $$c)
-                              }
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
+                    _c("div", { staticClass: "custom-control custom-radio" }, [
+                      _c("input", {
+                        directives: [
                           {
-                            staticClass: "custom-control-label",
-                            attrs: { for: study.id }
-                          },
-                          [_vm._v(_vm._s(study.name))]
-                        )
-                      ]
-                    )
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.checked[study.id],
+                            expression: "checked[study.id]"
+                          }
+                        ],
+                        staticClass: "custom-control-input",
+                        attrs: {
+                          type: "radio",
+                          id: study.id,
+                          name: "studies[" + study.id + "]"
+                        },
+                        domProps: {
+                          value: study.id,
+                          checked: _vm._q(_vm.checked[study.id], study.id)
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.$set(_vm.checked, study.id, study.id)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "custom-control-label",
+                          attrs: { for: study.id }
+                        },
+                        [_vm._v(_vm._s(study.name))]
+                      )
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-6 mb-4" }, [
@@ -48799,55 +48854,62 @@ var render = function() {
                                 },
                                 [
                                   _c("li", { staticClass: "list-group-item" }, [
-                                    _c("div", { staticClass: "form-check" }, [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.selected[s.study_id],
-                                            expression: "selected[s.study_id]"
-                                          }
-                                        ],
-                                        staticClass: "form-check-input",
-                                        attrs: {
-                                          type: "radio",
-                                          id: s.id + study.name
-                                        },
-                                        domProps: {
-                                          value: s.id,
-                                          checked: _vm._q(
-                                            _vm.selected[s.study_id],
-                                            s.id
-                                          )
-                                        },
-                                        on: {
-                                          input: _vm.clear,
-                                          change: function($event) {
-                                            _vm.$set(
-                                              _vm.selected,
-                                              s.study_id,
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "custom-control custom-radio"
+                                      },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.selected[s.study_id],
+                                              expression: "selected[s.study_id]"
+                                            }
+                                          ],
+                                          staticClass: "custom-control-input",
+                                          attrs: {
+                                            type: "radio",
+                                            id: s.id + study.name
+                                          },
+                                          domProps: {
+                                            value: s.id,
+                                            checked: _vm._q(
+                                              _vm.selected[s.study_id],
                                               s.id
                                             )
+                                          },
+                                          on: {
+                                            input: _vm.clear,
+                                            change: function($event) {
+                                              _vm.$set(
+                                                _vm.selected,
+                                                s.study_id,
+                                                s.id
+                                              )
+                                            }
                                           }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass: "form-check-label",
-                                          attrs: { for: s.id + study.name }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\r\n                                        " +
-                                              _vm._s(s.name) +
-                                              "\r\n                                    "
-                                          )
-                                        ]
-                                      )
-                                    ])
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "custom-control-label",
+                                            attrs: { for: s.id + study.name }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\r\n                                        " +
+                                                _vm._s(s.name) +
+                                                "\r\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
                                   ])
                                 ]
                               )
@@ -49051,6 +49113,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         onAddGroup: function onAddGroup() {
+            if (this.group == '') {
+                return;
+            }
             var newGroup = {
                 id: Math.random() * Math.random() * 1000,
                 value: this.group
@@ -49749,7 +49814,7 @@ var content = __webpack_require__(57);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(13)("5992d74f", content, false, {});
+var update = __webpack_require__(14)("5992d74f", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -49768,7 +49833,7 @@ if(false) {
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(12)(false);
+exports = module.exports = __webpack_require__(13)(false);
 // imports
 
 
@@ -49951,7 +50016,7 @@ var content = __webpack_require__(63);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(13)("37abf342", content, false, {});
+var update = __webpack_require__(14)("37abf342", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -49970,7 +50035,7 @@ if(false) {
 /* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(12)(false);
+exports = module.exports = __webpack_require__(13)(false);
 // imports
 
 

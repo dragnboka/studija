@@ -31,13 +31,14 @@ Route::get('/exel', 'Export\ExportsController@exportSubjects')->name('export.sub
 Route::get('/exel/{study}', 'Export\ExportsController@exportStudy')->name('exels');
 Route::get('/excels/{study}/{subject}', 'Export\ExportsController@exportSubjectExperiments')->name('subject.experiments');
 
-Route::get('/study', 'StudyController@index')->name('study.index');
+Route::get('/studies', 'StudyController@index')->name('study.index');
 Route::post('/study', 'StudyController@store');
 Route::get('/study/create', 'StudyController@create')->name('study.create');
 Route::get('/study/{study}/edit', 'StudyController@edit')->name('study.edit');
 Route::put('/study/{study}', 'StudyController@update')->name('study.update');
 Route::post('/study/{study}', 'StudyController@storeNew');
 Route::get('/study/{study}', 'StudyController@show')->name('study.show');
+Route::delete('/study/{study}', 'StudyController@destroy')->name('study.destroy');
 
 Route::post('/study/task/{task}', 'TaskController@store')->name('task.store');
 

@@ -75,15 +75,16 @@
 
             <div class="mt-3">
                 <div class="d-flex">
-                    <p class="flex-grow-1 text-center h4">Studies</p>
-                    <p v-if="cekiram" class="text-center flex-grow-1 h4">Groups<button @click="remove" type="button"
+                    <p class="flex-grow-1 text-center h4">Studies<button v-if="studiesValues.length > 0" @click="removeStudies" type="button"
+                    class="btn btn-danger btn-sm ml-3">X</button></p>
+                    <p v-if="cekiram" class="text-center flex-grow-1 h4">Groups<button v-if="emptyGroups" @click="remove" type="button"
                     class="btn btn-danger btn-sm ml-3">X</button></p>
                 </div>
 
                 <div class="row" v-for="study in studies" :key="study.id">
                     <div class="col-md-6 mb-4">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" :id=study.id v-model="checked[study.id]" :value=study.id name="studies">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" :id=study.id v-model="checked[study.id]" :value=study.id :name="`studies[${study.id}]`">
                             <label class="custom-control-label" :for=study.id>{{study.name}}</label>
                         </div>
                         
@@ -93,9 +94,9 @@
                         <div class="card" v-if="checked[study.id]" style="width: 18rem;">
                             <ul v-for="s in study.groups" :key=s.id class="list-group list-group-flush">
                                 <li class="list-group-item" >
-                                    <div class="form-check" >
-                                    <input  class="form-check-input"  type="radio" :value=s.id v-model="selected[s.study_id]" :id=s.id+study.name @input="clear">   
-                                    <label class="form-check-label" :for=s.id+study.name>
+                                    <div class="custom-control custom-radio" >
+                                    <input  class="custom-control-input"  type="radio" :value=s.id v-model="selected[s.study_id]" :id=s.id+study.name @input="clear">   
+                                    <label class="custom-control-label" :for=s.id+study.name>
                                         {{s.name}}
                                     </label>
                                     </div>
@@ -141,6 +142,9 @@ export default {
         }
     },
     computed: {
+        emptyGroups() {
+            return Object.keys(this.selected).length > 0
+        },
         cekiram(){
             for (var key in this.checked) {
                 if (this.checked[key] == true) {
@@ -148,7 +152,10 @@ export default {
                 }
             }
             //return Object.keys(this.checked).length !== 0
-        }
+        },
+        studiesValues(){
+            return _.keys(_.pickBy(this.checked));
+        },
     },
     methods: {
         clear(){
@@ -159,24 +166,29 @@ export default {
         remove() {
             this.selected = {}    
         },
+        removeStudies() {
+            this.checked = {}    
+        },
 
         send(){
+            if (Object.keys(this.selected).length !== Object.keys(this.checked).length) {
+                return
+            }
             axios.post('/subject', {
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    middleName: this.middleName,
-                    dob: this.dob,
-                    gender: this.gender,
-                    comment: this.comment,
-                    studies: this.checked,
-                    groups: this.selected,
-                    
+                firstName: this.firstName,
+                lastName: this.lastName,
+                middleName: this.middleName,
+                dob: this.dob,
+                gender: this.gender,
+                comment: this.comment,
+                studies: this.studiesValues,
+                groups: this.selected,
                 
-                }).then(() => {
-                    window.location.href = "/subject";
-                    
-                })
-                .catch((error) => this.errors.record(error.response.data.errors));
+            
+            }).then(() => {
+                window.location.href = "/subject";
+            })
+            .catch((error) => this.errors.record(error.response.data.errors));
         }
     },
     mounted(){

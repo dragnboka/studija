@@ -21,7 +21,6 @@
                             <div class="col-md-4">
                                 <h3>Study name</h3>
                                 <div class="form-group">
-                                    <label for="name" class="col-form-label">{{ __('Ime') }}</label>
                                     <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name', $study->name) }}"    autofocus >
             
                                     @if ($errors->has('name'))
