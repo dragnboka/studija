@@ -9,34 +9,34 @@
         <div class="col-sm-12">
             @can('admin')
             <div class="d-flex justify-content-around">
-            <a class="btn btn-success-my w-25" href="{{route('subject.edit', $subject)}}">Edit</a>
-            <button type="button" class="btn btn-outline-danger w-25" data-toggle="modal" data-target="#exampleModal">
+                <a class="btn btn-success-my w-25" href="{{route('subject.edit', $subject)}}">Edit</a>
+                <button type="button" class="btn btn-outline-danger w-25" data-toggle="modal" data-target="#exampleModal">
                     Delete {{$subject->ime}}
                 </button>
                 
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete subject {{$subject->ime}}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete subject {{$subject->ime}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                            <form action="{{route('subject.destroy', $subject)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit">Yes</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-                        <form action="{{route('subject.destroy', $subject)}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" type="submit">Yes</button>
-                            </form>
-                        </div>
-                    </div>
                     </div>
                 </div>
-            @endcan
             </div>
+            @endcan
         </div>
     </div>
     <div class="row">
@@ -102,34 +102,42 @@
     </div>
 
     @if(count($studyGroups))
-        <div class="row mb-5">
+        <div class="row my-3">
             <div class="col-md-12">
-                <h2 class="text-center">Choose task for new measuer</h2>
-                <div id="accordion">
-                    @foreach ($subject->studies as $study)
-                    <div class="card">
-                        <div class="card-header p-0" id="heading{{$study->id}}">
-                        <h5 class="mb-0 d-flex">
-                            <button class="btn flex-grow-1 p-3" data-toggle="collapse" data-target="#{{$study->id}}" aria-expanded="true" aria-controls="collapseOne">
-                                {{$study->name}}
-                            </button>
-                        </h5>
-                        </div>
+                <h2 class="text-center mb-3">Select study to add new record</h2>
+                
+                @foreach ($subject->studies as $study)
+                    <button type="button" class="btn btn-modal w-50 d-flex mb-2 mx-auto" data-toggle="modal" data-target="#{{$study->id}}">
+                        <span class="flex-grow-1">{{$study->name}}</span> <i class="fa fa-plus p-2" aria-hidden="true"></i>
+
+                    </button>
                     
-                        <div id="{{$study->id}}" class="collapse" aria-labelledby="heading{{$study->id}}" data-parent="#accordion">
-                            <div class="card-body p-0">
-                                <ul class="list-group list-group--task">
-                                    @foreach ($study->tasks as $task)
-                                    <li class="list-group-item p-0 text-center d-flex">
-                                        <a class="flex-grow-1 p-3" href="{{route('experiment.show', [$subject,$task])}}">{{$task->name}}</a>
-                                    </li>
-                                    @endforeach
-                                </ul>
+                    <!-- Modal -->
+                    <div class="modal fade" id="{{$study->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{$study->id}}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Choose task for new measuer</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul class="list-group list-group--task">
+                                        @foreach ($study->tasks as $task)
+                                        <li class="list-group-item p-0 text-center d-flex">
+                                            <a class="flex-grow-1 p-3" href="{{route('experiment.show', [$subject,$task])}}">{{$task->name}}</a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    @endforeach
-                </div>
+                    </div> <!--end of Modal -->
+                @endforeach
             </div>
         </div>
 
@@ -137,22 +145,26 @@
             <div class="col-md-12">
                 @if(count($experiments))
                 <h2 class="my-3 text-center">All measurements for {{$subject->ime}}</h2>
-                <div class="btn-group mb-4">
-                    <button type="button" class="btn btn-outline-primary btn-square dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{-- {{request()->input($key) ?? $key}} --}}
-                        Tasks
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        @foreach ($subject->studies as $study)
-                        @foreach ($study->tasks as $task)
-                            <a class="dropdown-item" href="/subject/{{$subject->id}}?task={{$task->name}}">{{$task->name}}</a>
-                        @endforeach
-                        @endforeach
-                    </div> 
-                </div>
-                {{-- @foreach ($experiments->task as $task)
-                    {{$task->name}}
-                @endforeach --}}
+                
+                <div class="flex mb-4">
+                    @foreach ($subject->studies as $study)
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-primary btn-square dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{$study->name}}
+                        </button>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            @foreach ($study->tasks as $task)
+                                <a class="dropdown-item" href="/subject/{{$subject->id}}?task={{$task->name}}">{{$task->name}}</a>
+                            @endforeach
+                        </div> 
+                    </div>
+                    @endforeach
+                    @if(request('task'))
+                        <a href="{{ route('subject.show', $subject) }}" class="btn btn-danger btn-sm ml-auto">clear filter X</a>
+                    @endif
+                </div>   
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -175,7 +187,14 @@
                 </table>
                 {{ $experiments->links() }}
                 @else
+                    @if(request('task'))
+                        <h3 class="text-center">No measurements for searched task {{request('task')}}
+                            <a href="{{ route('subject.show', $subject) }}" class="btn btn-danger btn-sm ml-auto">clear filter X</a>
+                        </h3>
+                        
+                    @else
                     <h3 class="text-center">No measurements for {{$subject->ime}}</h3>
+                    @endif
                 @endif
             
             </div>

@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="container">
-    <a class="btn btn-primary d-block mb-3" href="{{ route('subject.show', $subject) }}">Back</a>
+    <a class="btn btn-primary d-block w-10 mb-3" href="{{ route('subject.show', $subject) }}"><i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Back</a>
     
     <h2 class="mb-4">Task: {{$task->name}} 
         @if ($komentar)
@@ -44,7 +45,7 @@
                 <h3>Commetn for task</h3>
 
                 <div class="form-group">
-                    <label for="task_komentar" class="col-form-label">Commetn for task</label>
+                    <label for="task_komentar" class="col-form-label">Comment for task</label>
                     <textarea name="task_komentar" class="form-control" id="task_komentar" cols="30" rows="3"></textarea>
                 </div>
 

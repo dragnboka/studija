@@ -11,26 +11,6 @@ use App\Experiment;
 class ExperimentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,6 +18,9 @@ class ExperimentController extends Controller
      */
     public function store(Request $request, Subject $subject, Task $task)
     {
+        if(!$this->tasksIds($subject)->contains($task->id)){
+            abort(404);
+        };
         
         $time = implode(":", array($request->sati, $request->minuti));
         $experiment = new Experiment;
@@ -66,7 +49,10 @@ class ExperimentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Subject $subject, Task $task)
-    {
+    {       
+        if(!$this->tasksIds($subject)->contains($task->id)){
+            abort(404);
+        };
         $komentar = $task->subject()->where('subject_id', $subject->id)->first();
         
         $experiments = Experiment::where([['task_id', $task->id],['subject_id', $subject->id]])->get();
@@ -74,37 +60,14 @@ class ExperimentController extends Controller
         return view('experiments.show', compact('task','experiments','subject','komentar'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Study  $study
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Study $study)
+    protected function tasksIds(Subject $subject)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Study  $study
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Study $study)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Study  $study
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Study $study)
-    {
-        //
+        return \DB::table('subjects')
+        ->join('study_subject', 'subjects.id', '=', 'study_subject.subject_id')
+        ->join('studies', 'study_subject.study_id', '=', 'studies.id')
+        ->join('tasks', 'studies.id', '=', 'tasks.study_id')
+        ->where('subjects.id', $subject->id)
+        ->where('studies.deleted_at', null)
+        ->pluck('tasks.id');
     }
 }

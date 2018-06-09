@@ -10,3 +10,17 @@
 .active-group {
     background-color: #74e0f3;
 }
+.btn-modal {
+    line-height: 2;
+    color: #000;
+    background-color: #66a3e0;
+    border-color: #657b92;
+    &:hover {
+        color: #fff;
+        background-color: #1d78d4;
+        border-color: #dae0e5; 
+    }
+}
+.w-10 {
+    width: 10%
+}
