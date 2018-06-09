@@ -57,7 +57,7 @@
         <div class="content my-4">
             <div class="row">
                 <div class="col-sm-6 p-5">
-                    <h1>Software System for Recording and Intelligent Analysis of Patient Data</h1>
+                    <h1>Software System for Recording and Intelligent Analysis of Patient Data new branch</h1>
                 </div>
                 <div class="col-sm-6">
                     <img src="/images/doctor-using-a-digital-tablet.jpg" alt="">
