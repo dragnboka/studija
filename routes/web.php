@@ -46,10 +46,7 @@ Route::get('/subject', 'SubjectController@index')->name('subject.index');
 
 Route::get('/{study}/{group}/subject/create', 'SubjectController@create')->name('subject.create');
 Route::post('/{study}/{group}/subject', 'SubjectController@store')->name('subject.store');
-Route::get('/{study}/{group}/subjects/create', 'SubjectController@showCreate')->name('add.subject.to.study.create');
-//Route::post('/subject/{subject}', 'SubjectController@addStudy');
-Route::get('/{study}/{group}/{subject}/add', 'SubjectController@addStudy')->name('add.subject.to.study');
-
+Route::post('/subject/{subject}', 'SubjectController@addStudy');
 Route::get('/subject/{subject}', 'SubjectController@show')->name('subject.show');
 Route::get('/subject/{subject}/edit', 'SubjectController@edit')->name('subject.edit');
 Route::put('/subject/{subject}', 'SubjectController@update')->name('subject.update');

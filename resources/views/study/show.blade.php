@@ -43,7 +43,7 @@
     </div>
            
     <div class="row mb-4">
-        <div class="col-sm-4">
+        <div class="col-sm-5">
             <div class="card">
                 <div class="card-header text-white bg-dark">
                     <p class="m-0 p-1">Tasks</p> 
@@ -56,21 +56,19 @@
                 </ul>
             </div>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-7">
             <table class="table">
                 <tr>
                     <th>Groups</th>
                     <th>Add new subject to study</th>
-                    <th>Add existing subject to study</th>
                 </tr>
                 @foreach ($study->groups as $group)
                 <tr>
-                    <td>
-                        <a class="d-flex {{request()->query('group') == $group->name ? 'active-group' : ''}}" href="/study/{{$study->name}}?group={{urlencode($group->name)}}">{{$group->name}}<span class="badge badge-pill badge-danger p-2 ml-auto">{{$group->subjects->count()}}</span>
+                    <td class="p-0 w-60">
+                        <a class="d-flex p-2 {{request()->query('group') == $group->name ? 'active-group' : ''}}" href="/study/{{$study->name}}?group={{urlencode($group->name)}}">{{$group->name}}<span class="badge badge-pill badge-danger p-2 ml-auto">{{$group->subjects->count()}}</span>
                         </a>
                     </td>
-                    <td><a href="{{ route('subject.create', [$study->name,$group->name]) }}">Add</a></td>
-                    <td><a href="{{ route('add.subject.to.study.create', [$study->name,$group->name]) }}">Add</a></td>
+                    <td class="p-0 w-40 text-center align-middle"><a class="btn btn-success " href="{{ route('subject.create', [$study->name,$group->name]) }}">Add</a></td>
                 </tr>
                 @endforeach
             </table>

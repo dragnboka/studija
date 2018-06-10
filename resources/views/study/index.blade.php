@@ -11,9 +11,9 @@
         <div class="col-md-10 order-md-1">
             <h2 class="mb-3 text-center">All studies</h2>
 
-            <table class="table">
-                <thead>
-                    <tr>
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr class="text-center">
                         <th>Id</th>
                         <th>Name</th>
                         <th>Start Date</th>
@@ -24,11 +24,11 @@
                 <tbody>
                     @foreach ($studies as $study)
                     <tr>
-                        <td>{{$study->id}}</td>
-                        <td><a href="{{route('study.show', $study->name)}}">{{$study->name}}</a></td>
-                        <td>{{$study->created_at->toFormattedDateString()}}</td>
-                        <td class="text-center">{{$study->subjects_count}}</td>
-                        <td><a href="{{route('exels', $study)}}">exel</a></td>
+                        <td class="p-0 align-middle text-center">{{$study->id}}</td>
+                        <td class="d-flex p-0"><a class="p-3 flex-grow-1" href="{{route('study.show', $study->name)}}">{{$study->name}}</a></td>
+                        <td class="p-0 align-middle text-center">{{$study->created_at->toFormattedDateString()}}</td>
+                        <td class="text-center p-0 align-middle">{{$study->subjects_count}}</td>
+                        <td class="p-0 align-middle text-center"><a href="{{route('exels', $study)}}">exel</a></td>
                     </tr>
                     @endforeach
                 </tbody>

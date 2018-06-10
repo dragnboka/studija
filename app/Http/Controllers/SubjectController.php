@@ -132,24 +132,17 @@ class SubjectController extends Controller
         
         return redirect()->route('subject.show',$subject->id)->with('flash', 'Profile info has been changed.');
     }
-    public function addStudy(Study $study, Group $group, Subject $subject)
-    {   
-        $subject->studies()->attach($study->id);
     
-        $subject->groups()->attach($group->id);
+    public function addStudy(AddStudyToSubjectRequest $request, Subject $subject)
+    {
+        //$ids = array_values(array_filter($request->studies));
         
-        return redirect()->route('subject.show',$subject->id)->with('flash', "$subject->ime was added to study $study->name");
+        $subject->studies()->attach($request->studies);
+    
+        $subject->groups()->attach($request->groups);
+        
+        $request->session()->flash('flash', "$subject->ime was added to new study");
     }
-    // public function addStudy(AddStudyToSubjectRequest $request, Subject $subject)
-    // {
-    //     //$ids = array_values(array_filter($request->studies));
-        
-    //     $subject->studies()->attach($request->studies);
-    
-    //     $subject->groups()->attach($request->groups);
-        
-    //     $request->session()->flash('flash', "$subject->ime was added to new study");
-    // }
 
     /**
      * Remove the specified resource from storage.

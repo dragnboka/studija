@@ -49431,7 +49431,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             query: '',
             results: [],
             studies: []
-            //selected: 0,
         };
     },
 
@@ -49451,19 +49450,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         send: function send() {
             return window.location.href = '/search?query=' + this.query;
         },
-
-        // up() {
-        //     if (this.selected == 0) {
-        //     return;
-        //     }
-        //     this.selected -= 1;
-        // },
-        // down() {
-        //     if (this.selected >= this.results.length - 1) {
-        //     return;
-        //     }
-        //     this.selected += 1;
-        // },
         handleClickOutside: function handleClickOutside(evt) {
             if (!this.$el.contains(evt.target)) {
                 this.query = '';
