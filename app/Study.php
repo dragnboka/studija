@@ -9,6 +9,10 @@ class Study extends Model
 {
     use SoftDeletes;
 
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
     /**
      * The attributes that should be mutated to dates.
      *

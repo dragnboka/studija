@@ -22,7 +22,6 @@ window.flash = function (message) {
  */
 
 Vue.component('study', require('./components/Study.vue'))
-Vue.component('subject', require('./components/Subject.vue'))
 Vue.component('update-study', require('./components/UpdateStudy.vue'))
 Vue.component('update-subject', require('./components/UpdateSubject.vue'))
 Vue.component('flash', require('./components/Flash.vue'));

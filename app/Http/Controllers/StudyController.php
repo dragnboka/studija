@@ -136,7 +136,7 @@ class StudyController extends Controller
             $group->save();
         }
 
-        return redirect()->route('study.show',$study->id)->with('flash', 'Study info has been changed.');
+        return redirect()->route('study.show',$study->name)->with('flash', 'Study info has been changed.');
     }
 
     /**

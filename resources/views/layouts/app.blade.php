@@ -39,7 +39,7 @@
                     <ul class="navbar-nav mr-auto flex-grow-1">
                         <li><a class="nav-link" href="{{ route('study.index') }}">Studies</a></li>
                         <li><a class="nav-link" href="{{ route('subject.index') }}">Subjects</a></li>
-                        <li><a class="nav-link" href="{{ route('subject.create') }}">Create subject</a></li>
+                        {{-- <li><a class="nav-link" href="{{ route('subject.create') }}">Create subject</a></li> --}}
                        
                         <li class="search-list mr-3 d-flex justify-content-center flex-grow-1"><auto-complete></auto-complete></li>
                         

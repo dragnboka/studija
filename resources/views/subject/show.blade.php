@@ -89,7 +89,7 @@
                 <tr>
                     <td>
                         <p>{{$study->studyName}}</p>
-                        <a class="btn btn-primary" href="{{route('subject.experiments', [$study->id,$subject])}}">Export subject Experiments</a>
+                        <a class="btn btn-primary" href="{{route('subject.experiments', [$study->studyName,$subject])}}">Export subject Experiments</a>
                     </td>
                     <td>{{$study->groupName}}</td>
                 </tr>

@@ -27,7 +27,7 @@
                         </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-                        <form action="{{route('study.destroy', $study)}}" method="POST">
+                        <form action="{{route('study.destroy', $study->name)}}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger" type="submit">Yes</button>
@@ -43,7 +43,7 @@
     </div>
            
     <div class="row mb-4">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <div class="card">
                 <div class="card-header text-white bg-dark">
                     <p class="m-0 p-1">Tasks</p> 
@@ -56,23 +56,24 @@
                 </ul>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header text-white bg-dark d-flex">
-                    <p class="m-0 p-1">Groups</p> 
-                    @if(request('group'))
-                    <a href="{{ route('study.show', $study) }}" class="btn btn-danger btn-sm ml-auto">X</a>
-                    @endif
-                </div>
-
-                <ul class="list-group list-group--group list-group-flush">
-                    @foreach ($study->groups as $group)
-                        <li class="list-group-item p-0">
-                            <a class="d-flex p-3 {{request()->query('group') == $group->name ? 'active-group' : ''}}" href="/study/{{$study->id}}?group={{urlencode($group->name)}}">{{$group->name}}<span class="badge badge-pill badge-danger p-2 ml-auto">{{$group->subjects->count()}}</span></a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="col-sm-8">
+            <table class="table">
+                <tr>
+                    <th>Groups</th>
+                    <th>Add new subject to study</th>
+                    <th>Add existing subject to study</th>
+                </tr>
+                @foreach ($study->groups as $group)
+                <tr>
+                    <td>
+                        <a class="d-flex {{request()->query('group') == $group->name ? 'active-group' : ''}}" href="/study/{{$study->name}}?group={{urlencode($group->name)}}">{{$group->name}}<span class="badge badge-pill badge-danger p-2 ml-auto">{{$group->subjects->count()}}</span>
+                        </a>
+                    </td>
+                    <td><a href="{{ route('subject.create', [$study->name,$group->name]) }}">Add</a></td>
+                    <td><a href="{{ route('add.subject.to.study.create', [$study->name,$group->name]) }}">Add</a></td>
+                </tr>
+                @endforeach
+            </table>
         </div>
     </div>
 

@@ -16,7 +16,7 @@
     </li>
     <li class="list-group-item bg-info" v-if="studies.length">studije</li>
     <li class="list-group-item p-0" v-for="study in studies" :key="study.name">
-     <a class="d-block p-2" :href="`/study/${study.id}`">{{ study.name }}</a>
+     <a class="d-block p-2" :href="`/study/${study.name}`">{{ study.name }}</a>
     </li>
    </ul>
   </div>

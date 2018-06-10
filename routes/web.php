@@ -43,12 +43,17 @@ Route::delete('/study/{study}', 'StudyController@destroy')->name('study.destroy'
 Route::post('/study/task/{task}', 'TaskController@store')->name('task.store');
 
 Route::get('/subject', 'SubjectController@index')->name('subject.index');
-Route::post('/subject', 'SubjectController@store');
-Route::get('/subject/create', 'SubjectController@create')->name('subject.create');
+
+Route::get('/{study}/{group}/subject/create', 'SubjectController@create')->name('subject.create');
+Route::post('/{study}/{group}/subject', 'SubjectController@store')->name('subject.store');
+Route::get('/{study}/{group}/subjects/create', 'SubjectController@showCreate')->name('add.subject.to.study.create');
+//Route::post('/subject/{subject}', 'SubjectController@addStudy');
+Route::get('/{study}/{group}/{subject}/add', 'SubjectController@addStudy')->name('add.subject.to.study');
+
 Route::get('/subject/{subject}', 'SubjectController@show')->name('subject.show');
 Route::get('/subject/{subject}/edit', 'SubjectController@edit')->name('subject.edit');
 Route::put('/subject/{subject}', 'SubjectController@update')->name('subject.update');
-Route::post('/subject/{subject}', 'SubjectController@addStudy');
+
 Route::delete('/subject/{subject}', 'SubjectController@destroy')->name('subject.destroy');
 
 Route::get('/subject/{subject}/{task}', 'ExperimentController@show')->name('experiment.show');

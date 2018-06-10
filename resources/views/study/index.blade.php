@@ -25,7 +25,7 @@
                     @foreach ($studies as $study)
                     <tr>
                         <td>{{$study->id}}</td>
-                        <td><a href="{{route('study.show', $study)}}">{{$study->name}}</a></td>
+                        <td><a href="{{route('study.show', $study->name)}}">{{$study->name}}</a></td>
                         <td>{{$study->created_at->toFormattedDateString()}}</td>
                         <td class="text-center">{{$study->subjects_count}}</td>
                         <td><a href="{{route('exels', $study)}}">exel</a></td>

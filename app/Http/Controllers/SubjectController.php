@@ -34,9 +34,9 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Study $study, Group $group)
     {
-        return view('subject.create');
+        return view('subject.create', compact('study', 'group'));
     }
 
     /**
@@ -45,7 +45,7 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubjectStoreRequest $request)
+    public function store(SubjectStoreRequest $request, Study $study, Group $group)
     {
         $subject = new Subject;
         $subject->ime = $request->firstName;
@@ -55,14 +55,12 @@ class SubjectController extends Controller
         $subject->pol = $request->gender;
         $subject->komentar = $request->comment;
         $subject->save();
-           
-        $ids = array_values(array_filter($request->studies));
         
-        $subject->studies()->attach($ids);
+        $subject->studies()->attach($study->id);
 
-        $subject->groups()->attach($request->groups);
+        $subject->groups()->attach($group->id);
 
-        $request->session()->flash('flash', "$subject->ime was added");
+        return redirect()->route('subject.show',$subject->id)->with('flash', "$subject->ime was added");
     }
 
     /**
@@ -89,6 +87,15 @@ class SubjectController extends Controller
         $subject = $subject->where('id',$subject->id)->with('studies.tasks')->first();
         
         return view('subject.show', compact('subject','experiments','studyGroups'));
+    }
+
+    public function showCreate(Request $request, Study $study, Group $group)
+    {
+        $subjects = Subject::whereDoesntHave('studies', function ($query) use ($study)  {
+            $query->where('studies.id', $study->id);
+        })->get();
+        
+        return view('study.subjects.index', compact('subjects','study','group'));
     }
     
 
@@ -125,16 +132,24 @@ class SubjectController extends Controller
         
         return redirect()->route('subject.show',$subject->id)->with('flash', 'Profile info has been changed.');
     }
-    public function addStudy(AddStudyToSubjectRequest $request, Subject $subject)
-    {
-        //$ids = array_values(array_filter($request->studies));
-        
-        $subject->studies()->attach($request->studies);
+    public function addStudy(Study $study, Group $group, Subject $subject)
+    {   
+        $subject->studies()->attach($study->id);
     
-        $subject->groups()->attach($request->groups);
+        $subject->groups()->attach($group->id);
         
-        $request->session()->flash('flash', "$subject->ime was added to new study");
+        return redirect()->route('subject.show',$subject->id)->with('flash', "$subject->ime was added to study $study->name");
     }
+    // public function addStudy(AddStudyToSubjectRequest $request, Subject $subject)
+    // {
+    //     //$ids = array_values(array_filter($request->studies));
+        
+    //     $subject->studies()->attach($request->studies);
+    
+    //     $subject->groups()->attach($request->groups);
+        
+    //     $request->session()->flash('flash', "$subject->ime was added to new study");
+    // }
 
     /**
      * Remove the specified resource from storage.
