@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title','Study')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -37,8 +37,8 @@
                     <!-- Left Side Of Navbar -->
                     @auth
                     <ul class="navbar-nav mr-auto flex-grow-1">
-                        <li><a class="nav-link" href="{{ route('study.index') }}">Studies</a></li>
-                        <li><a class="nav-link" href="{{ route('subject.index') }}">Subjects</a></li>
+                        <li><a class="nav-link {{request()->is('studies') ? 'active' : ''}}" href="{{ route('study.index') }}">Studies</a></li>
+                        <li><a class="nav-link {{request()->is('subject') ? 'active' : ''}}" href="{{ route('subject.index') }}">Subjects</a></li>
                         {{-- <li><a class="nav-link" href="{{ route('subject.create') }}">Create subject</a></li> --}}
                        
                         <li class="search-list mr-3 d-flex justify-content-center flex-grow-1"><auto-complete></auto-complete></li>
@@ -50,15 +50,15 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                            <li><a class="nav-link {{request()->is('login') ? 'active' : ''}}" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                            <li><a class="nav-link {{request()->is('register') ? 'active' : ''}}" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->fullName }} <span class="caret"></span>
                                 </a>
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu m-0" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

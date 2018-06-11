@@ -12,15 +12,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExportsController extends Controller
 {
-    public function exportSubjects() 
-    {
-        return Excel::download(new SubjectsExport, 'invoices.xlsx');
-        //return Excel::download(new SubjectsExport, 'invoices.csv');
-    }
-
+   
     public function exportStudy(Study $study) 
     {
-        return Excel::download(new StudyExport($study), "$study->name subjects.xlsx");
+        if(count($study->subjects)) {
+            return Excel::download(new StudyExport($study), "$study->name subjects.xlsx");
+        } else {
+            return back()->withFlash('No data to export');
+        }
     }
 
     public function exportSubjectExperiments(Study $study, Subject $subject) 

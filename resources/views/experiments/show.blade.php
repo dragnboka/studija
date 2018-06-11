@@ -1,9 +1,32 @@
 @extends('layouts.app')
 
+@section('title',"$subject->ime experiments for $task->name")
+
 @section('content')
 <div class="container">
-    <a class="btn btn-primary d-block w-10 mb-3" href="{{ route('subject.show', $subject) }}"><i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Back</a>
+    <div class="row mb-3">
+        <div class="col-sm-3 mb-1">
+            <div class="d-flex align-items-center mr-1">
+                <a class="btn btn-primary m-1" href="{{ route('subject.show', $subject) }}"><i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    Back to profile</a>
+            </div>
+
+        </div>
+        <div class="col-sm-9 mb-1">
+            @if (count($tasks))
+            <h2 class="text-center">Other tasks for study {{$task->study->name}} </h2>
+            <div class="d-flex justify-content-between flex-wrap">
+                @foreach ($tasks as $t)
+                <a class="btn btn-primary m-1 flex-grow-1" href="{{route('experiment.show', [$subject,$t])}}">
+                    {{$t->name}}
+                </a>
+                @endforeach
+            </div>
+            @else
+
+            @endif
+        </div>
+    </div>
     
     <h2 class="mb-4">Task: {{$task->name}} 
         @if ($komentar)
@@ -17,35 +40,40 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group row">
-                            <label for="sati" class="col-sm-3 col-form-label">Hours</label>
+                            <label for="sati" class="col-sm-3 col-form-label">Hour</label>
                             <div class="col-sm-9">
-                                <input id="sati" type="number" class="form-control" name="sati" min="0" max="23" autofocus>
+                                <input id="sati" type="number" class="form-control {{ $errors->has('hour') ? ' is-invalid' : '' }}" name="hour" min="0" max="23" autofocus required>
                             </div>
+                            @if($errors->has('hour'))
+                                <p class="text-danger mt-2 ml-3">{{ $errors->first('hour') }}</p>
+                            @endif
                         </div>  
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group row">
-                            <label for="minuti" class="col-sm-3 col-form-label">Minutes</label>
+                            <label for="minuti" class="col-sm-3 col-form-label">Minute</label>
                             <div class="col-sm-9">
-                                <input id="minuti" type="number" class="form-control" name="minuti" min="0" max="59">
+                                <input id="minuti" type="number" class="form-control{{ $errors->has('minute') ? ' is-invalid' : '' }}" name="minute" min="0" max="59" required>
                             </div>
+                            @if($errors->has('minute'))
+                                <p class="text-danger mt-2 ml-3">{{ $errors->first('minute') }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="komentar" class="col-form-label">Comment</label>
-                    <textarea name="komentar" class="form-control" id="komentar" cols="30" rows="2"></textarea>
+                    <label for="comment" class="col-form-label">Comment</label>
+                    <textarea name="comment" class="form-control" id="comment" cols="30" rows="2"></textarea>
                 </div>
 
                 <input class="btn btn-primary" type="submit" value="Save">
             </form>
             <form action="{{route('task.comment.store', [$subject,$task])}}" method="post">
                 @csrf
-                <h3>Commetn for task</h3>
+                <h3>Comment for task</h3>
 
                 <div class="form-group">
-                    <label for="task_komentar" class="col-form-label">Comment for task</label>
                     <textarea name="task_komentar" class="form-control" id="task_komentar" cols="30" rows="3"></textarea>
                 </div>
 
@@ -61,7 +89,7 @@
                         <th>#</th>
                         <th>Time</th>
                         <th>Comment</th>
-                        <th>Radio</th>
+                        <th>Done by</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,7 +104,7 @@
                 </tbody> 
             </table>
             @else
-                <h3>There is no measurements for task {{$task->name}} </h3>
+                <h3>There are no experiments for task {{$task->name}} </h3>
             @endif
                 {{-- <p>{{$experiment->created_at->diffForHumans()}}</p>    --}}
         </div>

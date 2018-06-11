@@ -15,4 +15,9 @@ class Task extends Model
     {
         return $this->belongsToMany(Subject::class,'subject_task_comment')->withPivot('komentar');
     }
+
+    public function study()
+    {
+        return $this->belongsTo(Study::class);
+    }
 }

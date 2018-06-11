@@ -48297,7 +48297,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['studyId'],
+    props: ['slug'],
     data: function data() {
         return {
             task: '',
@@ -48346,18 +48346,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.taskInputs.length == 0 && this.groupInputs.length == 0) {
                 return;
             }
-            axios.post('/study/' + this.studyId, {
-                id: this.studyId,
+            axios.post('/study/' + this.slug, {
+                slug: this.slug,
                 tasks: this.taskInputsValues,
                 groups: this.taskGroupsValues
             }).then(function () {
-                window.location.href = '/study/' + _this.studyId;
+                window.location.href = '/study/' + _this.slug;
             }).catch(function (error) {
                 console.log(error);
             });
         },
         cancel: function cancel() {
-            return window.location.href = '/study/' + this.studyId;
+            return window.location.href = '/study/' + this.slug;
         }
     },
     computed: {
@@ -49388,7 +49388,7 @@ exports = module.exports = __webpack_require__(13)(false);
 
 
 // module
-exports.push([module.i, "\n.list-group-item:hover a[data-v-e197a202] {\r\n    background-color: aquamarine;\r\n    text-decoration: none;\r\n    color: black\n}\n.search-div[data-v-e197a202]{\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    -webkit-box-flex: 1;\r\n        -ms-flex: 1;\r\n            flex: 1;\r\n    position: relative;\n}\n.search-footer[data-v-e197a202]{\r\n    position: absolute;\r\n    top: 60px;\r\n    width: 80%;\r\n    z-index: 100;\r\n    left: 10%;\n}\nli.selected[data-v-e197a202] {\r\n    background: #58bd4c;\r\n    color: #fff;\r\n    font-weight: 600;\n}\r\n", ""]);
+exports.push([module.i, "\n.list-group-item:hover a[data-v-e197a202] {\r\n    background-color: aquamarine;\r\n    text-decoration: none;\r\n    color: black\n}\n.search-div[data-v-e197a202]{\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    -webkit-box-flex: 1;\r\n        -ms-flex: 1;\r\n            flex: 1;\r\n    position: relative;\n}\n.search-footer[data-v-e197a202]{\r\n    position: absolute;\r\n    top: 65px;\r\n    width: 80%;\r\n    z-index: 100;\r\n    left: 10%;\n}\nli.selected[data-v-e197a202] {\r\n    background: #58bd4c;\r\n    color: #fff;\r\n    font-weight: 600;\n}\r\n", ""]);
 
 // exports
 
@@ -49424,13 +49424,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             query: '',
-            results: [],
-            studies: []
+            subjects: [],
+            studies: [],
+            results: false
         };
     },
 
@@ -49438,11 +49444,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         autoComplete: function autoComplete() {
             var _this = this;
 
-            this.results = [];
+            this.subjects = [];
             this.studies = [];
-            if (this.query.length > 0) {
+            this.results = false;
+            if (this.query.length > 2) {
                 axios.get('/api/search', { params: { query: this.query } }).then(function (response) {
-                    _this.results = response.data.subjects;
+                    if (response.data.subjects.length == 0 && response.data.studies.length == 0) {
+                        _this.results = true;
+                    }
+                    _this.subjects = response.data.subjects;
                     _this.studies = response.data.studies;
                 });
             }
@@ -49453,7 +49463,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleClickOutside: function handleClickOutside(evt) {
             if (!this.$el.contains(evt.target)) {
                 this.query = '';
-                this.results = [];
+                this.results = false;
+                this.subjects = [];
                 this.studies = [];
             }
         }
@@ -49644,32 +49655,32 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm.results.length || _vm.studies.length
+    _vm.subjects.length || _vm.studies.length
       ? _c("div", { staticClass: "panel-footer search-footer" }, [
           _c(
             "ul",
             { staticClass: "list-group" },
             [
-              _vm.results.length
+              _vm.subjects.length
                 ? _c("li", { staticClass: "list-group-item bg-info" }, [
                     _vm._v("subjekti")
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _vm._l(_vm.results, function(result) {
+              _vm._l(_vm.subjects, function(subject) {
                 return _c(
                   "li",
-                  { key: result.id, staticClass: "list-group-item p-0" },
+                  { key: subject.id, staticClass: "list-group-item p-0" },
                   [
                     _c(
                       "a",
                       {
                         staticClass: "d-block p-2",
-                        attrs: { href: "/subject/" + result.id }
+                        attrs: { href: "/subject/" + subject.id }
                       },
                       [
                         _vm._v(
-                          _vm._s(result.ime) + " " + _vm._s(result.prezime)
+                          _vm._s(subject.ime) + " " + _vm._s(subject.prezime)
                         )
                       ]
                     )
@@ -49692,7 +49703,7 @@ var render = function() {
                       "a",
                       {
                         staticClass: "d-block p-2",
-                        attrs: { href: "/study/" + study.name }
+                        attrs: { href: "/study/" + study.slug }
                       },
                       [_vm._v(_vm._s(study.name))]
                     )
@@ -49703,6 +49714,10 @@ var render = function() {
             2
           )
         ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.results
+      ? _c("div", { staticClass: "panel-footer search-footer" }, [_vm._m(2)])
       : _vm._e()
   ])
 }
@@ -49754,6 +49769,16 @@ var staticRenderFns = [
         _c("div", { staticClass: "aa-dataset-2" })
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "list-group" }, [
+      _c("li", { staticClass: "list-group-item bg-info" }, [
+        _vm._v("No results")
+      ])
+    ])
   }
 ]
 render._withStripped = true

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title',"$subject->fullName ")
+
 @section('content')
 <div class="container">
     @if (Session::has('message'))
@@ -25,12 +27,12 @@
                             </button>
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-                            <form action="{{route('subject.destroy', $subject)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger" type="submit">Yes</button>
+                                <form action="{{route('subject.destroy', $subject)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit">Yes</button>
                                 </form>
+                                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -89,7 +91,7 @@
                 <tr>
                     <td>
                         <p>{{$study->studyName}}</p>
-                        <a class="btn btn-primary" href="{{route('subject.experiments', [$study->studyName,$subject])}}">Export subject Experiments</a>
+                        <a class="btn btn-primary" href="{{route('subject.experiments', [$study->slug,$subject])}}">Export subject Experiments</a>
                     </td>
                     <td>{{$study->groupName}}</td>
                 </tr>
@@ -104,7 +106,7 @@
     @if(count($studyGroups))
         <div class="row my-3">
             <div class="col-md-12">
-                <h2 class="text-center mb-3">Select study to add new record</h2>
+                <h2 class="text-center mb-3">Select study to add new experiment</h2>
                 
                 @foreach ($subject->studies as $study)
                     <button type="button" class="btn btn-modal w-50 d-flex mb-2 mx-auto" data-toggle="modal" data-target="#{{$study->id}}">
@@ -117,7 +119,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Choose task for new measuer</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Choose task to add new experiment</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -144,7 +146,7 @@
         <div class="row">
             <div class="col-md-12">
                 @if(count($experiments))
-                <h2 class="my-3 text-center">All measurements for {{$subject->ime}}</h2>
+                <h2 class="my-3 text-center">All experiments for {{$subject->ime}}</h2>
                 
                 <div class="flex mb-4">
                     @foreach ($subject->studies as $study)
@@ -170,7 +172,7 @@
                         <tr>
                             <th>Time</th>
                             <th>Comment</th>
-                            <th>Radio</th>
+                            <th>Done by</th>
                             <th>Task</th>
                         </tr>
                     </thead>
@@ -188,12 +190,12 @@
                 {{ $experiments->links() }}
                 @else
                     @if(request('task'))
-                        <h3 class="text-center">No measurements for searched task {{request('task')}}
+                        <h3 class="text-center">No experiments for searched task {{request('task')}}
                             <a href="{{ route('subject.show', $subject) }}" class="btn btn-danger btn-sm ml-auto">clear filter X</a>
                         </h3>
                         
                     @else
-                    <h3 class="text-center">No measurements for {{$subject->ime}}</h3>
+                    <h3 class="text-center">No experiments for {{$subject->ime}}</h3>
                     @endif
                 @endif
             

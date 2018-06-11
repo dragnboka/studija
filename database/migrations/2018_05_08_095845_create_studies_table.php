@@ -15,7 +15,8 @@ class CreateStudiesTable extends Migration
     {
         Schema::create('studies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

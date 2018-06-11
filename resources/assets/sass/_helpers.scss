@@ -1,14 +1,16 @@
-.list-group--group .list-group-item a,.list-group--task .list-group-item a{
+.list-group--group .list-group-item a,.list-group--task .list-group-item a, tr td.table-hover a{
     color: black;
     text-decoration: none;
 }
 
-.list-group--group .list-group-item:hover a, .list-group--task .list-group-item:hover a{
+.list-group--group .list-group-item:hover a, .list-group--task .list-group-item:hover a, tr td.table-hover:hover a{
     color: white;
     background-color: #74e0f3;
+    text-decoration: none;
 }
 .active-group {
     background-color: #74e0f3;
+    color: white !important;
 }
 .btn-modal {
     line-height: 2;

@@ -25,7 +25,8 @@ class ExperimentsExport implements FromCollection, WithMapping, WithHeadings
     
         return [
             $experiment->radio,
-            $experiment->vreme,
+            //Carbon::createFromTimeString($vreme)->format('H:i');
+            $experiment->time($experiment->vreme),
             $experiment->komentar,
             $experiment->task->name,
             $experiment->task->subject()->where('subject_id', $this->subject->id)->first() ? $experiment->task->subject()->where('subject_id', $this->subject->id)->first()->pivot->komentar : '',
@@ -36,11 +37,11 @@ class ExperimentsExport implements FromCollection, WithMapping, WithHeadings
     public function headings(): array
     {
         return [
-            'Radio',
-            'Vreme',
-            'Komentar',
-            'ime taska',
-            'task komentar' 
+            'Done by',
+            'Time',
+            'Comment',
+            'Task name',
+            'Task comment' 
         ];
     }
 

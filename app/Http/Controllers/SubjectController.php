@@ -76,7 +76,7 @@ class SubjectController extends Controller
             ->join('groups', 'group_subject.group_id', '=', 'groups.id')
             ->join('studies', 'groups.study_id', '=', 'studies.id')
             ->selectRaw('studies.name  as studyName')
-            ->selectRaw('studies.id as id')
+            ->selectRaw('studies.slug as slug')
             ->selectRaw('groups.name  as groupName')
             ->where('subjects.id', $subject->id)
             ->where('studies.deleted_at', null)
@@ -88,16 +88,6 @@ class SubjectController extends Controller
         
         return view('subject.show', compact('subject','experiments','studyGroups'));
     }
-
-    public function showCreate(Request $request, Study $study, Group $group)
-    {
-        $subjects = Subject::whereDoesntHave('studies', function ($query) use ($study)  {
-            $query->where('studies.id', $study->id);
-        })->get();
-        
-        return view('study.subjects.index', compact('subjects','study','group'));
-    }
-    
 
     /**
      * Show the form for editing the specified resource.

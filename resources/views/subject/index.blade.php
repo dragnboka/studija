@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title','Subjects')
+
 @section('content')
 
 <div class="container">    
@@ -28,7 +30,7 @@
             @foreach ($subjects as $subject)
             <a class="table-row table-row-body" href="{{route('subject.show', $subject)}}">
                 <div class="table-cell">{{$subject->id}}</div>
-                <div class="table-cell">{{$subject->formattedName}}</div>
+                <div class="table-cell">{{$subject->ime}}</div>
                 <div class="table-cell">{{$subject->prezime}}</div>
                 <div class="table-cell">{{$subject->srednje}}</div>
                 <div class="table-cell">{{$subject->rodjen->toFormattedDateString()}}</div>

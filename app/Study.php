@@ -11,7 +11,7 @@ class Study extends Model
 
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'slug';
     }
     /**
      * The attributes that should be mutated to dates.

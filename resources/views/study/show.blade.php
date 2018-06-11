@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title',"$study->name study")
+
 @section('content')
 <div class="container">
     <div class="row mb-4">
@@ -26,12 +28,12 @@
                         </button>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-                        <form action="{{route('study.destroy', $study->name)}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" type="submit">Yes</button>
+                            <form action="{{route('study.destroy', $study)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit">Yes</button>
                             </form>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                     </div>
@@ -43,32 +45,39 @@
     </div>
            
     <div class="row mb-4">
-        <div class="col-sm-5">
-            <div class="card">
-                <div class="card-header text-white bg-dark">
-                    <p class="m-0 p-1">Tasks</p> 
-                </div>
-
-                <ul class="list-group list-group-flush">
-                    @foreach ($study->tasks as $task)
-                        <li class="list-group-item p-3">{{$task->name}}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-        <div class="col-sm-7">
-            <table class="table">
-                <tr>
-                    <th>Groups</th>
-                    <th>Add new subject to study</th>
+        
+        <div class="col-md-7">
+            <table class="table table-bordered">
+                <tr class="thead-dark">
+                    <th class="w-60">
+                        <div class="d-flex">
+                            <span>Groups</span> 
+                            @if(request('group'))
+                            <a href="{{ route('study.show', $study) }}" class="btn btn-danger btn-sm ml-auto">X</a>
+                            @endif
+                        </div>
+                    </th>
+                    <th class="w-40">Add new subject to study</th>
                 </tr>
                 @foreach ($study->groups as $group)
                 <tr>
-                    <td class="p-0 w-60">
-                        <a class="d-flex p-2 {{request()->query('group') == $group->name ? 'active-group' : ''}}" href="/study/{{$study->name}}?group={{urlencode($group->name)}}">{{$group->name}}<span class="badge badge-pill badge-danger p-2 ml-auto">{{$group->subjects->count()}}</span>
+                    <td class="p-0 w-60 table-hover">
+                        <a class="d-flex p-3 {{request()->query('group') == $group->name ? 'active-group' : ''}}" href="/study/{{$study->slug}}?group={{urlencode($group->name)}}">{{$group->name}}<span class="badge badge-pill badge-danger p-2 ml-auto">{{$group->subjects->count()}}</span>
                         </a>
                     </td>
-                    <td class="p-0 w-40 text-center align-middle"><a class="btn btn-success " href="{{ route('subject.create', [$study->name,$group->name]) }}">Add</a></td>
+                    <td class="p-0 w-40 text-center align-middle"><a class="btn btn-success w-50 p-2" href="{{ route('subject.create', [$study,$group]) }}">Add</a></td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+        <div class="col-md-5">
+            <table class="table table-bordered">
+                <tr class="thead-dark text-center">
+                    <th>Tasks</th>
+                </tr>
+                @foreach ($study->tasks as $task)
+                <tr>
+                    <td class="text-center align-middle">{{$task->name}}</td>
                 </tr>
                 @endforeach
             </table>
@@ -91,7 +100,7 @@
                 @foreach ($subjects as $subject)
                 <a class="table-row table-row-body" href="{{route('subject.show', $subject)}}">
                     <div class="table-cell">{{$subject->id}}</div>
-                    <div class="table-cell">{{$subject->formattedName}}</div>
+                    <div class="table-cell">{{$subject->ime}}</div>
                     <div class="table-cell">{{$subject->prezime}}</div>
                     <div class="table-cell">{{$subject->srednje}}</div>
                     <div class="table-cell">{{$subject->rodjen->toFormattedDateString()}}</div>
@@ -102,7 +111,13 @@
         </div>
     </div>
     @else
+        @if(request('group'))
+            <h3 class="text-center">No subjects for searched group {{request('group')}}
+                <a href="{{ route('study.show', $study) }}" class="btn btn-danger btn-sm ml-auto">clear filter X</a>
+            </h3>
+        @else
         <h3>No subjects for {{$study->name}} study</h3>
+        @endif 
     @endif
 </div>
 @endsection

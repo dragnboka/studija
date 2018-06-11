@@ -10427,11 +10427,11 @@ a.text-dark:focus {
 }
 
 .navbar-nav li > a {
-  padding: 25px;
+  padding: 30px;
 }
 
 .navbar-nav li > a:hover {
-  background-color: #5456e6;
+  background-color: #fff;
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -10439,15 +10439,46 @@ a.text-dark:focus {
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
-  color: rgba(245, 245, 245, 0.904);
+  color: #030303;
+}
+
+.navbar-light .navbar-nav .show > .nav-link {
+  color: #fff;
+}
+
+.navbar-light .navbar-nav .show:hover > .nav-link {
+  color: #030303;
+}
+
+.navbar-light .dropdown-item:hover,
+.navbar-light .dropdown-item:focus {
+  color: #030303;
+  text-decoration: none;
+  background-color: #fff;
+}
+
+.navbar-light .dropdown-menu {
+  background-color: #242424;
+  border-radius: 0;
+  top: 98%;
+}
+
+.navbar-light .dropdown-item {
+  color: #fff;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+  color: #030303;
+  background-color: #fff;
 }
 
 .navbar {
-  background-color: #7072e9;
+  background-color: #242424;
 }
 
 .navbar-brand {
   position: relative;
+  padding: 10px;
 }
 
 .navbar-brand img {
@@ -10457,7 +10488,7 @@ a.text-dark:focus {
 .logo-light {
   position: absolute;
   top: 50%;
-  left: 0;
+  left: 9%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   opacity: 0;
@@ -10580,6 +10611,25 @@ a.text-dark:focus {
 
 .footer-layout-1 .widget:last-child {
   margin-bottom: 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .naix-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .footer-layout-1 .footer-content .footer-sidebar {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .footer-layout-1 .footer-content {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    text-align: center;
+  }
 }
 
 footer-layout-1 .social-links-widget .social-links-list {
@@ -10820,19 +10870,23 @@ button {
 }
 
 .list-group--group .list-group-item a,
-.list-group--task .list-group-item a {
+.list-group--task .list-group-item a,
+tr td.table-hover a {
   color: black;
   text-decoration: none;
 }
 
 .list-group--group .list-group-item:hover a,
-.list-group--task .list-group-item:hover a {
+.list-group--task .list-group-item:hover a,
+tr td.table-hover:hover a {
   color: white;
   background-color: #74e0f3;
+  text-decoration: none;
 }
 
 .active-group {
   background-color: #74e0f3;
+  color: white !important;
 }
 
 .btn-modal {

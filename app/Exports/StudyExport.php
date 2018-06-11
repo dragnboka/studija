@@ -25,6 +25,7 @@ class StudyExport implements FromCollection, WithMapping, WithHeadings
             $subject->prezime,
             $subject->srednje,
             $subject->rodjen->toDateString(),
+            $subject->age,
             $subject->pol = ($subject->pol == 'm' ? 'muski' : 'zenski'),
             $subject->komentar,
            
@@ -35,12 +36,13 @@ class StudyExport implements FromCollection, WithMapping, WithHeadings
     {
         return [
             'ID',
-            'Ime',
-            'Prezime',
-            'Srednje',
-            'Rodjen',
-            'Pol',
-            'Komentar',  
+            'Firt name',
+            'Last name',
+            'Middle name',
+            'Date of birth',
+            'Age',
+            'Gender',
+            'Comment',  
         ];
     }
 

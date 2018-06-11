@@ -64,7 +64,7 @@
 
 <script>
     export default {
-        props: ['studyId'],
+        props: ['slug'],
         data () {
             return {
                 task: '',
@@ -106,12 +106,12 @@
                 if (this.taskInputs.length == 0 && this.groupInputs.length == 0) {
                     return
                 }
-                axios.post(`/study/${this.studyId}`, {
-                    id: this.studyId,
+                axios.post(`/study/${this.slug}`, {
+                    slug: this.slug,
                     tasks: this.taskInputsValues,
                     groups: this.taskGroupsValues
                 }).then(() => {
-                    window.location.href = `/study/${this.studyId}`;
+                    window.location.href = `/study/${this.slug}`;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -119,7 +119,7 @@
 
             },
             cancel(){
-                return window.location.href = `/study/${this.studyId}`;
+                return window.location.href = `/study/${this.slug}`;
             }
         },
         computed: {

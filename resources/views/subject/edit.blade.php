@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title',"Edit $subject->fullName ")
+
 @section('content')
 
 <div class="row">

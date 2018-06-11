@@ -3,9 +3,12 @@
 @section('content')
 
 <div class="container">
+    @if (!$subjects->count() && !$studies->count())
+        <h2 class="mb-3 text-md-center">No results for searched term</h2>
+    @endif
     @if($subjects->count())
-        <h2 class="mb-3 text-md-center">{{$subjects->total()}} {{ ngettext(" Ispitanik", "Ispitanika", $subjects->total())}} za trazeni search {{request()->input('query')}}</h2>
-
+        {{-- <h2 class="mb-3 text-md-center">{{$subjects->total()}} {{ ngettext(" Ispitanik", "Ispitanika", $subjects->total())}} za trazeni search {{request()->input('query')}}</h2> --}}
+        <h2 class="mb-3 text-md-center">{{$subjects->total()}} {{str_plural('Subject',$subjects->total())}} </h2>
         <div class="table table1 table-responsive">
             <a class="table-row table-row-headig">
                 <div class="table-cell">Id</div>
@@ -18,7 +21,7 @@
             @foreach ($subjects as $subject)
             <a class="table-row table-row-body" href="{{route('subject.show', $subject)}}">
                 <div class="table-cell">{{$subject->id}}</div>
-                <div class="table-cell">{{$subject->formattedName}}</div>
+                <div class="table-cell">{{$subject->ime}}</div>
                 <div class="table-cell">{{$subject->prezime}}</div>
                 <div class="table-cell">{{$subject->srednje}}</div>
                 <div class="table-cell">{{$subject->rodjen->toFormattedDateString()}}</div>
@@ -32,7 +35,8 @@
     @endif
 
     @if($studies->count())
-        <h2 class="mb-3 text-md-center">{{$studies->total()}} {{ ngettext(" Studija", "Studije", $studies->total())}} za trazeni search {{request()->input('query')}}</h2>
+        {{-- <h2 class="mb-3 text-md-center">{{$studies->total()}} {{ ngettext(" Studija", "Studije", $studies->total())}} za trazeni search {{request()->input('query')}}</h2> --}}
+        <h2 class="mb-3 text-md-center">{{$studies->total()}} {{str_plural('Study',$studies->total())}} </h2>
 
         <div class="table table1 table-responsive">
             <a class="table-row table-row-headig">

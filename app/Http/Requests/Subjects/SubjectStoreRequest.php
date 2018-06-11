@@ -27,8 +27,8 @@ class SubjectStoreRequest extends FormRequest
             'firstName' => 'required|string',
             'lastName' => 'required|string',
             'middleName'  => 'required|string',
-            'dob'  => 'required|date_format:"Y-m-d"',
-            'gender'  => 'required|in:m,z',
+            'dob'  => 'required|date_format:"Y-m-d"|before:today',
+            'gender'  => 'required|in:m,f',
         ];
     }
 

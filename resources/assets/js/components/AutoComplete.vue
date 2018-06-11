@@ -8,16 +8,21 @@
         Search
     </button>
   </form>
-  <div class="panel-footer search-footer" v-if="results.length || studies.length">
+  <div class="panel-footer search-footer" v-if="subjects.length || studies.length">
    <ul class="list-group">
-    <li class="list-group-item bg-info" v-if="results.length">subjekti</li>
-    <li class="list-group-item p-0" v-for="result in results"  :key="result.id">
-     <a class="d-block p-2" :href="`/subject/${result.id}`">{{ result.ime }} {{ result.prezime }}</a>
+    <li class="list-group-item bg-info" v-if="subjects.length">subjekti</li>
+    <li class="list-group-item p-0" v-for="subject in subjects"  :key="subject.id">
+     <a class="d-block p-2" :href="`/subject/${subject.id}`">{{ subject.ime }} {{ subject.prezime }}</a>
     </li>
     <li class="list-group-item bg-info" v-if="studies.length">studije</li>
     <li class="list-group-item p-0" v-for="study in studies" :key="study.name">
-     <a class="d-block p-2" :href="`/study/${study.name}`">{{ study.name }}</a>
+     <a class="d-block p-2" :href="`/study/${study.slug}`">{{ study.name }}</a>
     </li>
+   </ul>
+  </div>
+  <div class="panel-footer search-footer" v-if="results">
+    <ul class="list-group">
+        <li class="list-group-item bg-info">No results</li>
    </ul>
   </div>
   
@@ -28,18 +33,23 @@
     data(){
         return {
             query: '',
-            results: [],
+            subjects: [],
             studies: [],
+            results: false
         }
     },
     methods: {
         autoComplete(){
-            this.results = [];
+            this.subjects = [];
             this.studies = [];
-            if(this.query.length > 0){
+            this.results = false;
+            if(this.query.length > 2){
                 axios.get('/api/search',{params: {query: this.query}}).then(response => {
-                this.results = response.data.subjects;
-                this.studies = response.data.studies;
+                    if(response.data.subjects.length == 0 && response.data.studies.length == 0 ) {
+                        this.results = true
+                    }
+                    this.subjects = response.data.subjects;
+                    this.studies = response.data.studies;
                 });
             }
         },
@@ -50,7 +60,8 @@
         handleClickOutside(evt) {
             if (!this.$el.contains(evt.target)) {
                 this.query = ''
-                this.results = [];
+                this.results = false;
+                this.subjects = [];
                 this.studies = [];
             }
       }
@@ -74,7 +85,7 @@
 }
 .search-footer{
     position: absolute;
-    top: 60px;
+    top: 65px;
     width: 80%;
     z-index: 100;
     left: 10%;

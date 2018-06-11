@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title',"Edit $study->name study")
+
 @section('content')
 
 <div class="container">
@@ -69,9 +71,8 @@
                         </div>
                     </form>
                 </div>
-
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <update-study :study-id={{$study->id}}></update-study>
+                    <update-study slug={{$study->slug}}></update-study>
                 </div>
             </div>
         </div>

@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Study;
+use App\{Study, Task, Subject, Experiment};
 use Illuminate\Http\Request;
-use App\Task;
-use App\Subject;
-use App\Experiment;
+use App\Http\Requests\Experiments\SaveNewExperimentRequest;
 
 class ExperimentController extends Controller
 {
@@ -16,13 +14,15 @@ class ExperimentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Subject $subject, Task $task)
+    public function store(SaveNewExperimentRequest $request, Subject $subject, Task $task)
     {
         if(!$this->tasksIds($subject)->contains($task->id)){
             abort(404);
         };
+        $subject = Subject::findOrFail($subject->id);
+        $task = Task::findOrFail($task->id);
         
-        $time = implode(":", array($request->sati, $request->minuti));
+        $time = implode(":", array($request->hour, $request->minute));
         $experiment = new Experiment;
         $experiment->subject_id = $subject->id;
         $experiment->task_id = $task->id;
@@ -37,7 +37,7 @@ class ExperimentController extends Controller
 
     public function storeComment(Request $request, Subject $subject, Task $task)
     {
-        $task->subject()->attach($subject, ['komentar' => $request->task_komentar]);
+        $task->subject()->sync([$subject->id => ['komentar' => $request->task_komentar]]);
         
         return redirect()->back();
     }
@@ -50,6 +50,7 @@ class ExperimentController extends Controller
      */
     public function show(Subject $subject, Task $task)
     {       
+        
         if(!$this->tasksIds($subject)->contains($task->id)){
             abort(404);
         };
@@ -57,7 +58,9 @@ class ExperimentController extends Controller
         
         $experiments = Experiment::where([['task_id', $task->id],['subject_id', $subject->id]])->get();
         
-        return view('experiments.show', compact('task','experiments','subject','komentar'));
+        $tasks = $task->study->tasks()->where('id', '<>', $task->id)->get();
+
+        return view('experiments.show', compact('task','experiments','subject','komentar', 'tasks'));
     }
 
     protected function tasksIds(Subject $subject)

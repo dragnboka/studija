@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title','Studies')
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -25,10 +27,14 @@
                     @foreach ($studies as $study)
                     <tr>
                         <td class="p-0 align-middle text-center">{{$study->id}}</td>
-                        <td class="d-flex p-0"><a class="p-3 flex-grow-1" href="{{route('study.show', $study->name)}}">{{$study->name}}</a></td>
+                        <td class="d-flex p-0 table-hover"><a class="p-3 flex-grow-1" href="{{route('study.show', $study)}}">{{$study->name}}</a></td>
                         <td class="p-0 align-middle text-center">{{$study->created_at->toFormattedDateString()}}</td>
                         <td class="text-center p-0 align-middle">{{$study->subjects_count}}</td>
-                        <td class="p-0 align-middle text-center"><a href="{{route('exels', $study)}}">exel</a></td>
+                        <td class=" d-flex p-0 align-middle text-center table-hover">
+                            @if($study->subjects_count)
+                            <a class="p-3 flex-grow-1" href="{{route('exels', $study)}}">Study subjects</a>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

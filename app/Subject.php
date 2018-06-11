@@ -21,6 +21,18 @@ class Subject extends Model
      */
     protected $dates = ['rodjen','deleted_at'];
 
+    public function setImeAttribute($value) {
+        $this->attributes['ime'] = mb_convert_case($value, MB_CASE_TITLE, 'UTF-8');
+    }
+
+    public function setPrezimeAttribute($value) {
+        $this->attributes['prezime'] = mb_convert_case($value, MB_CASE_TITLE, 'UTF-8');
+    }
+
+    public function setSrednjeAttribute($value) {
+        $this->attributes['srednje'] = mb_convert_case($value, MB_CASE_TITLE, 'UTF-8');
+    }
+
     public function getAgeAttribute()
     {
         return  $this->rodjen->diff(Carbon::now())->format('%y');
@@ -29,11 +41,6 @@ class Subject extends Model
     public function getFullNameAttribute()
     {
         return $this->ime . ' ' . $this->prezime;
-    }
-
-    public function getFormattedNameAttribute()
-    {
-        return mb_convert_case($this->ime, MB_CASE_TITLE, 'UTF-8');
     }
 
     public function getFormattedPolAttribute()

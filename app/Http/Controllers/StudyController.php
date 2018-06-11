@@ -42,6 +42,7 @@ class StudyController extends Controller
     {
         $study = new Study;
         $study->name = $request->name;
+        $study->slug = str_slug($request->name, '-');
         $study->save();
         $id = $study->id;
         $s = Study::where('id',$id)->first();
@@ -62,7 +63,7 @@ class StudyController extends Controller
     public function storeNew(AddTaskAndGroupsToStudyRequest $request)
     {
     
-        $study = Study::where('id',$request->id)->firstOrFail();
+        $study = Study::where('slug',$request->slug)->firstOrFail();
         
         if (count($request->tasks)) {
             foreach($request->tasks as $task) {
@@ -123,6 +124,7 @@ class StudyController extends Controller
         $this->authorize('admin');
 
         $study->name = $request->name;
+        $study->slug = str_slug($request->name, '-');
         $study->save();
         $tasks = Task::where('study_id', $study->id)->get();
         foreach ($tasks as $key => $task) {
@@ -136,7 +138,7 @@ class StudyController extends Controller
             $group->save();
         }
 
-        return redirect()->route('study.show',$study->name)->with('flash', 'Study info has been changed.');
+        return redirect()->route('study.show',$study)->with('flash', 'Study info has been changed.');
     }
 
     /**

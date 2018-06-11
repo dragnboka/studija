@@ -1,5 +1,7 @@
 @extends('account.layouts.default')
 
+@section('title',"Profile info")
+
 @section('account.content')
 <div class="row">
     <div class="col-sm-8 mx-auto">
